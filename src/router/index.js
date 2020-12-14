@@ -18,7 +18,12 @@ export default new Router({
       name: 'tweets',
       component: Tweets
     },
+    {
+      path: '/tweet/:id',
+      name: 'tweet',
+      component: () => import('../views/Tweet.vue')
 
+    },
     {
       path: '*',
       name: 'not-found',
