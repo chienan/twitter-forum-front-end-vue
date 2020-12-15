@@ -15,7 +15,7 @@
       <FollowRecommend />
     </div>
 
-    <div>
+    <div style="display: none">
       <!-- RepliedContent -->
       <RepliedContent />
     </div>
@@ -28,7 +28,7 @@ import RepliedContent from "../components/RepliedContent.vue";
 
 export default {
   components: {
-    TweetsDetail: TweetsDetail,
+    TweetsDetail,
     RepliedContent,
   },
 };
