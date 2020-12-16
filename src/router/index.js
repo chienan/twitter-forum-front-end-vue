@@ -2,16 +2,22 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import NotFound from '../views/NotFound'
 import Tweets from '../views/Tweets'
-
+import SignIn from '../views/SignIn.vue'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
+      path: '/signin',
+      name: 'sign-in',
+      component: SignIn
+    },
+    {
       path: '/',
       name: 'root',
-      redirect: '/tweets'
+      redirect: '/signin',
+
     },
     {
       path: '/tweets',
