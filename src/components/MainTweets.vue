@@ -29,14 +29,17 @@
 
           <div class="item-right">
             <div class="item-user-info d-flex">
-              <a href class="user-name">userName</a>
+              <a href class="user-name">Apple</a>
               <!-- <div class="user-name">Apple</div> -->
-              <a href class="user-id">{{tweet.userId}}</a>
+              <a href class="user-id">@apple</a>
               <!-- <div class="user-id">@apple</div> -->
 
               <div class="time">・3hrs</div>
             </div>
-            <a href class="item-content">{{tweet.description}}</a>
+            <a
+              href
+              class="item-content"
+            >Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.</a>
             <div class="item-interaction">
               <a href class="tweet-reply">
                 <img src="https://i.imgur.com/I3DHrNy.png" id="icon-reply" alt />
@@ -51,30 +54,219 @@
           </div>
         </div>
         <!-- tweet-item-test -->
+        <div class="tweet-item">
+          <a href class="item-left">
+            <div class="circle"></div>
+          </a>
+
+          <div class="item-right">
+            <div class="item-user-info d-flex">
+              <a href class="user-name">Apple</a>
+              <!-- <div class="user-name">Apple</div> -->
+              <a href class="user-id">@apple</a>
+              <!-- <div class="user-id">@apple</div> -->
+
+              <div class="time">・3hrs</div>
+            </div>
+            <a
+              href
+              class="item-content"
+            >Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.</a>
+            <div class="item-interaction">
+              <a href class="tweet-reply">
+                <img src="https://i.imgur.com/I3DHrNy.png" id="icon-reply" alt />
+                <p>13</p>
+              </a>
+
+              <a href class="tweet-like">
+                <img src="https://i.imgur.com/gCFSWst.png" id="icon-like" alt />
+                <p>5</p>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="tweet-item">
+          <a href class="item-left">
+            <div class="circle"></div>
+          </a>
+
+          <div class="item-right">
+            <div class="item-user-info d-flex">
+              <a href class="user-name">Apple</a>
+              <!-- <div class="user-name">Apple</div> -->
+              <a href class="user-id">@apple</a>
+              <!-- <div class="user-id">@apple</div> -->
+
+              <div class="time">・3hrs</div>
+            </div>
+            <a
+              href
+              class="item-content"
+            >Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.</a>
+            <div class="item-interaction">
+              <a href class="tweet-reply">
+                <img src="https://i.imgur.com/I3DHrNy.png" id="icon-reply" alt />
+                <p>13</p>
+              </a>
+
+              <a href class="tweet-like">
+                <img src="https://i.imgur.com/gCFSWst.png" id="icon-like" alt />
+                <p>5</p>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="tweet-item">
+          <a href class="item-left">
+            <div class="circle"></div>
+          </a>
+
+          <div class="item-right">
+            <div class="item-user-info d-flex">
+              <a href class="user-name">Apple</a>
+              <!-- <div class="user-name">Apple</div> -->
+              <a href class="user-id">@apple</a>
+              <!-- <div class="user-id">@apple</div> -->
+
+              <div class="time">・3hrs</div>
+            </div>
+            <a
+              href
+              class="item-content"
+            >Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.</a>
+            <div class="item-interaction">
+              <a href class="tweet-reply">
+                <img src="https://i.imgur.com/I3DHrNy.png" id="icon-reply" alt />
+                <p>13</p>
+              </a>
+
+              <a href class="tweet-like">
+                <img src="https://i.imgur.com/gCFSWst.png" id="icon-like" alt />
+                <p>5</p>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="tweet-item">
+          <a href class="item-left">
+            <div class="circle"></div>
+          </a>
+
+          <div class="item-right">
+            <div class="item-user-info d-flex">
+              <a href class="user-name">Apple</a>
+              <!-- <div class="user-name">Apple</div> -->
+              <a href class="user-id">@apple</a>
+              <!-- <div class="user-id">@apple</div> -->
+
+              <div class="time">・3hrs</div>
+            </div>
+            <a
+              href
+              class="item-content"
+            >Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.</a>
+            <div class="item-interaction">
+              <a href class="tweet-reply">
+                <img src="https://i.imgur.com/I3DHrNy.png" id="icon-reply" alt />
+                <p>13</p>
+              </a>
+
+              <a href class="tweet-like">
+                <img src="https://i.imgur.com/gCFSWst.png" id="icon-like" alt />
+                <p>5</p>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="tweet-item">
+          <a href class="item-left">
+            <div class="circle"></div>
+          </a>
+
+          <div class="item-right">
+            <div class="item-user-info d-flex">
+              <a href class="user-name">Apple</a>
+              <!-- <div class="user-name">Apple</div> -->
+              <a href class="user-id">@apple</a>
+              <!-- <div class="user-id">@apple</div> -->
+
+              <div class="time">・3hrs</div>
+            </div>
+            <a
+              href
+              class="item-content"
+            >Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.</a>
+            <div class="item-interaction">
+              <a href class="tweet-reply">
+                <img src="https://i.imgur.com/I3DHrNy.png" id="icon-reply" alt />
+                <p>13</p>
+              </a>
+
+              <a href class="tweet-like">
+                <img src="https://i.imgur.com/gCFSWst.png" id="icon-like" alt />
+                <p>5</p>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="tweet-item">
+          <a href class="item-left">
+            <div class="circle"></div>
+          </a>
+
+          <div class="item-right">
+            <div class="item-user-info d-flex">
+              <a href class="user-name">Apple</a>
+              <!-- <div class="user-name">Apple</div> -->
+              <a href class="user-id">@apple</a>
+              <!-- <div class="user-id">@apple</div> -->
+
+              <div class="time">・3hrs</div>
+            </div>
+            <a
+              href
+              class="item-content"
+            >Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.</a>
+            <div class="item-interaction">
+              <a href class="tweet-reply">
+                <img src="https://i.imgur.com/I3DHrNy.png" id="icon-reply" alt />
+                <p>13</p>
+              </a>
+
+              <a href class="tweet-like">
+                <img src="https://i.imgur.com/gCFSWst.png" id="icon-like" alt />
+                <p>5</p>
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-// eslint-disable-next-line no-unused-vars
-import { Toast } from "../utils/helpers";
-export default {
-  props: {
-    initialTweet: {
-      type: Object,
-      required: true
-    }
-  },
-  data() {
-    return {
-      tweet: this.initialTweet
-    };
-  }
-};
 </script>
 
 <style scoped>
+/* CSS reset  */
+body {
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0px;
+  padding: 0px;
+}
+
+/* style start */
 .container {
   position: relative;
 }

@@ -18,6 +18,7 @@ export default new Router({
       name: 'tweets',
       component: Tweets
     },
+
     {
       path: '*',
       name: 'not-found',
