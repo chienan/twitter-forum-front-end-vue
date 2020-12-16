@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <h1>Tweets</h1>
-
+  <div class="d-flex">
     <div>
       <NavBar />
     </div>
@@ -29,3 +27,4 @@ export default {
   }
 };
 </script>
+
