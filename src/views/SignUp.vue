@@ -87,6 +87,9 @@
 </template>
 
 <style scoped>
+* {
+  font-family: "Noto Sans TC";
+}
 .signin {
   margin-top: 100px;
   position: relative;
