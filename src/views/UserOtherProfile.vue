@@ -5,9 +5,9 @@
     </div>
 
     <div class="main-content">
-      <UserProfileDetail />
-      <UserProfileNav />
-      <UserProfileNavTabs />
+      <UserOtherNav />
+      <UserOtherDetail />
+      <UserOtherNavTabs />
       <!-- <UserProfileTweets /> -->
       <!-- <UserProfileReplied /> -->
       <UserProfileLiked />
@@ -22,20 +22,20 @@
 <script>
 import NavBar from "../components/NavBar";
 import FollowRecommend from "../components/FollowRecommend";
-import UserProfileDetail from "../components/UserProfileDetail";
-import UserProfileNav from "../components/UserProfileNav";
-import UserProfileNavTabs from "../components/UserProfileNavTabs";
-// import UserProfileTweets from "../components/UserProfileTweets";
-// import UserProfileReplied from "../components/UserProfileReplied";
+
+import UserOtherNav from "../components/UserOtherNav";
+import UserOtherDetail from "../components/UserOtherDetail";
+import UserOtherNavTabs from "../components/UserOtherNavTabs";
+
 import UserProfileLiked from "../components/UserProfileLiked";
 
 export default {
   components: {
     NavBar,
     FollowRecommend,
-    UserProfileDetail,
-    UserProfileNav,
-    UserProfileNavTabs,
+    UserOtherNav,
+    UserOtherDetail,
+    UserOtherNavTabs,
     // UserProfileTweets,
     // UserProfileReplied,
     UserProfileLiked

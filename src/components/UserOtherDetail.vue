@@ -2,26 +2,27 @@
   <div class="container">
     <div class="main-content">
       <div class="cover-container">
-        <img src="https://i.imgur.com/kTzPpZ3.png" class="cover-photo" alt />
+        <!-- insert cover photo -->
+        <!-- <img src="https://i.imgur.com/kTzPpZ3.png" class="cover-photo" alt /> -->
         <div class="avatar-container"></div>
       </div>
       <div class="profile-container">
-        <div class="edit-section">
-          <a href class="btn-edit">編輯個人資料</a>
+        <div class="btn-section">
+          <a href class="btn-follow">跟隨中</a>
         </div>
         <div class="profile-section">
-          <div class="user-name">John Doe</div>
-          <div class="user-id">@heyjohn</div>
+          <div class="user-name">Mary Jane</div>
+          <div class="user-id">@mjjane</div>
           <div
             class="user-intro"
           >Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.</div>
         </div>
         <div class="follow-section">
           <a href class="following-section">
-            <div class="following-number">34 個</div>跟隨中
+            <div class="following-number">1,164 個</div>跟隨中
           </a>
           <a href class="follower-section">
-            <div class="follower-number">59 位</div>跟隨者
+            <div class="follower-number">6.3萬 位</div>跟隨者
           </a>
         </div>
       </div>
@@ -70,6 +71,7 @@ img {
 .cover-container {
   z-index: 0;
   position: relative;
+  background: #999999;
 }
 
 .avatar-container {
@@ -95,13 +97,13 @@ img {
   margin-top: 10px;
 }
 
-.edit-section {
+.btn-section {
   display: flex;
   flex-direction: row-reverse;
 }
 
-.btn-edit {
-  width: 122px;
+.btn-follow {
+  width: 92px;
   height: 40px;
   border: 1px solid #ff6600;
   border-radius: 100px;
