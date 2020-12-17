@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div class="col-4">
+    <div>
       <!-- NavBar -->
     </div>
-    <div class="col-8">
+    <div>
       <!-- Account -->
       <Account />
     </div>
