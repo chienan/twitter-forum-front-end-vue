@@ -31,6 +31,11 @@ export default new Router({
 
     },
     {
+      path: '/admin',
+      name: 'admin-signIn',
+      component: () => import('../views/AdminSignIn.vue')
+    },
+    {
       path: '*',
       name: 'not-found',
       component: NotFound
