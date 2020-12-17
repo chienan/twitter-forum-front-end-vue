@@ -1,12 +1,13 @@
 <template>
   <div class="container">
-    <a href class="tab-tweets">推文</a>
-    <a href class="tab-replies">推文與回覆</a>
-    <a href class="tab-liked">喜歡的內容</a>
+    <a href="./users" class="tab-tweets" :class="{choose : true}" @click="ChooseBack">推文</a>
+    <a href="./users" class="tab-replies" @click="alterChoose">推文與回覆</a>
+    <a href="./users" class="tab-liked" @click="alterChoose">喜歡的內容</a>
   </div>
 </template>
 
 <script>
+export default {};
 </script>
 
 
@@ -22,7 +23,7 @@
   border-right: 1px solid #e6ecf0;
   display: flex;
   justify-content: start;
-  /* border: 1px solid seagreen; */
+  border-bottom: 1px solid #e6ecf0;
 }
 
 .tab-tweets,
@@ -30,7 +31,6 @@
 .tab-liked {
   width: 140px;
   height: 100%;
-  /* border: 1px solid salmon; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -38,6 +38,8 @@
   font-size: 15px;
   line-height: 22px;
   color: #657786;
+  border-bottom: 1px solid #ffffff;
+  padding-bottom: 10px;
 }
 
 :focus {
@@ -46,5 +48,9 @@
 
 .tab-tweets {
   margin-left: -15px;
+}
+
+.choose {
+  border-bottom: 2px solid #ff6600;
 }
 </style>

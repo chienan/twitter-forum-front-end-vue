@@ -8,6 +8,7 @@
       <UserProfileDetail />
       <UserProfileNav />
       <UserProfileNavTabs />
+      <UserProfileTweets />
     </div>
 
     <div>
@@ -22,13 +23,15 @@ import FollowRecommend from "../components/FollowRecommend";
 import UserProfileDetail from "../components/UserProfileDetail";
 import UserProfileNav from "../components/UserProfileNav";
 import UserProfileNavTabs from "../components/UserProfileNavTabs";
+import UserProfileTweets from "../components/UserProfileTweets";
 export default {
   components: {
     NavBar,
     FollowRecommend,
     UserProfileDetail,
     UserProfileNav,
-    UserProfileNavTabs
+    UserProfileNavTabs,
+    UserProfileTweets
   }
 };
 </script>
