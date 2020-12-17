@@ -14,6 +14,12 @@ export default new Router({
       component: SignIn
     },
     {
+      path: '/signup',
+      name: 'sign-up',
+      //動態載入，當使用者進到'/signup'時才載入這個元件
+      component: () => import('../views/SignUp.vue')
+    },
+    {
       path: '/',
       name: 'root',
       redirect: '/signin',
