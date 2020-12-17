@@ -8,15 +8,20 @@ Vue.use(Router)
 
 export default new Router({
   routes: [
-    {
-      path: '/',
-      name: 'root',
-      redirect: '/tweets'
-    },
+    // {
+    //   path: '/',
+    //   name: 'root',
+    //   redirect: '/tweets'
+    // },
     {
       path: '/tweets',
       name: 'tweets',
       component: Tweets
+    },
+    {
+      path: '/users/',
+      name: 'user',
+      component: () => import('../views/UserProfile.vue')
     },
 
     {

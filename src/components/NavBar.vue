@@ -16,7 +16,7 @@
 
       <div class="nav-item d-flex align-items-center">
         <img src="https://i.imgur.com/MBiFHBl.png" style="width: 16.7px" alt />
-        <a class="nav-link" href="#">個人資料</a>
+        <a class="nav-link" href>個人資料</a>
       </div>
 
       <div class="nav-item d-flex align-items-center">
