@@ -25,6 +25,13 @@ export default new Router({
       redirect: '/signin',
 
     },
+
+    {
+      path: '/setaccount',
+      name: 'set-account',
+      component: () => import('../views/SetAccount')
+
+    },
     {
       path: '/tweets',
       name: 'tweets',
