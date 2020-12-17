@@ -401,6 +401,8 @@ p {
   font-size: 15px;
   line-height: 22px;
   color: #1c1c1c;
+  text-align: left;
+  text-justify: inter-ideograph;
 }
 
 .item-interaction {

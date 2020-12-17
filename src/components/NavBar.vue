@@ -20,7 +20,7 @@
       </div>
 
       <div class="nav-item d-flex align-items-center">
-        <img src="https://i.imgur.com/seNtRms.png" style="width: 20.75px" alt />
+        <img src="https://i.imgur.com/Ce7aQj4.png" style="width: 20.75px" alt />
         <a class="nav-link" href="#">設定</a>
       </div>
 
