@@ -3,11 +3,14 @@ import Router from 'vue-router'
 import NotFound from '../views/NotFound'
 import Tweets from '../views/Tweets'
 import UserProfile from '../views/UserProfile'
-import UserOtherProfile from '../views/UserOtherProfile'
+
 import UserFollower from '../views/UserFollower'
 import UserFollowing from '../views/UserFollowing'
 import UserProfileReplied from '../views/UserProfileReplied'
 import UserProfileLiked from '../views/UserProfileLiked'
+import UserOtherProfile from '../views/UserOtherProfile'
+import UserOtherReplied from '../views/UserOtherReplied'
+import UserOtherLiked from '../views/UserOtherLiked'
 
 
 Vue.use(Router)
@@ -42,6 +45,7 @@ export default new Router({
 
     },
 
+
     /*********  test  **********/
     {
       path: '/follower',
@@ -57,9 +61,21 @@ export default new Router({
     /*********  test  **********/
     {
       path: '/userOther',
-      name: 'userOther',
+      name: 'user-other',
       component: UserOtherProfile
     },
+    {
+      path: '/userOther/replied',
+      name: 'user-other-replied',
+      component: UserOtherReplied
+    },
+    {
+      path: '/userOther/liked',
+      name: 'user-other-liked',
+      component: UserOtherLiked
+    },
+
+
 
     {
       path: '*',

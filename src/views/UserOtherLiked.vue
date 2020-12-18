@@ -9,12 +9,12 @@
       <UserOtherDetail />
       <!-- UserOtherNavTabs -->
       <div class="user-other-navtabs">
-        <a href class="tab-tweets">推文</a>
+        <a href="/#/userOther" class="tab-tweets">推文</a>
         <a href="/#/userOther/replied" class="tab-replies">推文與回覆</a>
-        <a href="/#/userOther/liked" class="tab-liked">喜歡的內容</a>
+        <a href class="tab-liked">喜歡的內容</a>
       </div>
 
-      <!-- UserOtherProfile -->
+      <!-- UserOtherLiked -->
       <div class="tweets-container">
         <!-- tweet-list -->
         <div class="tweet-list">
@@ -26,9 +26,47 @@
 
             <div class="item-right">
               <div class="item-user-info d-flex">
-                <a href class="user-name">Mary Jane</a>
+                <!-- UserName -->
+                <a href class="user-name">Disney</a>
 
-                <a href class="user-id">@mjjane</a>
+                <!-- UserId -->
+                <a href class="user-id">@disney</a>
+
+                <!-- time -->
+                <div class="time">・3 小時</div>
+              </div>
+
+              <!-- description -->
+              <a
+                href
+                class="item-content"
+              >Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</a>
+              <div class="item-interaction">
+                <!--reply-->
+                <a href class="tweet-reply">
+                  <img src="https://i.imgur.com/I3DHrNy.png" id="icon-reply" alt />
+                  <p class="reply-count">13</p>
+                </a>
+
+                <!-- like -->
+                <a href class="tweet-like">
+                  <img src="https://i.imgur.com/gCFSWst.png" id="icon-like" alt />
+                  <p class="like-count">76</p>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="tweet-item">
+            <a href class="item-left">
+              <div class="circle"></div>
+            </a>
+
+            <div class="item-right">
+              <div class="item-user-info d-flex">
+                <a href class="user-name">皮克森</a>
+
+                <a href class="user-id">@pixar</a>
 
                 <div class="time">・3 小時</div>
               </div>
@@ -50,66 +88,6 @@
             </div>
           </div>
           <!-- tweet-item-test -->
-          <div class="tweet-item">
-            <a href class="item-left">
-              <div class="circle"></div>
-            </a>
-
-            <div class="item-right">
-              <div class="item-user-info d-flex">
-                <a href class="user-name">Mary Jane</a>
-
-                <a href class="user-id">@mjjane</a>
-
-                <div class="time">・3 小時</div>
-              </div>
-              <a
-                href
-                class="item-content"
-              >Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</a>
-              <div class="item-interaction">
-                <a href class="tweet-reply">
-                  <img src="https://i.imgur.com/I3DHrNy.png" id="icon-reply" alt />
-                  <p class="reply-count">13</p>
-                </a>
-
-                <a href class="tweet-like">
-                  <img src="https://i.imgur.com/gCFSWst.png" id="icon-like" alt />
-                  <p class="like-count">76</p>
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="tweet-item">
-            <a href class="item-left">
-              <div class="circle"></div>
-            </a>
-
-            <div class="item-right">
-              <div class="item-user-info d-flex">
-                <a href class="user-name">Mary Jane</a>
-
-                <a href class="user-id">@mjjane</a>
-
-                <div class="time">・3 小時</div>
-              </div>
-              <a
-                href
-                class="item-content"
-              >Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</a>
-              <div class="item-interaction">
-                <a href class="tweet-reply">
-                  <img src="https://i.imgur.com/I3DHrNy.png" id="icon-reply" alt />
-                  <p class="reply-count">13</p>
-                </a>
-
-                <a href class="tweet-like">
-                  <img src="https://i.imgur.com/gCFSWst.png" id="icon-like" alt />
-                  <p class="like-count">76</p>
-                </a>
-              </div>
-            </div>
-          </div>
           <div class="tweet-item">
             <a href class="item-left">
               <div class="circle"></div>
@@ -248,7 +226,7 @@ p {
   padding-bottom: 10px;
 }
 
-.tab-tweets {
+.tab-liked {
   border-bottom: 2px solid #ff6600;
 }
 
