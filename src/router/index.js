@@ -4,6 +4,8 @@ import NotFound from '../views/NotFound'
 import Tweets from '../views/Tweets'
 import UserProfile from '../views/UserProfile'
 import UserOtherProfile from '../views/UserOtherProfile'
+import UserFollower from '../views/UserFollower'
+import UserFollowing from '../views/UserFollowing'
 
 
 Vue.use(Router)
@@ -27,6 +29,18 @@ export default new Router({
       component: UserProfile
     },
 
+    /*********  test  **********/
+    {
+      path: '/follower',
+      name: 'follower',
+      component: UserFollower
+    },
+    /*********  test ***********/
+    {
+      path: '/following',
+      name: 'following',
+      component: UserFollowing
+    },
     /*********  test  **********/
     {
       path: '/userOther',

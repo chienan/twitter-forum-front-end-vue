@@ -23,6 +23,7 @@
   left: 300px;
   background: #ffffff;
   border: 1px solid #e6ecf0;
+  border-bottom: none;
 }
 
 .main-content {

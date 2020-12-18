@@ -5,8 +5,9 @@
     </div>
 
     <div class="main-content">
-      <UserProfileDetail />
       <UserProfileNav />
+      <UserProfileDetail />
+
       <UserProfileNavTabs />
       <!-- <UserProfileTweets /> -->
       <!-- <UserProfileReplied /> -->
@@ -22,8 +23,9 @@
 <script>
 import NavBar from "../components/NavBar";
 import FollowRecommend from "../components/FollowRecommend";
-import UserProfileDetail from "../components/UserProfileDetail";
 import UserProfileNav from "../components/UserProfileNav";
+import UserProfileDetail from "../components/UserProfileDetail";
+
 import UserProfileNavTabs from "../components/UserProfileNavTabs";
 // import UserProfileTweets from "../components/UserProfileTweets";
 // import UserProfileReplied from "../components/UserProfileReplied";
@@ -33,8 +35,9 @@ export default {
   components: {
     NavBar,
     FollowRecommend,
-    UserProfileDetail,
     UserProfileNav,
+    UserProfileDetail,
+
     UserProfileNavTabs,
     // UserProfileTweets,
     // UserProfileReplied,
