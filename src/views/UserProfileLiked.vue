@@ -9,9 +9,9 @@
       <UserProfileDetail />
       <!-- UserProfileNavTabs  -->
       <div class="user-profile-navtabs">
-        <a href class="tab-tweets">推文</a>
+        <a href="/#/users" class="tab-tweets">推文</a>
         <a href="/#/users/replied" class="tab-replies">推文與回覆</a>
-        <a href="/#/users/liked" class="tab-liked">喜歡的內容</a>
+        <a href class="tab-liked">喜歡的內容</a>
       </div>
 
       <!--  UserProfileTweets  -->
@@ -26,22 +26,29 @@
 
             <div class="item-right">
               <div class="item-user-info d-flex">
-                <a href class="user-name">John Doe</a>
+                <!-- UserName -->
+                <a href class="user-name">Disney</a>
 
-                <a href class="user-id">@heyjohn</a>
+                <!-- UserId -->
+                <a href class="user-id">@disney</a>
 
+                <!-- time -->
                 <div class="time">・3 小時</div>
               </div>
+
+              <!-- description -->
               <a
                 href
                 class="item-content"
               >Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</a>
               <div class="item-interaction">
+                <!--reply-->
                 <a href class="tweet-reply">
                   <img src="https://i.imgur.com/I3DHrNy.png" id="icon-reply" alt />
                   <p class="reply-count">13</p>
                 </a>
 
+                <!-- like -->
                 <a href class="tweet-like">
                   <img src="https://i.imgur.com/gCFSWst.png" id="icon-like" alt />
                   <p class="like-count">76</p>
@@ -57,22 +64,29 @@
 
             <div class="item-right">
               <div class="item-user-info d-flex">
-                <a href class="user-name">John Doe</a>
+                <!-- UserName -->
+                <a href class="user-name">Disney</a>
 
-                <a href class="user-id">@heyjohn</a>
+                <!-- UserId -->
+                <a href class="user-id">@disney</a>
 
+                <!-- time -->
                 <div class="time">・3 小時</div>
               </div>
+
+              <!-- description -->
               <a
                 href
                 class="item-content"
               >Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</a>
               <div class="item-interaction">
+                <!--reply-->
                 <a href class="tweet-reply">
                   <img src="https://i.imgur.com/I3DHrNy.png" id="icon-reply" alt />
                   <p class="reply-count">13</p>
                 </a>
 
+                <!-- like -->
                 <a href class="tweet-like">
                   <img src="https://i.imgur.com/gCFSWst.png" id="icon-like" alt />
                   <p class="like-count">76</p>
@@ -87,23 +101,29 @@
 
             <div class="item-right">
               <div class="item-user-info d-flex">
-                <a href class="user-name">John Doe</a>
-                <!-- <div class="user-name">Apple</div> -->
-                <a href class="user-id">@heyjohn</a>
-                <!-- <div class="user-id">@apple</div> -->
+                <!-- UserName -->
+                <a href class="user-name">Disney</a>
 
+                <!-- UserId -->
+                <a href class="user-id">@disney</a>
+
+                <!-- time -->
                 <div class="time">・3 小時</div>
               </div>
+
+              <!-- description -->
               <a
                 href
                 class="item-content"
               >Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</a>
               <div class="item-interaction">
+                <!--reply-->
                 <a href class="tweet-reply">
                   <img src="https://i.imgur.com/I3DHrNy.png" id="icon-reply" alt />
                   <p class="reply-count">13</p>
                 </a>
 
+                <!-- like -->
                 <a href class="tweet-like">
                   <img src="https://i.imgur.com/gCFSWst.png" id="icon-like" alt />
                   <p class="like-count">76</p>
@@ -118,23 +138,29 @@
 
             <div class="item-right">
               <div class="item-user-info d-flex">
-                <a href class="user-name">John Doe</a>
-                <!-- <div class="user-name">Apple</div> -->
-                <a href class="user-id">@heyjohn</a>
-                <!-- <div class="user-id">@apple</div> -->
+                <!-- UserName -->
+                <a href class="user-name">Disney</a>
 
+                <!-- UserId -->
+                <a href class="user-id">@disney</a>
+
+                <!-- time -->
                 <div class="time">・3 小時</div>
               </div>
+
+              <!-- description -->
               <a
                 href
                 class="item-content"
               >Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</a>
               <div class="item-interaction">
+                <!--reply-->
                 <a href class="tweet-reply">
                   <img src="https://i.imgur.com/I3DHrNy.png" id="icon-reply" alt />
                   <p class="reply-count">13</p>
                 </a>
 
+                <!-- like -->
                 <a href class="tweet-like">
                   <img src="https://i.imgur.com/gCFSWst.png" id="icon-like" alt />
                   <p class="like-count">76</p>
@@ -220,7 +246,7 @@ p {
   padding-bottom: 10px;
 }
 
-.tab-tweets {
+.tab-liked {
   border-bottom: 2px solid #ff6600;
 }
 

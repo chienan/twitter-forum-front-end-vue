@@ -6,6 +6,8 @@ import UserProfile from '../views/UserProfile'
 import UserOtherProfile from '../views/UserOtherProfile'
 import UserFollower from '../views/UserFollower'
 import UserFollowing from '../views/UserFollowing'
+import UserProfileReplied from '../views/UserProfileReplied'
+import UserProfileLiked from '../views/UserProfileLiked'
 
 
 Vue.use(Router)
@@ -27,6 +29,17 @@ export default new Router({
       path: '/users',
       name: 'user',
       component: UserProfile
+    },
+    {
+      path: '/users/replied',
+      name: 'user-replied',
+      component: UserProfileReplied
+    },
+    {
+      path: '/users/liked',
+      name: 'user-liked',
+      component: UserProfileLiked
+
     },
 
     /*********  test  **********/
