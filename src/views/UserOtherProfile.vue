@@ -8,9 +8,10 @@
       <UserOtherNav />
       <UserOtherDetail />
       <UserOtherNavTabs />
-      <!-- <UserProfileTweets /> -->
-      <!-- <UserProfileReplied /> -->
-      <UserProfileLiked />
+      <!-- main contents -->
+      <!-- <UserOtherTweets /> -->
+      <!-- <UserOtherReplies /> -->
+      <UserOtherLiked />
     </div>
 
     <div>
@@ -22,12 +23,12 @@
 <script>
 import NavBar from "../components/NavBar";
 import FollowRecommend from "../components/FollowRecommend";
-
 import UserOtherNav from "../components/UserOtherNav";
 import UserOtherDetail from "../components/UserOtherDetail";
 import UserOtherNavTabs from "../components/UserOtherNavTabs";
-
-import UserProfileLiked from "../components/UserProfileLiked";
+// import UserOtherTweets from "../components/UserOtherTweets";
+// import UserOtherReplies from "../components/UserOtherReplies";
+import UserOtherLiked from "../components/UserOtherLiked";
 
 export default {
   components: {
@@ -36,9 +37,9 @@ export default {
     UserOtherNav,
     UserOtherDetail,
     UserOtherNavTabs,
-    // UserProfileTweets,
-    // UserProfileReplied,
-    UserProfileLiked
+    // UserOtherTweets,
+    // UserOtherReplies,
+    UserOtherLiked
   }
 };
 </script>
