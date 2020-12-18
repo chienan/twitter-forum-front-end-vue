@@ -12,11 +12,11 @@ Vue.use(Router)
 
 export default new Router({
   routes: [
-    {
-      path: '/',
-      name: 'root',
-      redirect: '/tweets'
-    },
+    // {
+    //   path: '/',
+    //   name: 'root',
+    //   redirect: '/tweets'
+    // },
     {
       path: '/tweets',
       name: 'tweets',

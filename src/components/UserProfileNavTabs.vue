@@ -1,8 +1,8 @@
 <template>
   <div class="container">
-    <a href="./users" class="tab-tweets" :class="{choose : true}" @click="ChooseBack">推文</a>
-    <a href="./users" class="tab-replies" @click="alterChoose">推文與回覆</a>
-    <a href="./users" class="tab-liked" @click="alterChoose">喜歡的內容</a>
+    <a href="./users" class="tab-tweets">推文</a>
+    <a href="./users" class="tab-replies">推文與回覆</a>
+    <a href="./users" class="tab-liked">喜歡的內容</a>
   </div>
 </template>
 
