@@ -44,10 +44,17 @@ export default new Router({
 
     },
     {
+      path: '/users/:id/edit',
+      name: 'users-edit',
+      //動態載入
+      component: () => import('../views/UserProfileEdit.vue')
+    },
+    {
       path: '/admin',
       name: 'admin-signIn',
       component: () => import('../views/AdminSignIn.vue')
     },
+
     {
       path: '*',
       name: 'not-found',
