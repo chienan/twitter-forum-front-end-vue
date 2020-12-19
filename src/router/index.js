@@ -59,6 +59,11 @@ export default new Router({
       name: 'admin-tweets',
       component: () => import('../views/AdminTweets.vue')
     },
+    {
+      path: '/admin/userList',
+      name: 'admin-userList',
+      component: () => import('../views/AdminUserList.vue')
+    },
 
     {
       path: '*',

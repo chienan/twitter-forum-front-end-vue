@@ -3,23 +3,23 @@
     <div>
       <!-- class="col-3" -->
       <!-- AdminBar -->
-      <AdminBar />
+      <UserBar />
     </div>
     <div>
       <!-- class="col-9" -->
-      <!--UserCard -->
-      <AdminMain />
+      <!--AdminMain -->
+      <UserCard />
     </div>
   </div>
 </template>
 
 <script>
-import AdminBar from "../components/AdminBar.vue";
-import AdminMain from "../components/AdminMain.vue";
+import UserBar from "../components/UserBar.vue";
+import UserCard from "../components/UserCard.vue";
 export default {
   components: {
-    AdminBar,
-    AdminMain,
+    UserBar,
+    UserCard,
   },
 };
 </script>
