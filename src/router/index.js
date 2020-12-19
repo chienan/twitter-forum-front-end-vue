@@ -54,6 +54,11 @@ export default new Router({
       name: 'admin-signIn',
       component: () => import('../views/AdminSignIn.vue')
     },
+    {
+      path: '/admin/tweets',
+      name: 'admin-tweets',
+      component: () => import('../views/AdminTweets.vue')
+    },
 
     {
       path: '*',
