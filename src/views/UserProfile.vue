@@ -162,8 +162,8 @@ import UserProfileDetail from "../components/UserProfileDetail";
 export default {
   components: {
     NavBar,
-    FollowRecommend,
     UserProfileNav,
+    FollowRecommend,
     UserProfileDetail
   }
 };
@@ -187,6 +187,49 @@ h6,
 p {
   margin: 0px;
   padding: 0px;
+}
+/* user-profile-nav */
+.nav-section {
+  height: 55px;
+  width: 600px;
+  position: absolute;
+  left: 315px;
+  background: #ffffff;
+  border: 1px solid #e6ecf0;
+  border-bottom: none;
+}
+
+.nav-icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 19px 21px 19px;
+}
+
+.nav-icon-back {
+  width: 17px;
+  height: 14px;
+}
+
+.nav-title {
+  height: 100%;
+
+  margin: 9px auto 5px 19px;
+}
+
+.nav-user-name {
+  font-weight: 700;
+  font-size: 19px;
+  line-height: 18px;
+  color: #1c1c1c;
+}
+
+.nav-tweets-count {
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 19px;
+  letter-spacing: 0.5px;
+  color: #657786;
 }
 
 /*  user-profile-navtabs  */

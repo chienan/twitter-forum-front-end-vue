@@ -10,12 +10,84 @@
       <!-- User Follow NavTab -->
       <div class="follow-nav-tabs">
         <a href class="tab-follower">跟隨者</a>
-        <a href="/#/following" class="tab-following">正在跟隨</a>
+        <a href="/#/users/following" class="tab-following">正在跟隨</a>
       </div>
       <!-- User Follow List -->
       <div class="user-follow-list">
         <div class="follow-item">
           <button class="delete-follow">正在跟隨</button>
+          <a href class="item-left">
+            <div class="circle"></div>
+          </a>
+
+          <div class="item-right">
+            <div class="item-user-info">
+              <a href class="user-name">Super Mario</a>
+
+              <a href class="user-id">@supermario</a>
+            </div>
+            <a
+              href
+              class="item-content"
+            >Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</a>
+          </div>
+        </div>
+        <div class="follow-item">
+          <button class="follow">跟隨</button>
+          <a href class="item-left">
+            <div class="circle"></div>
+          </a>
+
+          <div class="item-right">
+            <div class="item-user-info">
+              <a href class="user-name">Super Mario</a>
+
+              <a href class="user-id">@supermario</a>
+            </div>
+            <a
+              href
+              class="item-content"
+            >Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</a>
+          </div>
+        </div>
+        <div class="follow-item">
+          <button class="follow">跟隨</button>
+          <a href class="item-left">
+            <div class="circle"></div>
+          </a>
+
+          <div class="item-right">
+            <div class="item-user-info">
+              <a href class="user-name">Super Mario</a>
+
+              <a href class="user-id">@supermario</a>
+            </div>
+            <a
+              href
+              class="item-content"
+            >Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</a>
+          </div>
+        </div>
+        <div class="follow-item">
+          <button class="follow">跟隨</button>
+          <a href class="item-left">
+            <div class="circle"></div>
+          </a>
+
+          <div class="item-right">
+            <div class="item-user-info">
+              <a href class="user-name">Super Mario</a>
+
+              <a href class="user-id">@supermario</a>
+            </div>
+            <a
+              href
+              class="item-content"
+            >Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</a>
+          </div>
+        </div>
+        <div class="follow-item">
+          <button class="follow">跟隨</button>
           <a href class="item-left">
             <div class="circle"></div>
           </a>

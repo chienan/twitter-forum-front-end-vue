@@ -10,13 +10,13 @@
           <img src="https://i.imgur.com/OxLE5Bf.png" style="width: 20.25px" alt />
         </div>
         <div>
-          <a class="nav-link" href="#">首頁</a>
+          <a class="nav-link" href="/#/tweets">首頁</a>
         </div>
       </div>
 
       <div class="nav-item d-flex align-items-center">
         <img src="https://i.imgur.com/MBiFHBl.png" style="width: 16.7px" alt />
-        <a class="nav-link" href="/users">個人資料</a>
+        <a class="nav-link" href="/#/users">個人資料</a>
       </div>
 
       <div class="nav-item d-flex align-items-center">

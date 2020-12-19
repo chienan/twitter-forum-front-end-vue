@@ -17,10 +17,10 @@
           >Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.</div>
         </div>
         <div class="follow-section">
-          <a href class="following-section">
+          <a href="/#/users/following" class="following-section">
             <div class="following-number">34 個</div>跟隨中
           </a>
-          <a href class="follower-section">
+          <a href="/#/users/follower" class="follower-section">
             <div class="follower-number">59 位</div>跟隨者
           </a>
         </div>

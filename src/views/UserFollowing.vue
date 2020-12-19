@@ -9,7 +9,7 @@
 
       <!-- User Follow NavTab -->
       <div class="follow-nav-tabs">
-        <a href="/#/follower" class="tab-follower">跟隨者</a>
+        <a href="/#/users/follower" class="tab-follower">跟隨者</a>
         <a href class="tab-following">正在跟隨</a>
       </div>
       <!-- User Follow List -->

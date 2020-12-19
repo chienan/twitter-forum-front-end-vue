@@ -3,7 +3,6 @@ import Router from 'vue-router'
 import NotFound from '../views/NotFound'
 import Tweets from '../views/Tweets'
 import UserProfile from '../views/UserProfile'
-
 import UserFollower from '../views/UserFollower'
 import UserFollowing from '../views/UserFollowing'
 import UserProfileReplied from '../views/UserProfileReplied'
@@ -17,11 +16,11 @@ Vue.use(Router)
 
 export default new Router({
   routes: [
-    // {
-    //   path: '/',
-    //   name: 'root',
-    //   redirect: '/tweets'
-    // },
+    {
+      path: '/',
+      name: 'root',
+      redirect: '/tweets'
+    },
     {
       path: '/tweets',
       name: 'tweets',
@@ -48,14 +47,14 @@ export default new Router({
 
     /*********  test  **********/
     {
-      path: '/follower',
-      name: 'follower',
+      path: '/users/follower',
+      name: 'user-follower',
       component: UserFollower
     },
     /*********  test ***********/
     {
-      path: '/following',
-      name: 'following',
+      path: '/users/following',
+      name: 'user-following',
       component: UserFollowing
     },
     /*********  test  **********/
