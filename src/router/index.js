@@ -19,6 +19,27 @@ export default new Router({
       component: Tweets
     },
     {
+<<<<<<< HEAD
+=======
+      path: '/tweet/:id',
+      name: 'tweet',
+      component: () => import('../views/Tweet.vue')
+
+    },
+    {
+      path: '/users/:id/edit',
+      name: 'users-edit',
+      //動態載入
+      component: () => import('../views/UserProfileEdit.vue')
+    },
+    {
+      path: '/admin',
+      name: 'admin-signIn',
+      component: () => import('../views/AdminSignIn.vue')
+    },
+
+    {
+>>>>>>> f920617... create UserProfileEdit
       path: '*',
       name: 'not-found',
       component: NotFound
