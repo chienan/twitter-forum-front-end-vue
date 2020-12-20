@@ -11,11 +11,11 @@
         <div class="mb-3 label-parents">
           <input
             type="email"
-            class="form-control input1 input-space"
+            class="form-control input1 input-space rounded-0"
             id="exampleInputEmail1"
             aria-describedby="emailHelp"
             placeholder="帳號"
-            style="width: 500px; height: 45px"
+            style="width: 540px; height: 50px"
           />
 
           <label for="exampleInputEmail1" class="form-label">帳號</label>
@@ -25,26 +25,28 @@
         <div class="mb-3 label-parents">
           <input
             type="password"
-            class="form-control input1"
+            class="form-control input1 rounded-0"
             id="exampleInputPassword1"
             placeholder="密碼"
-            style="width: 500px; height: 45px"
+            style="width: 540px; height: 50px"
           />
 
           <label for="exampleInputPassword1" class="form-label">密碼</label>
         </div>
 
         <button
-          style="width: 500px; height: 45px"
+          style="width: 540px; height: 50px"
           type="submit"
-          class="btn bold mt-2"
+          class="btn bold mt-3"
         >
           登入
         </button>
       </form>
 
       <div class="signup-alphitter d-flex justify-content-end">
-        <a class="bold" href="#" style="color: #0099ff">前台登入</a>
+        <a class="bold" href="#" style="color: #0099ff; font-size: 18px"
+          >前台登入</a
+        >
       </div>
     </div>
   </div>
@@ -66,7 +68,7 @@ button {
   background-color: #ff6600;
   color: white;
   border-radius: 35px;
-  /* /* outline: none; */
+  font-size: 18px;
 }
 button:hover {
   color: white;
@@ -81,9 +83,8 @@ button:focus {
   font-weight: bold;
 }
 .Admin {
-  font-size: 23px;
+  font-size: 25px;
   margin-top: 30px;
-  /* margin-bottom: 500px; */
 }
 .form-control {
   margin-top: -20px;
@@ -110,7 +111,7 @@ input.form-control:focus {
 }
 .label-parents {
   position: relative;
-  margin-top: 25px;
+  margin-top: 30px;
 }
 .input1:placeholder-shown ~ label {
   display: block;
@@ -123,41 +124,16 @@ label {
   position: absolute;
   top: 2px;
   left: 12px;
-  font-size: 11px;
+  font-size: 15px;
   font-weight: bold;
   color: #657786;
 }
 .input-space {
-  margin-bottom: 35px;
-}
-
-/* ::placeholder {
-  color: #657786;
-  position: absolute;
-  left: -5px;
-  font-size: 11px;
-  font-weight: bold; */
-/* margin-top: -10px;
-  margin-left: 30px; */
-/* } */
-::-webkit-input-placeholder {
-  /* Chrome, Safari */
-  color: #657786;
-  /* position: absolute;
-  right: 30px; */
-}
-::-ms-input-placeholder {
-  /* IE 10+ */
-  color: #657786;
-}
-
-::-moz-placeholder {
-  /* Firefox 19+ */
-  color: #657786;
+  margin-bottom: 39px;
 }
 
 .signup-alphitter {
-  margin-top: 35px;
+  margin-top: 40px;
   /* border-bottom: 1px solid #0099ff;
   width: 70px; */
   text-decoration: none;
@@ -170,9 +146,9 @@ a::after {
   content: "";
   position: absolute;
   background-color: #0099ff;
-  width: 65px;
+  width: 72px;
   height: 1px;
-  bottom: 3px;
+  bottom: 4px;
   left: 0px;
 }
 </style>
