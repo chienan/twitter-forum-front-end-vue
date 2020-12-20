@@ -187,6 +187,10 @@ p {
   flex-direction: row;
 }
 
+.item-right {
+  padding-right: 25px;
+}
+
 .item-user-info {
   margin: 5px auto 0px auto;
 }
@@ -223,7 +227,9 @@ p {
 }
 
 .item-interaction {
-  margin: 12px 0px;
+  /* margin: 14px 0px; */
+  position: relative;
+  height: 40px;
 }
 
 .item-interaction,
@@ -235,6 +241,8 @@ p {
 
 .tweet-reply,
 .tweet-like {
+  position: absolute;
+  bottom: 14px;
   font-weight: 400;
   font-size: 13px;
   line-height: 13px;
@@ -247,6 +255,7 @@ p {
 
 .tweet-like {
   width: 80%;
+  left: 90px;
 }
 
 #icon-reply {
