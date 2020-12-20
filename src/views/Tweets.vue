@@ -18,7 +18,8 @@
 import NavBar from "../components/NavBar";
 import MainTweets from "../components/MainTweets";
 import FollowRecommend from "../components/FollowRecommend";
-// import tweetsAPI from '../apis/tweets'
+// import tweetsAPI from "../apis/tweets";
+// import { Toast } from "../utils/helpers";
 
 const dummyData = {
   tweets: [
@@ -1144,6 +1145,22 @@ export default {
       const tweets = dummyData;
       this.tweets = tweets;
     }
+    //改寫成async
+    // async fetchTweets() {
+    //   try {
+    //     const response = await tweetsAPI.getTweets();
+    //     console.log("response", response);
+
+    //     const tweets = response;
+    //     this.tweets = tweets;
+    //   } catch (error) {
+    //     console.log("error", error);
+    //     Toast.fire({
+    //       icon: "error",
+    //       title: "無法取得資料，請稍後再試"
+    //     });
+    //   }
+    // }
   }
 };
 </script>
