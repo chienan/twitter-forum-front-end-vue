@@ -33,7 +33,7 @@
 
               <a href class="user-id">@{{tweet.UserId}}</a>
 
-              <div class="time">・3hrs</div>
+              <div class="time">・{{tweet.createdAt | fromNow}}</div>
             </div>
             <a href class="item-content">{{tweet.description}}</a>
             <div class="item-interaction">
@@ -55,7 +55,17 @@
 </template>
 
 <script>
+import moment from "moment";
+
 export default {
+  filters: {
+    fromNow(datetime) {
+      if (!datetime) {
+        return "-";
+      }
+      return moment(datetime).fromNow();
+    }
+  },
   props: {
     tweets: {
       type: Object,
