@@ -1,4 +1,4 @@
-<template>
+
   <!-- <div class="container mt-3"> -->
   <nav class="nav d-flex flex-column align-items-center">
     <div class="nav-list">
