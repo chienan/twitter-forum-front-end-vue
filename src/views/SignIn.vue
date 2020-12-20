@@ -4,48 +4,55 @@
       <div class="d-flex justify-content-center">
         <img src="https://i.postimg.cc/LsddLPp9/Logo.png" alt="" />
       </div>
-      <div class="bold Alphitter">登入Alphitter</div>
+      <div class="bold Alphitter">登入 Alphitter</div>
     </div>
     <div class="form1">
       <form>
-        <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label"></label>
+        <div class="mb-3 label-parents">
           <input
             type="email"
-            class="form-control"
+            class="form-control input1 input-space rounded-0"
             id="exampleInputEmail1"
             aria-describedby="emailHelp"
             placeholder="帳號"
-            style="width: 500px; height: 45px"
+            style="width: 540px; height: 50px"
           />
+
+          <label for="exampleInputEmail1" class="form-label">帳號</label>
           <div id="emailHelp" class="form-text"></div>
         </div>
-        <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label"></label>
+
+        <div class="mb-3 label-parents">
           <input
             type="password"
-            class="form-control"
+            class="form-control input1 rounded-0"
             id="exampleInputPassword1"
             placeholder="密碼"
-            style="width: 500px; height: 45px"
+            style="width: 540px; height: 50px"
           />
+
+          <label for="exampleInputPassword1" class="form-label">密碼</label>
         </div>
 
         <button
-          style="width: 500px; height: 45px"
+          style="width: 540px; height: 50px"
           type="submit"
-          class="btn bold mt-2"
+          class="btn bold mt-3"
         >
           登入
         </button>
       </form>
 
       <div class="signup-alphitter d-flex justify-content-end">
-        <div>
-          <a class="bold mr-1" href="#" style="color: #0099ff">註冊 Alphitter</a
-          ><span class="bold mr-1" style="color: #0099ff">·</span>
-          <a class="bold" href="#" style="color: #0099ff">後台登入</a>
-        </div>
+        <a class="bold mr-1 a1" href="#" style="color: #0099ff; font-size: 18px"
+          >註冊 Alphitter</a
+        ><span class="bold mr-1" style="color: #0099ff; font-size: 18px"
+          >·</span
+        >
+
+        <a class="bold" href="#" style="color: #0099ff; font-size: 18px"
+          >後台登入</a
+        >
       </div>
     </div>
   </div>
@@ -67,7 +74,7 @@ button {
   background-color: #ff6600;
   color: white;
   border-radius: 35px;
-  /* /* outline: none; */
+  font-size: 18px;
 }
 button:hover {
   color: white;
@@ -82,14 +89,15 @@ button:focus {
   font-weight: bold;
 }
 .Alphitter {
-  font-size: 23px;
+  font-size: 25px;
   margin-top: 30px;
 }
 .form-control {
   margin-top: -20px;
 }
+
 input {
-  position: relative;
+  /* position: relative; */
   background-color: #f5f8fa;
   border-top: none;
   border-right: none;
@@ -104,29 +112,64 @@ input.form-control:focus {
   background-color: #f5f8fa;
   border-color: #657786;
 }
+.input1:placeholder-shown::placeholder {
+  color: transparent;
+}
+.label-parents {
+  position: relative;
+  margin-top: 30px;
+}
+.input1:placeholder-shown ~ label {
+  display: block;
+}
+.input1:not(:placeholder-shown) ~ label {
+  display: none;
+}
 
-::placeholder {
-  color: #657786;
+label {
   position: absolute;
-  right: 30px;
-}
-::-webkit-input-placeholder {
-  /* Chrome, Safari */
+  top: 2px;
+  left: 12px;
+  font-size: 15px;
+  font-weight: bold;
   color: #657786;
-  position: absolute;
-  right: 30px;
+}
+.input-space {
+  margin-bottom: 39px;
 }
 
-::-ms-input-placeholder {
-  /* IE 10+ */
-  color: #657786;
-}
-
-::-moz-placeholder {
-  /* Firefox 19+ */
-  color: #657786;
-}
 .signup-alphitter {
-  margin-top: 35px;
+  margin-top: 40px;
+  /* border-bottom: 1px solid #0099ff;
+  width: 70px; */
+  text-decoration: none;
+}
+a {
+  text-decoration: none;
+  position: relative;
+}
+a::after {
+  content: "";
+  position: absolute;
+  background-color: #0099ff;
+  width: 72px;
+  height: 1px;
+  bottom: 4px;
+  left: 0px;
+}
+.a1 {
+  text-decoration: none;
+  position: relative;
+}
+.a1::after {
+  content: "";
+  position: absolute;
+  background-color: #0099ff;
+  width: 118px;
+  height: 1px;
+  bottom: 4px;
+  left: 0px;
 }
 </style>
+
+
