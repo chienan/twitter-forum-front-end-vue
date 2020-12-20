@@ -22,211 +22,20 @@
       <!-- tweet-list -->
       <div class="tweet-list">
         <!--tweet item start-->
-        <div class="tweet-item">
+        <div class="tweet-item" v-for="tweet in tweets.tweets" :key="tweet.id">
           <a href class="item-left">
             <div class="circle"></div>
           </a>
 
           <div class="item-right">
             <div class="item-user-info d-flex">
-              <a href class="user-name">Apple</a>
-              <!-- <div class="user-name">Apple</div> -->
-              <a href class="user-id">@apple</a>
-              <!-- <div class="user-id">@apple</div> -->
+              <a href class="user-name">{{tweet.User.name}}</a>
+
+              <a href class="user-id">@{{tweet.UserId}}</a>
 
               <div class="time">・3hrs</div>
             </div>
-            <a
-              href
-              class="item-content"
-            >Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.</a>
-            <div class="item-interaction">
-              <a href class="tweet-reply">
-                <img src="https://i.imgur.com/I3DHrNy.png" id="icon-reply" alt />
-                <p>13</p>
-              </a>
-
-              <a href class="tweet-like">
-                <img src="https://i.imgur.com/gCFSWst.png" id="icon-like" alt />
-                <p>5</p>
-              </a>
-            </div>
-          </div>
-        </div>
-        <!-- tweet-item-test -->
-        <div class="tweet-item">
-          <a href class="item-left">
-            <div class="circle"></div>
-          </a>
-
-          <div class="item-right">
-            <div class="item-user-info d-flex">
-              <a href class="user-name">Apple</a>
-              <!-- <div class="user-name">Apple</div> -->
-              <a href class="user-id">@apple</a>
-              <!-- <div class="user-id">@apple</div> -->
-
-              <div class="time">・3hrs</div>
-            </div>
-            <a
-              href
-              class="item-content"
-            >Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.</a>
-            <div class="item-interaction">
-              <a href class="tweet-reply">
-                <img src="https://i.imgur.com/I3DHrNy.png" id="icon-reply" alt />
-                <p>13</p>
-              </a>
-
-              <a href class="tweet-like">
-                <img src="https://i.imgur.com/gCFSWst.png" id="icon-like" alt />
-                <p>5</p>
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="tweet-item">
-          <a href class="item-left">
-            <div class="circle"></div>
-          </a>
-
-          <div class="item-right">
-            <div class="item-user-info d-flex">
-              <a href class="user-name">Apple</a>
-              <!-- <div class="user-name">Apple</div> -->
-              <a href class="user-id">@apple</a>
-              <!-- <div class="user-id">@apple</div> -->
-
-              <div class="time">・3hrs</div>
-            </div>
-            <a
-              href
-              class="item-content"
-            >Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.</a>
-            <div class="item-interaction">
-              <a href class="tweet-reply">
-                <img src="https://i.imgur.com/I3DHrNy.png" id="icon-reply" alt />
-                <p>13</p>
-              </a>
-
-              <a href class="tweet-like">
-                <img src="https://i.imgur.com/gCFSWst.png" id="icon-like" alt />
-                <p>5</p>
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="tweet-item">
-          <a href class="item-left">
-            <div class="circle"></div>
-          </a>
-
-          <div class="item-right">
-            <div class="item-user-info d-flex">
-              <a href class="user-name">Apple</a>
-              <!-- <div class="user-name">Apple</div> -->
-              <a href class="user-id">@apple</a>
-              <!-- <div class="user-id">@apple</div> -->
-
-              <div class="time">・3hrs</div>
-            </div>
-            <a
-              href
-              class="item-content"
-            >Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.</a>
-            <div class="item-interaction">
-              <a href class="tweet-reply">
-                <img src="https://i.imgur.com/I3DHrNy.png" id="icon-reply" alt />
-                <p>13</p>
-              </a>
-
-              <a href class="tweet-like">
-                <img src="https://i.imgur.com/gCFSWst.png" id="icon-like" alt />
-                <p>5</p>
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="tweet-item">
-          <a href class="item-left">
-            <div class="circle"></div>
-          </a>
-
-          <div class="item-right">
-            <div class="item-user-info d-flex">
-              <a href class="user-name">Apple</a>
-              <!-- <div class="user-name">Apple</div> -->
-              <a href class="user-id">@apple</a>
-              <!-- <div class="user-id">@apple</div> -->
-
-              <div class="time">・3hrs</div>
-            </div>
-            <a
-              href
-              class="item-content"
-            >Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.</a>
-            <div class="item-interaction">
-              <a href class="tweet-reply">
-                <img src="https://i.imgur.com/I3DHrNy.png" id="icon-reply" alt />
-                <p>13</p>
-              </a>
-
-              <a href class="tweet-like">
-                <img src="https://i.imgur.com/gCFSWst.png" id="icon-like" alt />
-                <p>5</p>
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="tweet-item">
-          <a href class="item-left">
-            <div class="circle"></div>
-          </a>
-
-          <div class="item-right">
-            <div class="item-user-info d-flex">
-              <a href class="user-name">Apple</a>
-              <!-- <div class="user-name">Apple</div> -->
-              <a href class="user-id">@apple</a>
-              <!-- <div class="user-id">@apple</div> -->
-
-              <div class="time">・3hrs</div>
-            </div>
-            <a
-              href
-              class="item-content"
-            >Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.</a>
-            <div class="item-interaction">
-              <a href class="tweet-reply">
-                <img src="https://i.imgur.com/I3DHrNy.png" id="icon-reply" alt />
-                <p>13</p>
-              </a>
-
-              <a href class="tweet-like">
-                <img src="https://i.imgur.com/gCFSWst.png" id="icon-like" alt />
-                <p>5</p>
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="tweet-item">
-          <a href class="item-left">
-            <div class="circle"></div>
-          </a>
-
-          <div class="item-right">
-            <div class="item-user-info d-flex">
-              <a href class="user-name">Apple</a>
-              <!-- <div class="user-name">Apple</div> -->
-              <a href class="user-id">@apple</a>
-              <!-- <div class="user-id">@apple</div> -->
-
-              <div class="time">・3hrs</div>
-            </div>
-            <a
-              href
-              class="item-content"
-            >Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.</a>
+            <a href class="item-content">{{tweet.description}}</a>
             <div class="item-interaction">
               <a href class="tweet-reply">
                 <img src="https://i.imgur.com/I3DHrNy.png" id="icon-reply" alt />
@@ -246,6 +55,14 @@
 </template>
 
 <script>
+export default {
+  props: {
+    tweets: {
+      type: Object,
+      required: true
+    }
+  }
+};
 </script>
 
 <style scoped>
