@@ -23,9 +23,9 @@
       <div class="tweet-list">
         <!--tweet item start-->
         <div class="tweet-item" v-for="tweet in tweets.tweets" :key="tweet.id">
-          <a href class="item-left">
+          <router-link to="{ name: 'user', params:{id: tweet.UserId}}" class="item-left">
             <img :src="tweet.User.avatar" width="50" height="50" class="user-avatar" />
-          </a>
+          </router-link>
 
           <div class="item-right">
             <div class="item-user-info d-flex">

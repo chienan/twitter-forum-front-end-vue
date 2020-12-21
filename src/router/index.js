@@ -1,9 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import NotFound from '../views/NotFound'
-// import Tweets from '../views/Tweets'
 import SignIn from '../views/SignIn.vue'
-import UserProfile from '../views/UserProfile'
+// import UserProfile from '../views/UserProfile'
 import UserFollower from '../views/UserFollower'
 import UserFollowing from '../views/UserFollowing'
 import UserProfileReplied from '../views/UserProfileReplied'
@@ -18,6 +17,7 @@ Vue.use(Router)
 
 export default new Router({
   routes: [
+    /**   SignIn, SignUp   **/
     {
       path: '/signin',
       name: 'sign-in',
@@ -40,22 +40,24 @@ export default new Router({
       component: () => import('../views/SetAccount')
 
     },
+    /****  tweets  ****/
     {
       path: '/tweets',
       name: 'tweets',
       component: () => import('../views/Tweets')
     },
-    /*********  test ***********/
+
     {
       path: '/tweet/:id',
       name: 'tweet',
       component: () => import('../views/Tweet.vue')
 
     },
+    /****  users  ****/
     {
-      path: '/users',
+      path: '/user',
       name: 'user',
-      component: UserProfile
+      component: () => import('../views/UserProfile.vue')
     },
     {
       path: '/users/replied',
@@ -112,6 +114,9 @@ export default new Router({
       component: UserFollower
 
     },
+
+
+    /**** admin ****/
     {
 
       path: '/admin',
