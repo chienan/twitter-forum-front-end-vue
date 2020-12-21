@@ -3,7 +3,6 @@ import Router from 'vue-router'
 import NotFound from '../views/NotFound'
 import Tweets from '../views/Tweets'
 <<<<<<< HEAD
-=======
 import UserProfile from '../views/UserProfile'
 import UserFollower from '../views/UserFollower'
 import UserFollowing from '../views/UserFollowing'
@@ -29,6 +28,56 @@ export default new Router({
       name: 'tweets',
       component: Tweets
     },
+    /*********  test ***********/
+    {
+      path: '/users',
+      name: 'user',
+      component: UserProfile
+    },
+    {
+      path: '/users/replied',
+      name: 'user-replied',
+      component: UserProfileReplied
+    },
+    {
+      path: '/users/liked',
+      name: 'user-liked',
+      component: UserProfileLiked
+
+    },
+
+
+    /*********  test  **********/
+    {
+      path: '/users/follower',
+      name: 'user-follower',
+      component: UserFollower
+    },
+    /*********  test ***********/
+    {
+      path: '/users/following',
+      name: 'user-following',
+      component: UserFollowing
+    },
+    /*********  test  **********/
+    {
+      path: '/userOther',
+      name: 'user-other',
+      component: UserOtherProfile
+    },
+    {
+      path: '/userOther/replied',
+      name: 'user-other-replied',
+      component: UserOtherReplied
+    },
+    {
+      path: '/userOther/liked',
+      name: 'user-other-liked',
+      component: UserOtherLiked
+    },
+
+
+
     {
 <<<<<<< HEAD
 =======

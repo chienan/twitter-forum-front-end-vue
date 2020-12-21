@@ -1,8 +1,4 @@
 <template>
-<<<<<<< HEAD
-  <h1>NavBar</h1>
-</template>
-=======
   <!-- <div class="container mt-3"> -->
   <nav class="nav d-flex flex-column align-items-center">
     <div class="nav-list">
@@ -100,4 +96,3 @@
 }
 </style>
 
->>>>>>> 49f4ad3... update UserFollowing & UserFollower
