@@ -15,7 +15,7 @@
       <FollowRecommend />
     </div>
 
-    <div style="display: none">
+    <div>
       <!-- RepliedContent -->
       <RepliedContent />
     </div>
