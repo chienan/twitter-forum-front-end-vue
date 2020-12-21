@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import NotFound from '../views/NotFound'
-import Tweets from '../views/Tweets'
+// import Tweets from '../views/Tweets'
 import SignIn from '../views/SignIn.vue'
 import UserProfile from '../views/UserProfile'
 import UserFollower from '../views/UserFollower'
@@ -43,7 +43,7 @@ export default new Router({
     {
       path: '/tweets',
       name: 'tweets',
-      component: Tweets
+      component: () => import('../views/Tweets')
     },
     /*********  test ***********/
     {
