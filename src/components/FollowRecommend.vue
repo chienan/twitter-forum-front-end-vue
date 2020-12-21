@@ -3,51 +3,31 @@
     <div class="list-group-container d-flex justify-content-center">
       <ul class="list-group list-group-flush">
         <li class="list-group-item list-title">跟隨誰</li>
-        <li class="list-group-item">
+
+        <!--li start-->
+        <li class="list-group-item" v-for="user in users" :key="user.id">
           <div class="item d-flex row justify-content-between align-items-center">
             <div class="li-front-part row">
               <div class="image-container">
                 <!--recommend image-->
                 <a href>
-                  <div class="circle"></div>
+                  <img :src="user.avatar" class="user-avatar" width="50px" height="50px" />
+                  <!-- <div class="circle"></div> -->
                 </a>
               </div>
               <div class="recommend-title d-flex flex-column">
                 <!--recommend name-->
-                <a href class="recommend-name">Pizza hut</a>
+                <a href class="recommend-name">{{user.account}}</a>
 
                 <!--recommend id-->
-                <a href class="recommend-id">@pizzahut</a>
+                <a href class="recommend-id">@{{user.id}}</a>
               </div>
             </div>
 
             <div class="btn-follow">
-              <!--v-if: isfollowed-->
-              <button class="delete-follow">正在跟隨</button>
-            </div>
-          </div>
-        </li>
-        <li class="list-group-item">
-          <div class="item d-flex row justify-content-between align-items-center">
-            <div class="li-front-part row">
-              <div class="image-container">
-                <!--recommend image-->
-                <a href>
-                  <div class="circle"></div>
-                </a>
-              </div>
-              <div class="recommend-title d-flex flex-column">
-                <!--recommend name-->
-                <a href class="recommend-name">Pizza hut</a>
+              <button v-if="user.isFollowed" class="delete-follow">正在跟隨</button>
 
-                <!--recommend id-->
-                <a href class="recommend-id">@pizzahut</a>
-              </div>
-            </div>
-
-            <div class="btn-follow">
-              <!--v-else-->
-              <button class="follow">跟隨</button>
+              <button v-else class="follow">跟隨</button>
             </div>
           </div>
         </li>
@@ -60,6 +40,39 @@
   </div>
 </template>
 
+
+<script>
+import usersAPI from "../apis/users";
+import { Toast } from "../utils/helpers";
+
+export default {
+  data() {
+    return {
+      users: {}
+    };
+  },
+  created() {
+    this.fetchTopTenUsers();
+  },
+  methods: {
+    async fetchTopTenUsers() {
+      try {
+        const response = await usersAPI.getTopTenUsers({ users });
+        console.log("response", response);
+
+        const users = response.data;
+        this.users = users;
+      } catch (error) {
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "無法取得資料，請稍後再試"
+        });
+      }
+    }
+  }
+};
+</script>
 <style scoped>
 .list-group-container {
   position: relative;
@@ -95,11 +108,8 @@
   margin-right: 10px;
 }
 
-.circle {
-  background: #c4c4c4;
+.user-avatar {
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
 }
 
 .recommend-title {
