@@ -7,7 +7,7 @@
       <div class="bold Admin">後台登入</div>
     </div>
     <div class="form1">
-      <form>
+      <form @submit.stop.prevent="handleSubmit">
         <div class="mb-3 label-parents">
           <input
             type="email"
@@ -16,6 +16,7 @@
             aria-describedby="emailHelp"
             placeholder="帳號"
             style="width: 540px; height: 50px"
+            v-model="email"
           />
 
           <label for="exampleInputEmail1" class="form-label">帳號</label>
@@ -29,6 +30,7 @@
             id="exampleInputPassword1"
             placeholder="密碼"
             style="width: 540px; height: 50px"
+            v-model="password"
           />
 
           <label for="exampleInputPassword1" class="form-label">密碼</label>
@@ -38,6 +40,7 @@
           style="width: 540px; height: 50px"
           type="submit"
           class="btn bold mt-3"
+          @
         >
           登入
         </button>
@@ -51,6 +54,40 @@
     </div>
   </div>
 </template>
+
+
+<script>
+import authorizationAPI from "../apis/authorization.js";
+
+export default {
+  name: "AdminSignIn",
+  data() {
+    return {
+      email: "",
+      password: "",
+    };
+  },
+  methods: {
+    async handleSubmit(e) {
+      try {
+        const response = await authorizationAPI.authorization.AdminSignIn({
+          email: this.email,
+          password: this.password,
+        });
+        console.log(response);
+      } catch (error) {
+        console.log("error", error);
+      }
+    },
+  },
+};
+</script>
+
+
+
+
+
+
 
 <style scoped>
 .signin {

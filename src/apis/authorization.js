@@ -1,16 +1,16 @@
-import { apiHelper } from './../utils/helpers'
+
+import { apiHelper } from "../utils/helpers.js"
 
 export default {
-  signIn({ email, password }) {
-    return apiHelper.post('/signin', {
-      email,
-      password
-    })
-  },
-  signUp(data) {
-    return apiHelper.post('/signup', {
-      ...data
-    })
+  authorization: {
+    AdminSignIn({ email, password }) {
+      return apiHelper.post('signin', { email, password })
+
+    },
+    signIn({ email, password }) {
+      return apiHelper.post('signin', { email, password })
+
+    }
   }
 
 }

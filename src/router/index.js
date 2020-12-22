@@ -109,15 +109,6 @@ export default new Router({
 
 
     {
-      path: '/users/follower',
-      name: 'user-follower',
-      component: UserFollower
-
-    },
-
-
-    /**** admin ****/
-    {
 
       path: '/admin',
       name: 'admin-signIn',
@@ -133,11 +124,11 @@ export default new Router({
       name: 'admin-userList',
       component: () => import('../views/AdminUserList.vue')
     },
-    {
-      path: '/users/following',
-      name: 'user-following',
-      component: UserFollowing
-    },
+    // {
+    //   path: '/users/following',
+    //   name: 'user-following',
+    //   component: UserFollowing
+    // },
 
     {
       path: '*',
