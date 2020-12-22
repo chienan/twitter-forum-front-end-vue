@@ -2,20 +2,25 @@
   <div class="d-flex justify-content-center signin">
     <div class="logo">
       <div class="d-flex justify-content-center">
-        <img src="https://i.postimg.cc/LsddLPp9/Logo.png" alt="" />
+        <img src="https://i.postimg.cc/LsddLPp9/Logo.png" alt />
       </div>
       <div class="bold Alphitter">登入 Alphitter</div>
     </div>
     <div class="form1">
-      <form>
+
+      <form @submit.stop.prevent="handleSubmit">
+
         <div class="mb-3 label-parents">
           <input
+            v-model="email"
             type="email"
             class="form-control input1 input-space rounded-0"
             id="exampleInputEmail1"
             aria-describedby="emailHelp"
             placeholder="帳號"
             style="width: 540px; height: 50px"
+            v-model="email"
+            required
           />
 
           <label for="exampleInputEmail1" class="form-label">帳號</label>
@@ -24,39 +29,104 @@
 
         <div class="mb-3 label-parents">
           <input
+            v-model="password"
             type="password"
             class="form-control input1 rounded-0"
             id="exampleInputPassword1"
             placeholder="密碼"
             style="width: 540px; height: 50px"
+            v-model="password"
+            required
           />
 
           <label for="exampleInputPassword1" class="form-label">密碼</label>
         </div>
 
+
         <button
           style="width: 540px; height: 50px"
           type="submit"
           class="btn bold mt-3"
+          :disabled="isProcessing"
         >
-          登入
+          {{ isProcessing ? "處理中，請稍後" : "登入" }}
         </button>
       </form>
 
       <div class="signup-alphitter d-flex justify-content-end">
-        <a class="bold mr-1 a1" href="#" style="color: #0099ff; font-size: 18px"
-          >註冊 Alphitter</a
+        <router-link
+          to="/signup"
+          class="bold mr-1 a1"
+          href="#"
+          style="color: #0099ff; font-size: 18px"
+          >註冊 Alphitter</router-link
         ><span class="bold mr-1" style="color: #0099ff; font-size: 18px"
           >·</span
         >
 
-        <a class="bold" href="#" style="color: #0099ff; font-size: 18px"
-          >後台登入</a
+        <router-link
+          to="/admin"
+          class="bold"
+          href="#"
+          style="color: #0099ff; font-size: 18px"
+          >後台登入</router-link
         >
       </div>
     </div>
   </div>
 </template>
+
+<script>
+
+import authorizationAPI from "../apis/authorization.js";
+import { Toast } from "../utils/helpers.js";
+export default {
+  name: "SignIn",
+  data() {
+    return {
+      email: "",
+      password: "",
+      isProcessing: false,
+    };
+  },
+  methods: {
+    async handleSubmit(e) {
+      try {
+        if (!this.email || !this.password) {
+          Toast.fire({
+            icon: "warning",
+            title: "請填入 email 和 password",
+          });
+          return;
+        }
+
+        this.isProcessing = true;
+        const response = await authorizationAPI.authorization.signIn({
+          email: this.email,
+          password: this.password,
+        });
+
+        console.log(response);
+        const { data } = response;
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+
+        localStorage.setItem("token", data.token);
+        this.$router.push("/tweets");
+      } catch (error) {
+        console.log("error", error);
+        this.password = "";
+        this.isProcessing = false;
+        Toast.fire({
+          icon: "warning",
+          title: "請確認您輸入了正確的帳號密碼",
+        });
+      }
+    },
+  },
+};
+</script>
 
 <style scoped>
 .signin {
@@ -154,7 +224,7 @@ a::after {
   background-color: #0099ff;
   width: 72px;
   height: 1px;
-  bottom: 4px;
+  bottom: 3px;
   left: 0px;
 }
 .a1 {
@@ -167,7 +237,7 @@ a::after {
   background-color: #0099ff;
   width: 118px;
   height: 1px;
-  bottom: 4px;
+  bottom: 2px;
   left: 0px;
 }
 </style>

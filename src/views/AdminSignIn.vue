@@ -7,7 +7,7 @@
       <div class="bold Admin">後台登入</div>
     </div>
     <div class="form1">
-      <form>
+      <form @submit.stop.prevent="handleSubmit">
         <div class="mb-3 label-parents">
           <input
             type="email"
@@ -16,6 +16,8 @@
             aria-describedby="emailHelp"
             placeholder="帳號"
             style="width: 540px; height: 50px"
+            v-model="email"
+            required
           />
 
           <label for="exampleInputEmail1" class="form-label">帳號</label>
@@ -29,6 +31,8 @@
             id="exampleInputPassword1"
             placeholder="密碼"
             style="width: 540px; height: 50px"
+            v-model="password"
+            required
           />
 
           <label for="exampleInputPassword1" class="form-label">密碼</label>
@@ -38,19 +42,81 @@
           style="width: 540px; height: 50px"
           type="submit"
           class="btn bold mt-3"
+          :disabled="isProcessing"
         >
-          登入
+          {{ isProcessing ? "處理中，請稍後" : "登入" }}
         </button>
       </form>
 
       <div class="signup-alphitter d-flex justify-content-end">
-        <a class="bold" href="#" style="color: #0099ff; font-size: 18px"
-          >前台登入</a
+        <router-link
+          to="/signin"
+          class="bold"
+          href="#"
+          style="color: #0099ff; font-size: 18px"
+          >前台登入</router-link
         >
       </div>
     </div>
   </div>
 </template>
+
+
+<script>
+import authorizationAPI from "../apis/authorization.js";
+import { Toast } from "../utils/helpers.js";
+
+export default {
+  name: "AdminSignIn",
+  data() {
+    return {
+      email: "",
+      password: "",
+      isProcessing: false,
+    };
+  },
+  methods: {
+    async handleSubmit(e) {
+      try {
+        if (!this.email || !this.password) {
+          Toast.fire({
+            icon: "warning",
+            title: "請填入 email 和 password",
+          });
+          return;
+        }
+        this.isProcessing = true;
+        const response = await authorizationAPI.authorization.AdminSignIn({
+          email: this.email,
+          password: this.password,
+        });
+        console.log(response);
+        const { data } = response;
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+
+        localStorage.setItem("token1", data.token);
+        this.$router.push("/admin/tweets");
+      } catch (error) {
+        console.log("error", error);
+        this.password = "";
+        this.isProcessing = false;
+        Toast.fire({
+          icon: "warning",
+          title: "請確認您輸入了正確的帳號密碼",
+        });
+      }
+    },
+  },
+};
+</script>
+
+
+
+
+
+
 
 <style scoped>
 .signin {
@@ -148,7 +214,7 @@ a::after {
   background-color: #0099ff;
   width: 72px;
   height: 1px;
-  bottom: 4px;
+  bottom: 3px;
   left: 0px;
 }
 </style>
