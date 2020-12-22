@@ -27,14 +27,10 @@
 }
 
 .main-content {
-  /* border: 1px solid teal; */
   height: 100%;
 }
 
 .icon-container {
-  /* border: 1px solid teal; */
-  /* padding-left: 19px;
-  padding-top: 15px; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -44,14 +40,12 @@
 .icon-back {
   width: 17px;
   height: 14px;
-  /* border: 1px solid gray; */
 }
 
 .title {
   height: 100%;
-  /* margin-left: 19px; */
+
   margin: 9px auto 5px 19px;
-  /* border: 1px solid gray; */
 }
 
 .user-name {

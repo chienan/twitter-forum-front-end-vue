@@ -8,7 +8,7 @@
       <div class="tweet-input">
         <div class="input-content">
           <div class="input-content-top">
-            <!--user-image-->
+            <!--current-user-image-->
             <div class="user-image">
               <div class="circle"></div>
             </div>
@@ -23,9 +23,9 @@
       <div class="tweet-list">
         <!--tweet item start-->
         <div class="tweet-item" v-for="tweet in tweets.tweets" :key="tweet.id">
-          <a href class="item-left">
-            <div class="circle"></div>
-          </a>
+          <router-link to="{ name: 'user', params:{id: tweet.UserId}}" class="item-left">
+            <img :src="tweet.User.avatar" width="50" height="50" class="user-avatar" />
+          </router-link>
 
           <div class="item-right">
             <div class="item-user-info d-flex">
@@ -149,11 +149,8 @@ p {
   /* border: 1px solid gray; */
 }
 
-.circle {
-  background: #c4c4c4;
+.user-avatar {
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
   margin: 9px 10px auto 15px;
 }
 

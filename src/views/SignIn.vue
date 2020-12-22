@@ -2,14 +2,17 @@
   <div class="d-flex justify-content-center signin">
     <div class="logo">
       <div class="d-flex justify-content-center">
-        <img src="https://i.postimg.cc/LsddLPp9/Logo.png" alt="" />
+        <img src="https://i.postimg.cc/LsddLPp9/Logo.png" alt />
       </div>
       <div class="bold Alphitter">登入 Alphitter</div>
     </div>
     <div class="form1">
+
       <form @submit.stop.prevent="handleSubmit">
+
         <div class="mb-3 label-parents">
           <input
+            v-model="email"
             type="email"
             class="form-control input1 input-space rounded-0"
             id="exampleInputEmail1"
@@ -26,6 +29,7 @@
 
         <div class="mb-3 label-parents">
           <input
+            v-model="password"
             type="password"
             class="form-control input1 rounded-0"
             id="exampleInputPassword1"
@@ -37,6 +41,7 @@
 
           <label for="exampleInputPassword1" class="form-label">密碼</label>
         </div>
+
 
         <button
           style="width: 540px; height: 50px"
@@ -72,6 +77,7 @@
 </template>
 
 <script>
+
 import authorizationAPI from "../apis/authorization.js";
 import { Toast } from "../utils/helpers.js";
 export default {
