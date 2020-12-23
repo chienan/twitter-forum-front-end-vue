@@ -10,6 +10,13 @@ export default {
     })
   },
 
+  /* 取得追隨者排名前10使用者 */
+  getTopTenUsers() {
+    return apiHelper.get('/users/top', {
+      headers: { Authorization: `Bearer ${getToken()}` }
+    })
+  },
+
   /* 取得使用者 */
   getUsers({ userId }) {
     return apiHelper.get(`/users/${userId}`, {
@@ -35,11 +42,17 @@ export default {
     })
   },
 
-  /* 取得追隨者排名前10使用者 */
-  getTopTenUsers() {
-    return apiHelper.get('/users/top', {
+  getUserFollowings({ userId }) {
+    return apiHelper.get(`/users/${userId}/followings`, {
       headers: { Authorization: `Bearer ${getToken()}` }
     })
-  }
+  },
+
+  getUserFollowers({ userId }) {
+    return apiHelper.get(`/users/${userId}/followers`, {
+      headers: { Authorization: `Bearer ${getToken()}` }
+    })
+  },
+
 
 }

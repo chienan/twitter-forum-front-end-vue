@@ -22,7 +22,7 @@
       <!-- tweet-list -->
       <div class="tweet-list">
         <!--tweet item start-->
-        <div class="tweet-item" v-for="tweet in tweets.tweets" :key="tweet.id">
+        <div class="tweet-item" v-for="tweet in tweets" :key="tweet.id">
           <a href class="item-left">
             <img :src="tweet.User.avatar" width="50" height="50" class="user-avatar" />
           </a>
@@ -39,12 +39,13 @@
             <div class="item-interaction">
               <a href class="tweet-reply">
                 <img src="https://i.imgur.com/I3DHrNy.png" id="icon-reply" alt />
-                <!-- reply-count -->
-                <p>13</p>
+                <!-- replycount -->
+                <p>{{tweet.Replies.length}}</p>
               </a>
 
               <a href class="tweet-like">
                 <img src="https://i.imgur.com/gCFSWst.png" id="icon-like" alt />
+                <!-- like count -->
                 <p>5</p>
               </a>
             </div>

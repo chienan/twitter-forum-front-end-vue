@@ -34,10 +34,10 @@
         </div>
         <div class="follow-section">
           <a href class="following-section">
-            <div class="following-number">1,164 個</div>跟隨中
+            <div class="following-number">{{followingLength ? followingLength : '0'}} 個</div>跟隨中
           </a>
           <a href class="follower-section">
-            <div class="follower-number">6.3萬 位</div>跟隨者
+            <div class="follower-number">{{followerLength ? followerLength : '0'}} 位</div>跟隨者
           </a>
         </div>
       </div>
@@ -46,9 +46,55 @@
 </template>
 
 <script>
+import usersAPI from "../apis/users";
+import { Toast } from "../utils/helpers";
+
 export default {
   props: {
     user: {}
+  },
+  data() {
+    return {
+      followingLength: "",
+      followerLength: ""
+    };
+  },
+  created() {
+    this.getFollowingsNumber();
+    this.getFollowersNumber();
+  },
+
+  methods: {
+    async getFollowingsNumber(userId) {
+      try {
+        const response = await usersAPI.getUserFollowings({ userId });
+        console.log("response", response);
+
+        const followingLength = response.data.length;
+        this.followingLength = followingLength;
+      } catch (error) {
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "無法取得使用者跟隨中資料"
+        });
+      }
+    },
+    async getFollowersNumber(userId) {
+      try {
+        const response = await usersAPI.getUserFollowers({ userId });
+        console.log("response", response);
+
+        const followerLength = response.data.length;
+        this.followerLength = followerLength;
+      } catch (error) {
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "無法取得使用者跟隨者資料"
+        });
+      }
+    }
   }
 };
 </script>
@@ -62,8 +108,6 @@ export default {
   top: 55px;
   left: 300px;
   background: #ffffff;
-  /* border-left: 1px solid #e6ecf0;
-  border-right: 1px solid #e6ecf0; */
 }
 
 * {
