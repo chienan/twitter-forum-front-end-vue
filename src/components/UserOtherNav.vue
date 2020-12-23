@@ -8,13 +8,21 @@
       </div>
 
       <div class="title">
-        <div class="user-name">Mary Jane</div>
+        <div class="user-name">{{user.name}}</div>
         <!--  可能要載入進位套件  -->
         <div class="tweets-count">1.4萬 推文</div>
       </div>
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  props: {
+    user: {}
+  }
+};
+</script>
 
 <style scoped>
 .container {

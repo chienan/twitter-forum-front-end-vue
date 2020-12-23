@@ -2,9 +2,9 @@
   <div class="container">
     <div class="main-content">
       <div class="cover-container">
-        <!-- insert cover photo -->
-        <!-- <img src="https://i.imgur.com/kTzPpZ3.png" class="cover-photo" alt /> -->
-        <div class="avatar-container"></div>
+        <img :src="user.cover" alt />
+
+        <img :src="user.avatar" class="avatar-container" alt />
       </div>
       <div class="profile-container">
         <!-- button section -->
@@ -28,11 +28,9 @@
           <!-- <a href class="btn-follow">跟隨</a> -->
         </div>
         <div class="profile-section">
-          <div class="user-name">Mary Jane</div>
-          <div class="user-id">@mjjane</div>
-          <div
-            class="user-intro"
-          >Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.</div>
+          <div class="user-name">{{user.name}}</div>
+          <div class="user-id">@{{user.id}}</div>
+          <div class="user-intro">{{user.introduction}}</div>
         </div>
         <div class="follow-section">
           <a href class="following-section">
@@ -46,6 +44,14 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  props: {
+    user: {}
+  }
+};
+</script>
 
 
 <style scoped>

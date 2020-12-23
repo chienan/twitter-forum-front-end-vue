@@ -2,32 +2,56 @@
   <div class="container">
     <div class="main-content">
       <div class="cover-container">
-        <img src="https://i.imgur.com/kTzPpZ3.png" class="cover-photo" alt />
-        <div class="avatar-container"></div>
+        <img :src="user.cover" alt />
+
+        <img :src="user.avatar" class="avatar-container" alt />
       </div>
       <div class="profile-container">
-        <div class="edit-section">
-          <a href class="btn-edit">編輯個人資料</a>
+        <!-- button section -->
+        <div class="btn-section">
+          <a href class="btn-mail">
+            <img class="icon-mail" src="https://i.imgur.com/TDfyaS9.png" alt />
+          </a>
+          <!-- notice off(小鈴鐺關) -->
+          <a href class="btn-notice-off">
+            <img class="icon-notice-off" src="https://i.imgur.com/p1FX7TV.png" alt />
+          </a>
+          <!--notice on(小鈴鐺開)-->
+          <!-- <a href class="btn-notice-on">
+            <img class="icon-notice-on" src="https://i.imgur.com/aYdKhit.png" alt />
+          </a>-->
+
+          <!-- 取消跟隨 -->
+          <a href class="btn-unfollow">正在跟隨</a>
+
+          <!--跟隨-->
+          <!-- <a href class="btn-follow">跟隨</a> -->
         </div>
         <div class="profile-section">
-          <div class="user-name">John Doe</div>
-          <div class="user-id">@heyjohn</div>
-          <div
-            class="user-intro"
-          >Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.</div>
+          <div class="user-name">{{user.name}}</div>
+          <div class="user-id">@{{user.id}}</div>
+          <div class="user-intro">{{user.introduction}}</div>
         </div>
         <div class="follow-section">
-          <a href="/#/users/following" class="following-section">
-            <div class="following-number">34 個</div>跟隨中
+          <a href class="following-section">
+            <div class="following-number">1,164 個</div>跟隨中
           </a>
-          <a href="/#/users/follower" class="follower-section">
-            <div class="follower-number">59 位</div>跟隨者
+          <a href class="follower-section">
+            <div class="follower-number">6.3萬 位</div>跟隨者
           </a>
         </div>
       </div>
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  props: {
+    user: {}
+  }
+};
+</script>
 
 
 <style scoped>
@@ -70,6 +94,7 @@ img {
 .cover-container {
   z-index: 0;
   position: relative;
+  background: #999999;
 }
 
 .avatar-container {
@@ -95,24 +120,70 @@ img {
   margin-top: 10px;
 }
 
-.edit-section {
+.btn-section {
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
 }
 
-.btn-edit {
-  width: 122px;
+.btn-mail,
+.btn-notice-off,
+.btn-notice-on {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid #ff6600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-notice-on {
+  background-color: #ff6600;
+}
+
+.btn-mail {
+  margin-right: 10px;
+}
+
+.icon-mail {
+  height: 18px;
+  width: 20px;
+}
+
+.icon-notice-off {
+  height: 21.89px;
+  width: 23.9px;
+}
+
+.icon-notice-on {
+  height: 22.54px;
+  width: 23.93px;
+}
+
+.btn-follow,
+.btn-unfollow {
+  width: 92px;
   height: 40px;
   border: 1px solid #ff6600;
   border-radius: 100px;
   font-weight: bold;
   font-size: 15px;
   line-height: 15px;
-  color: #ff6600;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 10px 15px;
+  margin: 10px 15px 10px 10px;
+}
+
+.btn-follow {
+  color: #ff6600;
+}
+
+.btn-unfollow {
+  background-color: #ff6600;
+  color: #ffffff;
 }
 
 .user-name {

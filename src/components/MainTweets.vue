@@ -23,15 +23,15 @@
       <div class="tweet-list">
         <!--tweet item start-->
         <div class="tweet-item" v-for="tweet in tweets.tweets" :key="tweet.id">
-          <router-link to="{ name: 'user', params:{id: tweet.UserId}}" class="item-left">
+          <a href class="item-left">
             <img :src="tweet.User.avatar" width="50" height="50" class="user-avatar" />
-          </router-link>
+          </a>
 
           <div class="item-right">
             <div class="item-user-info d-flex">
               <a href class="user-name">{{tweet.User.name}}</a>
 
-              <a href class="user-id">@{{tweet.UserId}}</a>
+              <a href class="user-id">@{{tweet.User.account}}</a>
 
               <div class="time">・{{tweet.createdAt | fromNow}}</div>
             </div>
@@ -39,6 +39,7 @@
             <div class="item-interaction">
               <a href class="tweet-reply">
                 <img src="https://i.imgur.com/I3DHrNy.png" id="icon-reply" alt />
+                <!-- reply-count -->
                 <p>13</p>
               </a>
 

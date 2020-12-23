@@ -40,7 +40,8 @@
 </template>
 
 
-
+<script>
+</script>
 
 <style scoped>
 .nav {
