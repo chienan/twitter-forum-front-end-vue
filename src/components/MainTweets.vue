@@ -22,23 +22,42 @@
       <!-- tweet-list -->
       <div class="tweet-list">
         <!--tweet item start-->
-        <div class="tweet-item" v-for="tweet in tweets.tweets" :key="tweet.id">
-          <a href class="item-left">
+        <div
+          class="tweet-item"
+          v-for="tweet in tweets.tweets"
+          :key="tweet.User.id"
+        >
+          <router-link
+            :to="{ name: 'tweet', params: { id: tweet.id } }"
+            class="item-left"
+          >
             <div class="circle"></div>
-          </a>
+          </router-link>
 
           <div class="item-right">
             <div class="item-user-info d-flex">
-              <a href class="user-name">{{tweet.User.name}}</a>
+              <router-link
+                :to="{ name: 'tweet', params: { id: tweet.id } }"
+                class="user-name"
+                >{{ tweet.User.name }}</router-link
+              >
 
-              <a href class="user-id">@{{tweet.UserId}}</a>
+              <a href class="user-id">@{{ tweet.UserId }}</a>
 
-              <div class="time">・{{tweet.createdAt | fromNow}}</div>
+              <div class="time">・{{ tweet.createdAt | fromNow }}</div>
             </div>
-            <a href class="item-content">{{tweet.description}}</a>
+            <router-link
+              :to="{ name: 'tweet', params: { id: tweet.id } }"
+              class="item-content"
+              >{{ tweet.description }}</router-link
+            >
             <div class="item-interaction">
               <a href class="tweet-reply">
-                <img src="https://i.imgur.com/I3DHrNy.png" id="icon-reply" alt />
+                <img
+                  src="https://i.imgur.com/I3DHrNy.png"
+                  id="icon-reply"
+                  alt
+                />
                 <p>13</p>
               </a>
 
@@ -64,14 +83,14 @@ export default {
         return "-";
       }
       return moment(datetime).fromNow();
-    }
+    },
   },
   props: {
     tweets: {
       type: Object,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 };
 </script>
 
