@@ -3,11 +3,19 @@
   <nav class="nav d-flex flex-column align-items-center">
     <div class="nav-list">
       <div class="nav-top">
-        <img src="https://i.imgur.com/FwTYXrW.png" style="width: 30px" alt="logo" />
+        <img
+          src="https://i.imgur.com/FwTYXrW.png"
+          style="width: 30px"
+          alt="logo"
+        />
       </div>
       <div class="nav-item d-flex align-items-center">
         <div>
-          <img src="https://i.imgur.com/OxLE5Bf.png" style="width: 20.25px" alt />
+          <img
+            src="https://i.imgur.com/OxLE5Bf.png"
+            style="width: 20.25px"
+            alt
+          />
         </div>
         <div>
           <a class="nav-link" href="/#/tweets">首頁</a>
