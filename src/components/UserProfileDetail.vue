@@ -29,7 +29,7 @@
         </div>
         <div class="profile-section">
           <div class="user-name">{{user.name}}</div>
-          <div class="user-id">@{{user.id}}</div>
+          <div class="user-id">@{{user.account}}</div>
           <div class="user-intro">{{user.introduction}}</div>
         </div>
         <div class="follow-section">

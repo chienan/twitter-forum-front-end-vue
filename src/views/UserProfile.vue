@@ -26,9 +26,9 @@
               <div class="item-user-info d-flex">
                 <a href class="user-name">{{user.name}}</a>
 
-                <a href class="user-id">@{{tweet.UserId}}</a>
+                <a href class="user-account">@{{user.account}}</a>
 
-                <div class="time">・3 小時</div>
+                <div class="time">・{{tweet.createdAt | fromNow}}</div>
               </div>
               <a href class="item-content">{{tweet.description}}</a>
               <div class="item-interaction">
@@ -64,6 +64,7 @@ import UserProfileNav from "../components/UserProfileNav";
 import UserProfileDetail from "../components/UserProfileDetail";
 import usersAPI from "../apis/users";
 import { Toast } from "../utils/helpers";
+import moment from "moment";
 
 export default {
   components: {
@@ -71,6 +72,14 @@ export default {
     UserProfileNav,
     FollowRecommend,
     UserProfileDetail
+  },
+  filters: {
+    fromNow(datetime) {
+      if (!datetime) {
+        return "-";
+      }
+      return moment(datetime).fromNow();
+    }
   },
   data() {
     return {
@@ -265,7 +274,7 @@ p {
   margin: 5px 5px 5px 0px;
 }
 
-.user-id,
+.user-account,
 .time {
   font-weight: 400;
   font-size: 15px;
@@ -287,7 +296,8 @@ p {
 }
 
 .item-interaction {
-  margin: 12px 0px;
+  position: relative;
+  height: 30px;
 }
 
 .item-interaction,
@@ -299,6 +309,8 @@ p {
 
 .tweet-reply,
 .tweet-like {
+  position: absolute;
+  bottom: 7px;
   font-weight: 400;
   font-size: 13px;
   line-height: 13px;
@@ -311,6 +323,7 @@ p {
 
 .tweet-like {
   width: 80%;
+  left: 90px;
 }
 
 #icon-reply {

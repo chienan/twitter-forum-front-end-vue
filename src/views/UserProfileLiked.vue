@@ -71,6 +71,8 @@ import NavBar from "../components/NavBar";
 import FollowRecommend from "../components/FollowRecommend";
 import UserProfileNav from "../components/UserProfileNav";
 import UserProfileDetail from "../components/UserProfileDetail";
+import usersAPI from "../apis/users";
+import { Toast } from "../utils/helpers";
 
 export default {
   components: {
@@ -78,6 +80,49 @@ export default {
     FollowRecommend,
     UserProfileNav,
     UserProfileDetail
+  },
+  data() {
+    return {
+      user: {},
+      tweets: {}
+    };
+  },
+  created() {
+    const { id: userId } = this.$route.params;
+    this.fetchUser(userId);
+    this.fetchUserLiked(userId);
+  },
+  methods: {
+    async fetchUser(userId) {
+      try {
+        const response = await usersAPI.getUsers({ userId });
+        console.log("response", response);
+
+        const user = response.data;
+        this.user = user;
+      } catch (error) {
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "無法取得使用者資料"
+        });
+      }
+    },
+    async fetchUserRepliedTweets(userId) {
+      try {
+        const response = await usersAPI.getUsersLiked({ userId });
+        console.log("response", response);
+
+        const tweets = response.data;
+        this.tweets = tweets;
+      } catch (error) {
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "無法取得使用者回覆資料，請稍後再試"
+        });
+      }
+    }
   }
 };
 </script>
@@ -204,7 +249,8 @@ p {
 }
 
 .item-interaction {
-  margin: 12px 0px;
+  position: relative;
+  height: 30px;
 }
 
 .item-interaction,
@@ -216,6 +262,8 @@ p {
 
 .tweet-reply,
 .tweet-like {
+  position: absolute;
+  bottom: 7px;
   font-weight: 400;
   font-size: 13px;
   line-height: 13px;
@@ -228,6 +276,7 @@ p {
 
 .tweet-like {
   width: 80%;
+  left: 90px;
 }
 
 #icon-reply {
