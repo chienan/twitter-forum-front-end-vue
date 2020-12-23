@@ -8,31 +8,43 @@
           </div>
           <div class="d-flex flex-row">
             <div>
-              <img
-                src="https://i.postimg.cc/MKrzTW5q/icon-index.png"
-                alt=""
-                class="icon-index mr-4"
-              />
+              <router-link to="/admin/tweets"
+                ><img
+                  src="https://i.postimg.cc/MKrzTW5q/icon-index.png"
+                  alt=""
+                  class="icon-index mr-4"
+              /></router-link>
             </div>
             <div>
-              <p
-                class="bold icon-index"
-                style="font-size: 18px; color: #ff6600"
+              <router-link to="/admin/tweets"
+                ><p
+                  class="bold icon-index"
+                  style="font-size: 18px; color: #ff6600"
+                >
+                  推文清單
+                </p></router-link
               >
-                推文清單
-              </p>
             </div>
           </div>
           <div class="d-flex flex-row">
             <div>
-              <img
-                src="https://i.postimg.cc/dVjPCwmh/icon-user.png"
-                alt=""
-                class="icon-user mr-4"
-              />
+              <router-link to="/admin/userList">
+                <img
+                  src="https://i.postimg.cc/dVjPCwmh/icon-user.png"
+                  alt=""
+                  class="icon-user mr-4"
+                />
+              </router-link>
             </div>
             <div>
-              <p class="bold icon-user" style="font-size: 18px">使用者列表</p>
+              <router-link to="/admin/userList">
+                <p
+                  class="bold icon-user"
+                  style="font-size: 18px; color: #1c1c1c"
+                >
+                  使用者列表
+                </p></router-link
+              >
             </div>
           </div>
           <div class="d-flex flex-row">

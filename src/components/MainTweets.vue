@@ -22,24 +22,41 @@
       <!-- tweet-list -->
       <div class="tweet-list">
         <!--tweet item start-->
+
         <div class="tweet-item" v-for="tweet in tweets" :key="tweet.id">
           <router-link :to="{ name: 'user', params:{id: tweet.UserId}}" class="item-left">
+
+ </router-link>
+
             <img :src="tweet.User.avatar" width="50" height="50" class="user-avatar" />
+
           </router-link>
 
           <div class="item-right">
             <div class="item-user-info d-flex">
-              <a href class="user-name">{{tweet.User.name}}</a>
+              <router-link
+                :to="{ name: 'tweet', params: { id: tweet.id } }"
+                class="user-name"
+                >{{ tweet.User.name }}</router-link
+              >
+
 
               <a href class="user-account">@{{tweet.User.account}}</a>
 
-              <div class="time">・{{tweet.createdAt | fromNow}}</div>
+
+              <div class="time">・{{ tweet.createdAt | fromNow }}</div>
             </div>
-            <a href class="item-content">{{tweet.description}}</a>
+            <router-link
+              :to="{ name: 'tweet', params: { id: tweet.id } }"
+              class="item-content"
+              >{{ tweet.description }}</router-link
+            >
             <div class="item-interaction">
               <a href class="tweet-reply">
+
                 <img src="https://i.imgur.com/I3DHrNy.png" id="icon-reply" alt />
                 <p>{{tweet.Replies.length}}</p>
+
               </a>
 
               <div class="tweet-like">
@@ -84,7 +101,7 @@ export default {
         return "-";
       }
       return moment(datetime).fromNow();
-    }
+    },
   },
   data() {
     return {
@@ -94,6 +111,7 @@ export default {
   props: {
     tweets: {
       type: Object,
+
       required: true
     }
   },
@@ -145,6 +163,7 @@ export default {
       }
     }
   }
+
 };
 </script>
 
