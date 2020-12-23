@@ -9,9 +9,12 @@
       <UserProfileDetail :user="user" />
       <!-- UserProfileNavTabs  -->
       <div class="user-profile-navtabs">
-        <a href class="tab-tweets">推文</a>
-        <a href="/#/users/replied" class="tab-replies">推文與回覆</a>
-        <a href="/#/users/liked" class="tab-liked">喜歡的內容</a>
+        <div class="tab-tweets">推文</div>
+        <router-link
+          :to="{name: 'users-replied-tweets',  params: {id: user.id}}"
+          class="tab-replies"
+        >推文與回覆</router-link>
+        <router-link :to="{name: 'users-likes',  params: {id: user.id}}" class="tab-liked">喜歡的內容</router-link>
       </div>
 
       <!--  UserProfileTweets  -->

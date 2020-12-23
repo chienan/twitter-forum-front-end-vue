@@ -5,13 +5,16 @@
     </div>
 
     <div class="main-content">
-      <UserProfileNav />
-      <UserProfileDetail />
+      <UserProfileNav :user="user" :tweetsLength="tweetsLength" />
+      <UserProfileDetail :user="user" />
       <!-- UserProfileNavTabs  -->
       <div class="user-profile-navtabs">
-        <a href="/#/users" class="tab-tweets">推文</a>
-        <a href="/#/users/replied" class="tab-replies">推文與回覆</a>
-        <a href class="tab-liked">喜歡的內容</a>
+        <router-link :to="{name: 'user',  params: {id: user.id}}" class="tab-tweets">推文</router-link>
+        <router-link
+          :to="{name: 'users-replied-tweets',  params: {id: user.id}}"
+          class="tab-replies"
+        >推文與回覆</router-link>
+        <div class="tab-liked">喜歡的內容</div>
       </div>
 
       <!--  UserProfileTweets  -->

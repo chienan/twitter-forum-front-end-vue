@@ -10,17 +10,19 @@
             <div class="li-front-part row">
               <div class="image-container">
                 <!--recommend image-->
-                <a href>
+                <router-link :to="{name: 'user', params: {id: user.id}}">
                   <img :src="user.avatar" class="user-avatar" width="50px" height="50px" />
-                  <!-- <div class="circle"></div> -->
-                </a>
+                </router-link>
               </div>
-              <div class="recommend-title d-flex flex-column">
-                <!--recommend name-->
-                <a href class="recommend-name">{{user.account}}</a>
 
-                <!--recommend id-->
-                <a href class="recommend-id">@{{user.id}}</a>
+              <div class="recommend-title d-flex flex-column">
+                <router-link :to="{name: 'user', params: {id: user.id}}">
+                  <!--recommend name-->
+                  <div class="recommend-name">{{user.account}}</div>
+
+                  <!--recommend id-->
+                  <div class="recommend-account">@{{user.id}}</div>
+                </router-link>
               </div>
             </div>
 
@@ -125,7 +127,7 @@ export default {
   color: #1c1c1c;
 }
 
-.recommend-id {
+.recommend-account {
   font-weight: 550;
   font-size: 15px;
   line-height: 15px;
