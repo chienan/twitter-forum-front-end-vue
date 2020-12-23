@@ -8,7 +8,11 @@
       </div>
       <div class="profile-container">
         <!-- button section -->
-        <div class="btn-section">
+        <div v-if="currentUser.id === user.id" class="edit-section">
+          <a href class="btn-edit">編輯個人資料</a>
+        </div>
+
+        <div v-else class="btn-section">
           <a href class="btn-mail">
             <img class="icon-mail" src="https://i.imgur.com/TDfyaS9.png" alt />
           </a>
@@ -29,7 +33,7 @@
         </div>
         <div class="profile-section">
           <div class="user-name">{{user.name}}</div>
-          <div class="user-id">@{{user.account}}</div>
+          <div class="user-account">@{{user.account}}</div>
           <div class="user-intro">{{user.introduction}}</div>
         </div>
         <div class="follow-section">
@@ -48,6 +52,7 @@
 <script>
 import usersAPI from "../apis/users";
 import { Toast } from "../utils/helpers";
+import { mapState } from "vuex";
 
 export default {
   props: {
@@ -64,6 +69,10 @@ export default {
     this.getFollowersNumber();
   },
 
+  computed: {
+    ...mapState(["currentUser", "isAuthenticated"])
+  },
+
   methods: {
     async getFollowingsNumber(userId) {
       try {
@@ -71,7 +80,11 @@ export default {
         console.log("response", response);
 
         const followingLength = response.data.length;
-        this.followingLength = followingLength;
+        if (followingLength > 0) {
+          this.followingLength = followingLength;
+        } else {
+          this.followingLength = 0;
+        }
       } catch (error) {
         console.log("error", error);
         Toast.fire({
@@ -86,7 +99,11 @@ export default {
         console.log("response", response);
 
         const followerLength = response.data.length;
-        this.followerLength = followerLength;
+        if (followerLength > 0) {
+          this.followerLength = followerLength;
+        } else {
+          this.followerLength = 0;
+        }
       } catch (error) {
         console.log("error", error);
         Toast.fire({
@@ -164,6 +181,26 @@ img {
   margin-top: 10px;
 }
 
+.edit-section {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.btn-edit {
+  width: 122px;
+  height: 40px;
+  border: 1px solid #ff6600;
+  border-radius: 100px;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 15px;
+  color: #ff6600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 15px;
+}
+
 .btn-section {
   display: flex;
   flex-direction: row;
@@ -237,7 +274,7 @@ img {
   color: #1c1c1c;
 }
 
-.user-id {
+.user-account {
   margin-top: -4px;
   font-weight: 410;
   font-size: 15px;

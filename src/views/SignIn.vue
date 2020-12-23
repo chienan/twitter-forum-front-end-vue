@@ -97,6 +97,8 @@ export default {
         }
 
         localStorage.setItem("token", data.token);
+        //將資料傳到Vuex中
+        this.$store.commit("setCurrentUser", data.user);
         this.$router.push("/tweets");
       } catch (error) {
         console.log("error", error);

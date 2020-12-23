@@ -10,13 +10,13 @@
           <img src="https://i.imgur.com/OxLE5Bf.png" style="width: 20.25px" alt />
         </div>
         <div>
-          <a class="nav-link" href="/#/tweets">首頁</a>
+          <a href="/#/tweets" class="nav-link">首頁</a>
         </div>
       </div>
 
       <div class="nav-item d-flex align-items-center">
         <img src="https://i.imgur.com/MBiFHBl.png" style="width: 16.7px" alt />
-        <a class="nav-link" href="/#/user">個人資料</a>
+        <router-link :to="{name: 'user',  params: {id: currentUser.id}}" class="nav-link">個人資料</router-link>
       </div>
 
       <div class="nav-item d-flex align-items-center">
@@ -41,6 +41,14 @@
 
 
 <script>
+import { mapState } from "vuex";
+
+export default {
+  //vuex `mapState` 方法
+  computed: {
+    ...mapState(["currentUser", "isAuthenticated"])
+  }
+};
 </script>
 
 <style scoped>

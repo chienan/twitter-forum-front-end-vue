@@ -96,6 +96,11 @@ export default {
     this.fetchUser(userId);
     this.fetchUserTweets(userId);
   },
+  beforeRouteUpdate(to, from, next) {
+    const { id: userId } = to.params;
+    this.fetchUser(userId);
+    next();
+  },
 
   methods: {
     async fetchUser(userId) {

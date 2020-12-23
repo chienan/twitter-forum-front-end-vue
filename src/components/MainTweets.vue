@@ -10,7 +10,7 @@
           <div class="input-content-top">
             <!--current-user-image-->
             <div class="user-image">
-              <div class="circle"></div>
+              <img :src="currentUser.avatar" height="50px" width="50px" class="user-avatar" />
             </div>
             <div class="user-input">有什麼新鮮事？</div>
           </div>
@@ -23,15 +23,15 @@
       <div class="tweet-list">
         <!--tweet item start-->
         <div class="tweet-item" v-for="tweet in tweets" :key="tweet.id">
-          <a href class="item-left">
+          <router-link :to="{ name: 'user', params:{id: tweet.UserId}}" class="item-left">
             <img :src="tweet.User.avatar" width="50" height="50" class="user-avatar" />
-          </a>
+          </router-link>
 
           <div class="item-right">
             <div class="item-user-info d-flex">
               <a href class="user-name">{{tweet.User.name}}</a>
 
-              <a href class="user-id">@{{tweet.User.account}}</a>
+              <a href class="user-account">@{{tweet.User.account}}</a>
 
               <div class="time">・{{tweet.createdAt | fromNow}}</div>
             </div>
@@ -39,13 +39,11 @@
             <div class="item-interaction">
               <a href class="tweet-reply">
                 <img src="https://i.imgur.com/I3DHrNy.png" id="icon-reply" alt />
-                <!-- replycount -->
                 <p>{{tweet.Replies.length}}</p>
               </a>
 
               <a href class="tweet-like">
                 <img src="https://i.imgur.com/gCFSWst.png" id="icon-like" alt />
-                <!-- like count -->
                 <p>5</p>
               </a>
             </div>
@@ -58,6 +56,7 @@
 
 <script>
 import moment from "moment";
+import { mapState } from "vuex";
 
 export default {
   filters: {
@@ -73,6 +72,9 @@ export default {
       type: Object,
       required: true
     }
+  },
+  computed: {
+    ...mapState(["currentUser", "isAuthenticated"])
   }
 };
 </script>
@@ -151,6 +153,10 @@ p {
   /* border: 1px solid gray; */
 }
 
+.circle {
+  border-radius: 50%;
+}
+
 .user-avatar {
   border-radius: 50%;
   margin: 9px 10px auto 15px;
@@ -214,7 +220,7 @@ p {
   margin: 5px 5px 5px 0px;
 }
 
-.user-id,
+.user-account,
 .time {
   font-weight: 400;
   font-size: 15px;

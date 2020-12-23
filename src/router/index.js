@@ -4,6 +4,8 @@ import NotFound from '../views/NotFound'
 import SignIn from '../views/SignIn.vue'
 import UserFollower from '../views/UserFollower'
 import UserFollowing from '../views/UserFollowing'
+import store from './../store'
+
 // import UserProfileLiked from '../views/UserProfileLiked'
 
 
@@ -134,6 +136,13 @@ const router = new Router({
       component: NotFound
     }
   ]
+})
+
+
+router.beforeEach((to, from, next) => {
+  // 使用 dispatch 呼叫 Vuex 內的 actions
+  store.dispatch('fetchCurrentUser')
+  next()
 })
 
 export default router
