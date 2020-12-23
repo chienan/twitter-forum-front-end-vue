@@ -42,10 +42,26 @@
                 <p>{{tweet.Replies.length}}</p>
               </a>
 
-              <a href class="tweet-like">
-                <img src="https://i.imgur.com/gCFSWst.png" id="icon-like" alt />
+              <div class="tweet-like">
+                <div class="unlike-container">
+                  <img
+                    src="https://i.imgur.com/7Mp1UdA.png"
+                    id="icon-unlike"
+                    @click.stop.prevent="deleteLike(tweet.id)"
+                    alt
+                  />
+                </div>
+                <div class="like-container">
+                  <img
+                    src="https://i.imgur.com/gCFSWst.png"
+                    id="icon-like"
+                    @click.stop.prevent="addLike(tweet.id)"
+                    alt
+                  />
+                </div>
+
                 <p>5</p>
-              </a>
+              </div>
             </div>
           </div>
         </div>
@@ -57,6 +73,9 @@
 <script>
 import moment from "moment";
 import { mapState } from "vuex";
+import { Toast } from "../utils/helpers";
+import usersAPI from "../apis/users";
+// let isLiked = false;
 
 export default {
   filters: {
@@ -67,6 +86,11 @@ export default {
       return moment(datetime).fromNow();
     }
   },
+  data() {
+    return {
+      // isLiked: ""
+    };
+  },
   props: {
     tweets: {
       type: Object,
@@ -75,6 +99,51 @@ export default {
   },
   computed: {
     ...mapState(["currentUser", "isAuthenticated"])
+  },
+  methods: {
+    async addLike(tweetId) {
+      try {
+        const { data } = await usersAPI.addLike({ tweetId });
+
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+
+        this.tweet = {
+          ...this.tweet
+          // isLiked = true
+        };
+
+        console.log(this.tweet);
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: "無法like，請稍後再試"
+        });
+        console.log("error", error);
+      }
+    },
+    async deleteLike(tweetId) {
+      try {
+        const { data } = await usersAPI.deleteLike({ tweetId });
+
+        if (data.status === "error") {
+          throw new Error(data.message);
+        }
+        this.tweet = {
+          ...this.tweet
+        };
+
+        this.tweet.isLiked = false;
+        console.log(this.tweet);
+      } catch (error) {
+        console.error(error.message);
+        Toast.fire({
+          icon: "error",
+          title: "無法取消按讚，請稍後再試"
+        });
+      }
+    }
   }
 };
 </script>
@@ -282,6 +351,12 @@ p {
 #icon-like {
   height: 11.82px;
   width: 12.56px;
+  margin-right: 11.35px;
+}
+
+#icon-unlike {
+  height: 19px;
+  width: 20px;
   margin-right: 11.35px;
 }
 </style>
