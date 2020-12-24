@@ -15,10 +15,11 @@
             <div class="user-input">有什麼新鮮事？</div>
           </div>
           <div class="input-content-bottom">
-            <button class="btn-tweet">推文</button>
+            <button class="btn-tweet" @click="openModal">推文</button>
           </div>
         </div>
       </div>
+
       <!-- tweet-list -->
       <div class="tweet-list">
         <!--tweet item start-->
@@ -73,6 +74,44 @@
           </div>
         </div>
       </div>
+      <!-- tweet Modal start -->
+      <div v-if="myModal">
+        <transition name="modal">
+          <div class="modal-mask">
+            <div class="modal-wrapper">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" @click="myModal=false">
+                      <span area-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <form @submit.stop.prevent="handleSubmit">
+                    <div class="modal-body">
+                      <img
+                        :src="currentUser.avatar"
+                        height="50px"
+                        width="50px"
+                        class="user-avatar"
+                        id="modal-avatar"
+                      />
+                      <input
+                        type="text"
+                        class="form-control"
+                        v-model="description"
+                        placeholder="有什麼新鮮事？"
+                        style="height: 150px; width: 380px;"
+                      />
+                      <button class="btn-tweet">推文</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </transition>
+      </div>
+      <!-- tweet Modal end -->
     </div>
   </div>
 </template>
@@ -82,6 +121,8 @@ import moment from "moment";
 import { mapState } from "vuex";
 import { Toast } from "../utils/helpers";
 import usersAPI from "../apis/users";
+import tweetsAPI from "../apis/tweets";
+
 // let isLiked = false;
 
 export default {
@@ -95,13 +136,14 @@ export default {
   },
   data() {
     return {
+      myModal: false,
+      description: ""
       // isLiked: ""
     };
   },
   props: {
     tweets: {
       type: Object,
-
       required: true
     }
   },
@@ -151,6 +193,51 @@ export default {
           title: "無法取消按讚，請稍後再試"
         });
       }
+    },
+    openModal() {
+      this.myModal = true;
+    },
+
+    // console.log(this.description);
+    // this.myModal = false;
+    async handleSubmit() {
+      try {
+        if (!this.description) {
+          Toast.fire({
+            icon: "warning",
+            title: "您尚未填寫任何文字"
+          });
+          return;
+        }
+        // this.isProcessing = true;
+        const { data } = await tweetsAPI.create({
+          description: this.description
+        });
+        if (data.status === "error") {
+          throw new Error(data.message);
+        }
+        // this.$emit("after-create-tweet", {
+        //   tweetId: data.tweetId,
+        //   description: this.description
+        // });
+        this.myModal = false;
+        this.description = "";
+      } catch (error) {
+        console.error(error.message);
+        Toast.fire({
+          icon: "error",
+          title: "無法新增tweet，請稍後再試"
+        });
+      }
+
+      // TODO: 向 API 發送 POST 請求
+      // 伺服器新增 Comment 成功後...
+      // this.$emit("after-create-comment", {
+      //   commentId: uuidv4, // 尚未串接 API 暫時使用隨機的 id
+      //   restaurantId: this.restaurantId,
+      //   text: this.text
+      // });
+      // this.text = ""; // 將表單內的資料清空
     }
   }
 };
@@ -366,5 +453,27 @@ p {
   height: 19px;
   width: 20px;
   margin-right: 11.35px;
+}
+
+.modal-mask {
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: table;
+  transition: opacity 0.3s ease;
+}
+
+.modal-body {
+  height: 245px;
+  display: flex;
+  vertical-align: text-top;
+}
+.modal-wrapper {
+  display: table-cell;
+  vertical-align: middle;
 }
 </style>
