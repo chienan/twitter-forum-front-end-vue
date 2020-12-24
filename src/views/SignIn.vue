@@ -7,9 +7,7 @@
       <div class="bold Alphitter">登入 Alphitter</div>
     </div>
     <div class="form1">
-
       <form @submit.stop.prevent="handleSubmit">
-
         <div class="mb-3 label-parents">
           <input
             v-model="email"
@@ -19,7 +17,6 @@
             aria-describedby="emailHelp"
             placeholder="帳號"
             style="width: 540px; height: 50px"
-            v-model="email"
             required
           />
 
@@ -35,22 +32,18 @@
             id="exampleInputPassword1"
             placeholder="密碼"
             style="width: 540px; height: 50px"
-            v-model="password"
             required
           />
 
           <label for="exampleInputPassword1" class="form-label">密碼</label>
         </div>
 
-
         <button
           style="width: 540px; height: 50px"
           type="submit"
           class="btn bold mt-3"
           :disabled="isProcessing"
-        >
-          {{ isProcessing ? "處理中，請稍後" : "登入" }}
-        </button>
+        >{{ isProcessing ? "處理中，請稍後" : "登入" }}</button>
       </form>
 
       <div class="signup-alphitter d-flex justify-content-end">
@@ -59,25 +52,16 @@
           class="bold mr-1 a1"
           href="#"
           style="color: #0099ff; font-size: 18px"
-          >註冊 Alphitter</router-link
-        ><span class="bold mr-1" style="color: #0099ff; font-size: 18px"
-          >·</span
-        >
+        >註冊 Alphitter</router-link>
+        <span class="bold mr-1" style="color: #0099ff; font-size: 18px">·</span>
 
-        <router-link
-          to="/admin"
-          class="bold"
-          href="#"
-          style="color: #0099ff; font-size: 18px"
-          >後台登入</router-link
-        >
+        <router-link to="/admin" class="bold" href="#" style="color: #0099ff; font-size: 18px">後台登入</router-link>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-
 import authorizationAPI from "../apis/authorization.js";
 import { Toast } from "../utils/helpers.js";
 export default {
@@ -86,16 +70,16 @@ export default {
     return {
       email: "",
       password: "",
-      isProcessing: false,
+      isProcessing: false
     };
   },
   methods: {
-    async handleSubmit(e) {
+    async handleSubmit() {
       try {
         if (!this.email || !this.password) {
           Toast.fire({
             icon: "warning",
-            title: "請填入 email 和 password",
+            title: "請填入 email 和 password"
           });
           return;
         }
@@ -103,7 +87,7 @@ export default {
         this.isProcessing = true;
         const response = await authorizationAPI.authorization.signIn({
           email: this.email,
-          password: this.password,
+          password: this.password
         });
 
         console.log(response);
@@ -113,6 +97,8 @@ export default {
         }
 
         localStorage.setItem("token", data.token);
+        //將資料傳到Vuex中
+        this.$store.commit("setCurrentUser", data.user);
         this.$router.push("/tweets");
       } catch (error) {
         console.log("error", error);
@@ -120,11 +106,11 @@ export default {
         this.isProcessing = false;
         Toast.fire({
           icon: "warning",
-          title: "請確認您輸入了正確的帳號密碼",
+          title: "請確認您輸入了正確的帳號密碼"
         });
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

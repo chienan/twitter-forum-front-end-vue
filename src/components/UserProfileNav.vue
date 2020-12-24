@@ -8,13 +8,21 @@
       </div>
 
       <div class="title">
-        <div class="user-name">John Doe</div>
-        <div class="tweets-count">25則推文</div>
+        <div class="user-name">{{user.name}}</div>
+        <div class="tweets-count">{{tweetsLength}}則推文</div>
       </div>
     </div>
   </div>
 </template>
 
+<script>
+export default {
+  props: {
+    user: {},
+    tweetsLength: {}
+  }
+};
+</script>>
 <style scoped>
 .container {
   height: 55px;
