@@ -2,32 +2,119 @@
   <div class="container">
     <div class="main-content">
       <div class="cover-container">
-        <img src="https://i.imgur.com/kTzPpZ3.png" class="cover-photo" alt />
-        <div class="avatar-container"></div>
+        <img :src="user.cover" alt />
+
+        <img :src="user.avatar" class="avatar-container" alt />
       </div>
       <div class="profile-container">
-        <div class="edit-section">
+        <!-- button section -->
+        <div v-if="currentUser.id === user.id" class="edit-section">
           <a href class="btn-edit">編輯個人資料</a>
         </div>
+
+        <div v-else class="btn-section">
+          <a href class="btn-mail">
+            <img class="icon-mail" src="https://i.imgur.com/TDfyaS9.png" alt />
+          </a>
+          <!-- notice off(小鈴鐺關) -->
+          <a href class="btn-notice-off">
+            <img class="icon-notice-off" src="https://i.imgur.com/p1FX7TV.png" alt />
+          </a>
+          <!--notice on(小鈴鐺開)-->
+          <!-- <a href class="btn-notice-on">
+            <img class="icon-notice-on" src="https://i.imgur.com/aYdKhit.png" alt />
+          </a>-->
+
+          <!-- 取消跟隨 -->
+          <a href class="btn-unfollow">正在跟隨</a>
+
+          <!--跟隨-->
+          <!-- <a href class="btn-follow">跟隨</a> -->
+        </div>
         <div class="profile-section">
-          <div class="user-name">John Doe</div>
-          <div class="user-id">@heyjohn</div>
-          <div
-            class="user-intro"
-          >Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.</div>
+          <div class="user-name">{{user.name}}</div>
+          <div class="user-account">@{{user.account}}</div>
+          <div class="user-intro">{{user.introduction}}</div>
         </div>
         <div class="follow-section">
-          <a href="/#/users/following" class="following-section">
-            <div class="following-number">34 個</div>跟隨中
+          <a href class="following-section">
+            <div class="following-number">{{followingLength ? followingLength : '0'}} 個</div>跟隨中
           </a>
-          <a href="/#/users/follower" class="follower-section">
-            <div class="follower-number">59 位</div>跟隨者
+          <a href class="follower-section">
+            <div class="follower-number">{{followerLength ? followerLength : '0'}} 位</div>跟隨者
           </a>
         </div>
       </div>
     </div>
   </div>
 </template>
+
+<script>
+import usersAPI from "../apis/users";
+import { Toast } from "../utils/helpers";
+import { mapState } from "vuex";
+
+export default {
+  props: {
+    user: {}
+  },
+  data() {
+    return {
+      followingLength: "",
+      followerLength: ""
+    };
+  },
+  created() {
+    this.getFollowingsNumber();
+    this.getFollowersNumber();
+  },
+
+  computed: {
+    ...mapState(["currentUser", "isAuthenticated"])
+  },
+
+  methods: {
+    async getFollowingsNumber(userId) {
+      try {
+        const response = await usersAPI.getUserFollowings({ userId });
+        console.log("response", response);
+
+        const followingLength = response.data.length;
+        if (followingLength > 0) {
+          this.followingLength = followingLength;
+        } else {
+          this.followingLength = 0;
+        }
+      } catch (error) {
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "無法取得使用者跟隨中資料"
+        });
+      }
+    },
+    async getFollowersNumber(userId) {
+      try {
+        const response = await usersAPI.getUserFollowers({ userId });
+        console.log("response", response);
+
+        const followerLength = response.data.length;
+        if (followerLength > 0) {
+          this.followerLength = followerLength;
+        } else {
+          this.followerLength = 0;
+        }
+      } catch (error) {
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "無法取得使用者跟隨者資料"
+        });
+      }
+    }
+  }
+};
+</script>
 
 
 <style scoped>
@@ -38,8 +125,6 @@
   top: 55px;
   left: 300px;
   background: #ffffff;
-  /* border-left: 1px solid #e6ecf0;
-  border-right: 1px solid #e6ecf0; */
 }
 
 * {
@@ -70,6 +155,7 @@ img {
 .cover-container {
   z-index: 0;
   position: relative;
+  background: #999999;
 }
 
 .avatar-container {
@@ -115,6 +201,72 @@ img {
   margin: 10px 15px;
 }
 
+.btn-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.btn-mail,
+.btn-notice-off,
+.btn-notice-on {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid #ff6600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-notice-on {
+  background-color: #ff6600;
+}
+
+.btn-mail {
+  margin-right: 10px;
+}
+
+.icon-mail {
+  height: 18px;
+  width: 20px;
+}
+
+.icon-notice-off {
+  height: 21.89px;
+  width: 23.9px;
+}
+
+.icon-notice-on {
+  height: 22.54px;
+  width: 23.93px;
+}
+
+.btn-follow,
+.btn-unfollow {
+  width: 92px;
+  height: 40px;
+  border: 1px solid #ff6600;
+  border-radius: 100px;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 15px 10px 10px;
+}
+
+.btn-follow {
+  color: #ff6600;
+}
+
+.btn-unfollow {
+  background-color: #ff6600;
+  color: #ffffff;
+}
+
 .user-name {
   font-weight: 900;
   font-size: 19px;
@@ -122,7 +274,7 @@ img {
   color: #1c1c1c;
 }
 
-.user-id {
+.user-account {
   margin-top: -4px;
   font-weight: 410;
   font-size: 15px;

@@ -5,13 +5,16 @@
     </div>
 
     <div class="main-content">
-      <UserProfileNav />
-      <UserProfileDetail />
+      <UserProfileNav :user="user" :tweetsLength="tweetsLength" />
+      <UserProfileDetail :user="user" />
       <!-- UserProfileNavTabs  -->
       <div class="user-profile-navtabs">
-        <a href="/#/users" class="tab-tweets">推文</a>
-        <a href="/#/users/replied" class="tab-replies">推文與回覆</a>
-        <a href class="tab-liked">喜歡的內容</a>
+        <router-link :to="{name: 'user',  params: {id: user.id}}" class="tab-tweets">推文</router-link>
+        <router-link
+          :to="{name: 'users-replied-tweets',  params: {id: user.id}}"
+          class="tab-replies"
+        >推文與回覆</router-link>
+        <div class="tab-liked">喜歡的內容</div>
       </div>
 
       <!--  UserProfileTweets  -->
@@ -56,119 +59,6 @@
               </div>
             </div>
           </div>
-          <!-- tweet-item-test -->
-          <div class="tweet-item">
-            <a href class="item-left">
-              <div class="circle"></div>
-            </a>
-
-            <div class="item-right">
-              <div class="item-user-info d-flex">
-                <!-- UserName -->
-                <a href class="user-name">Disney</a>
-
-                <!-- UserId -->
-                <a href class="user-id">@disney</a>
-
-                <!-- time -->
-                <div class="time">・3 小時</div>
-              </div>
-
-              <!-- description -->
-              <a
-                href
-                class="item-content"
-              >Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</a>
-              <div class="item-interaction">
-                <!--reply-->
-                <a href class="tweet-reply">
-                  <img src="https://i.imgur.com/I3DHrNy.png" id="icon-reply" alt />
-                  <p class="reply-count">13</p>
-                </a>
-
-                <!-- like -->
-                <a href class="tweet-like">
-                  <img src="https://i.imgur.com/gCFSWst.png" id="icon-like" alt />
-                  <p class="like-count">76</p>
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="tweet-item">
-            <a href class="item-left">
-              <div class="circle"></div>
-            </a>
-
-            <div class="item-right">
-              <div class="item-user-info d-flex">
-                <!-- UserName -->
-                <a href class="user-name">Disney</a>
-
-                <!-- UserId -->
-                <a href class="user-id">@disney</a>
-
-                <!-- time -->
-                <div class="time">・3 小時</div>
-              </div>
-
-              <!-- description -->
-              <a
-                href
-                class="item-content"
-              >Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</a>
-              <div class="item-interaction">
-                <!--reply-->
-                <a href class="tweet-reply">
-                  <img src="https://i.imgur.com/I3DHrNy.png" id="icon-reply" alt />
-                  <p class="reply-count">13</p>
-                </a>
-
-                <!-- like -->
-                <a href class="tweet-like">
-                  <img src="https://i.imgur.com/gCFSWst.png" id="icon-like" alt />
-                  <p class="like-count">76</p>
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="tweet-item">
-            <a href class="item-left">
-              <div class="circle"></div>
-            </a>
-
-            <div class="item-right">
-              <div class="item-user-info d-flex">
-                <!-- UserName -->
-                <a href class="user-name">Disney</a>
-
-                <!-- UserId -->
-                <a href class="user-id">@disney</a>
-
-                <!-- time -->
-                <div class="time">・3 小時</div>
-              </div>
-
-              <!-- description -->
-              <a
-                href
-                class="item-content"
-              >Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</a>
-              <div class="item-interaction">
-                <!--reply-->
-                <a href class="tweet-reply">
-                  <img src="https://i.imgur.com/I3DHrNy.png" id="icon-reply" alt />
-                  <p class="reply-count">13</p>
-                </a>
-
-                <!-- like -->
-                <a href class="tweet-like">
-                  <img src="https://i.imgur.com/gCFSWst.png" id="icon-like" alt />
-                  <p class="like-count">76</p>
-                </a>
-              </div>
-            </div>
-          </div>
-          <!-- tweet-item-test-end -->
         </div>
       </div>
     </div>
@@ -184,6 +74,8 @@ import NavBar from "../components/NavBar";
 import FollowRecommend from "../components/FollowRecommend";
 import UserProfileNav from "../components/UserProfileNav";
 import UserProfileDetail from "../components/UserProfileDetail";
+import usersAPI from "../apis/users";
+import { Toast } from "../utils/helpers";
 
 export default {
   components: {
@@ -191,6 +83,49 @@ export default {
     FollowRecommend,
     UserProfileNav,
     UserProfileDetail
+  },
+  data() {
+    return {
+      user: {},
+      tweets: {}
+    };
+  },
+  created() {
+    const { id: userId } = this.$route.params;
+    this.fetchUser(userId);
+    this.fetchUserLiked(userId);
+  },
+  methods: {
+    async fetchUser(userId) {
+      try {
+        const response = await usersAPI.getUsers({ userId });
+        console.log("response", response);
+
+        const user = response.data;
+        this.user = user;
+      } catch (error) {
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "無法取得使用者資料"
+        });
+      }
+    },
+    async fetchUserRepliedTweets(userId) {
+      try {
+        const response = await usersAPI.getUsersLiked({ userId });
+        console.log("response", response);
+
+        const tweets = response.data;
+        this.tweets = tweets;
+      } catch (error) {
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "無法取得使用者回覆資料，請稍後再試"
+        });
+      }
+    }
   }
 };
 </script>
@@ -317,7 +252,8 @@ p {
 }
 
 .item-interaction {
-  margin: 12px 0px;
+  position: relative;
+  height: 30px;
 }
 
 .item-interaction,
@@ -329,6 +265,8 @@ p {
 
 .tweet-reply,
 .tweet-like {
+  position: absolute;
+  bottom: 7px;
   font-weight: 400;
   font-size: 13px;
   line-height: 13px;
@@ -341,6 +279,7 @@ p {
 
 .tweet-like {
   width: 80%;
+  left: 90px;
 }
 
 #icon-reply {

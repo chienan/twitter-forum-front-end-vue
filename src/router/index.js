@@ -2,20 +2,20 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import NotFound from '../views/NotFound'
 import SignIn from '../views/SignIn.vue'
-// import UserProfile from '../views/UserProfile'
 import UserFollower from '../views/UserFollower'
 import UserFollowing from '../views/UserFollowing'
-import UserProfileReplied from '../views/UserProfileReplied'
-import UserProfileLiked from '../views/UserProfileLiked'
-import UserOtherProfile from '../views/UserOtherProfile'
-import UserOtherReplied from '../views/UserOtherReplied'
-import UserOtherLiked from '../views/UserOtherLiked'
+import store from './../store'
+
+// import UserProfileLiked from '../views/UserProfileLiked'
+
 
 
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
+  linkExactActiveClass: 'active',
+
   routes: [
     /**   SignIn, SignUp   **/
     {
@@ -54,27 +54,27 @@ export default new Router({
 
     },
     /****  users  ****/
+
     {
-      path: '/user',
+      path: '/users/:id',
       name: 'user',
       component: () => import('../views/UserProfile.vue')
-    },
-    {
-      path: '/users/replied',
-      name: 'user-replied',
-      component: UserProfileReplied
-    },
-    {
-      path: '/users/liked',
-      name: 'user-liked',
-      component: UserProfileLiked
-
     },
     {
       path: '/users/:id/edit',
       name: 'users-edit',
       //動態載入
       component: () => import('../views/UserProfileEdit.vue')
+    },
+    {
+      path: '/users/:id/replied_tweets',
+      name: 'users-replied-tweets',
+      component: () => import('../views/UserProfileReplied.vue')
+    },
+    {
+      path: '/users/:id/likes',
+      name: 'users-likes',
+      component: () => import('../views/UserProfileLiked.vue')
     },
 
 
@@ -91,21 +91,21 @@ export default new Router({
       component: UserFollowing
     },
     /*********  test  **********/
-    {
-      path: '/userOther',
-      name: 'user-other',
-      component: UserOtherProfile
-    },
-    {
-      path: '/userOther/replied',
-      name: 'user-other-replied',
-      component: UserOtherReplied
-    },
-    {
-      path: '/userOther/liked',
-      name: 'user-other-liked',
-      component: UserOtherLiked
-    },
+    // {
+    //   path: '/userOther',
+    //   name: 'user-other',
+    //   component: UserOtherProfile
+    // },
+    // {
+    //   path: '/userOther/replied',
+    //   name: 'user-other-replied',
+    //   component: UserOtherReplied
+    // },
+    // {
+    //   path: '/userOther/liked',
+    //   name: 'user-other-liked',
+    //   component: UserOtherLiked
+    // },
 
 
     {
@@ -137,3 +137,12 @@ export default new Router({
     }
   ]
 })
+
+
+router.beforeEach((to, from, next) => {
+  // 使用 dispatch 呼叫 Vuex 內的 actions
+  store.dispatch('fetchCurrentUser')
+  next()
+})
+
+export default router
