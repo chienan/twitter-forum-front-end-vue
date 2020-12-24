@@ -3,71 +3,12 @@
     <ul class="list-group rounded-0" style="width: 1063px; height: 1320px">
       <li class="list-group-item bold">使用者列表</li>
       <div class="d-flex flex-row flex-wrap">
- 
         <div v-for="adminUser in adminUsers" :key="adminUser.id">
           <div class="card" style="width: 245px; height: 314px">
             <div class="icon-relative">
-              <img :src="adminUser.cover" class="card-img-top" alt="" />
+              <img :src="adminUser.cover" class="card-img-top" alt />
               <p class="circle3"></p>
-              <img :src="adminUser.avatar" alt="" class="thumbnail3" />
-        <div>
-          <div class="card" style="width: 245px; height: 314px">
-            <div class="icon-relative">
-              <img src="https://i.postimg.cc/mkqYQXWk/Rectangle-28.png" class="card-img-top" alt />
-              <p class="circle3"></p>
-              <img src="https://i.postimg.cc/gk19JmQF/Photo-2.png" alt class="thumbnail3" />
-            </div>
-            <div class="card-body">
-              <div class="card-text">
-                <p class="bold">John Doe</p>
-                <p class="account color3">@heyjohn</p>
-              </div>
-
-              <div>
-                <div class="d-flex flex-row vector">
-                  <div class="d-flex flex-row">
-                    <div class="mr-1">
-                      <img src="https://i.postimg.cc/65Z7T5qC/Vector-3.png" alt />
-                    </div>
-                    <div class="mr-3">
-                      <p>1.5k</p>
-                    </div>
-                  </div>
-
-                  <div class="d-flex flex-row">
-                    <div class="mr-1">
-                      <img src="https://i.postimg.cc/Jhp0SsYC/Vector-2.png" alt />
-                    </div>
-                    <p>20k</p>
-                  </div>
-                </div>
-                <!-- 1 -->
-
-                <div class="d-flex flex-row follow">
-                  <div class="mr-2">
-                    34個
-                    <span class="color3">跟隨中</span>
-                  </div>
-                  <div>
-                    59位
-                    <span class="color3">跟隨者</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- card-body -->
-          </div>
-          <!-- card -->
-        </div>
-        <!-- 1 -->
-
-        <div>
-          <div class="card" style="width: 245px; height: 314px">
-            <div class="icon-relative">
-              <img src="https://i.postimg.cc/YC7LLGvQ/Rectangle-28-2.png" class="card-img-top" alt />
-              <p class="circle3"></p>
-              <img src="https://i.postimg.cc/bvQnFx4C/Photo-3.png" alt class="thumbnail3" />
-
+              <img :src="adminUser.avatar" alt class="thumbnail3" />
             </div>
             <div class="card-body">
               <div class="card-text">
@@ -97,77 +38,14 @@
 
                 <div class="d-flex flex-row follow">
                   <div class="mr-2">
-                    {{ adminUser.Followings.length }}個<span class="color3"
-                      >跟隨中</span
-                    >
-                  </div>
-                  <div>
-                    {{ adminUser.Followers.length }}位<span class="color3"
-                      >跟隨者</span
-                    >
-                  </div>
-                </div>
-
-                    34個
+                    {{ adminUser.Followings.length }}個
                     <span class="color3">跟隨中</span>
                   </div>
                   <div>
-                    59位
+                    {{ adminUser.Followers.length }}位
                     <span class="color3">跟隨者</span>
                   </div>
                 </div>
-              </div>
-            </div>
-            <!-- card-body -->
-          </div>
-          <!-- card -->
-        </div>
-        <!-- 1 -->
-
-        <div>
-          <div class="card" style="width: 245px; height: 314px">
-            <div class="icon-relative">
-              <img src="https://i.postimg.cc/YC7LLGvQ/Rectangle-28-2.png" class="card-img-top" alt />
-              <p class="circle3"></p>
-              <img src="https://i.postimg.cc/bvQnFx4C/Photo-3.png" alt class="thumbnail3" />
-            </div>
-            <div class="card-body">
-              <div class="card-text">
-                <p class="bold">Leslie Alexander</p>
-                <p class="account color3">@lesAlex</p>
-              </div>
-
-              <div>
-                <div class="d-flex flex-row vector">
-                  <div class="d-flex flex-row">
-                    <div class="mr-1">
-                      <img src="https://i.postimg.cc/65Z7T5qC/Vector-3.png" alt />
-                    </div>
-                    <div class="mr-3">
-                      <p>1.5k</p>
-                    </div>
-                  </div>
-
-                  <div class="d-flex flex-row">
-                    <div class="mr-1">
-                      <img src="https://i.postimg.cc/Jhp0SsYC/Vector-2.png" alt />
-                    </div>
-                    <p>20k</p>
-                  </div>
-                </div>
-                <!-- 1 -->
-
-                <div class="d-flex flex-row follow">
-                  <div class="mr-2">
-                    34個
-                    <span class="color3">跟隨中</span>
-                  </div>
-                  <div>
-                    59位
-                    <span class="color3">跟隨者</span>
-                  </div>
-                </div>
-
               </div>
             </div>
             <!-- card-body -->
@@ -646,9 +524,9 @@ export default {
   props: {
     adminUsers: {
       type: Array,
-      required: true,
-    },
-  },
+      required: true
+    }
+  }
 };
 </script>
 

@@ -2,37 +2,39 @@
   <div class="container mt-3">
     <div class="list-group-container d-flex justify-content-center">
       <ul class="list-group list-group-flush">
-        <li class="list-group-item list-title">跟隨誰</li>
+        <div class="list-group-item list-title">跟隨誰</div>
 
         <!--li start-->
-        <li class="list-group-item" v-for="user in users" :key="user.id">
-          <div class="item d-flex row justify-content-between align-items-center">
-            <div class="li-front-part row">
-              <div class="image-container">
-                <!--recommend image-->
-                <router-link :to="{name: 'user', params: {id: user.id}}">
-                  <img :src="user.avatar" class="user-avatar" width="50px" height="50px" />
-                </router-link>
+        <div class="list-group-item" v-for="user in users" :key="user.id">
+          <div v-if="currentUser.id !== user.id" class="list-container">
+            <div class="item d-flex row justify-content-between align-items-center">
+              <div class="li-front-part row">
+                <div class="image-container">
+                  <!--recommend image-->
+                  <router-link :to="{name: 'user', params: {id: user.id}}">
+                    <img :src="user.avatar" class="user-avatar" width="50px" height="50px" />
+                  </router-link>
+                </div>
+
+                <div class="recommend-title d-flex flex-column">
+                  <router-link :to="{name: 'user', params: {id: user.id}}">
+                    <!--recommend name-->
+                    <div class="recommend-name">{{user.account}}</div>
+
+                    <!--recommend id-->
+                    <div class="recommend-account">@{{user.id}}</div>
+                  </router-link>
+                </div>
               </div>
 
-              <div class="recommend-title d-flex flex-column">
-                <router-link :to="{name: 'user', params: {id: user.id}}">
-                  <!--recommend name-->
-                  <div class="recommend-name">{{user.account}}</div>
+              <div class="btn-follow">
+                <button v-if="user.isFollowed" class="delete-follow">正在跟隨</button>
 
-                  <!--recommend id-->
-                  <div class="recommend-account">@{{user.id}}</div>
-                </router-link>
+                <button v-else class="follow">跟隨</button>
               </div>
-            </div>
-
-            <div class="btn-follow">
-              <button v-if="user.isFollowed" class="delete-follow">正在跟隨</button>
-
-              <button v-else class="follow">跟隨</button>
             </div>
           </div>
-        </li>
+        </div>
 
         <div class="recommend-bottom">
           <a href class="show-more">顯示更多</a>
@@ -46,6 +48,7 @@
 <script>
 import usersAPI from "../apis/users";
 import { Toast } from "../utils/helpers";
+import { mapState } from "vuex";
 
 export default {
   data() {
@@ -72,6 +75,10 @@ export default {
         });
       }
     }
+  },
+  //vuex `mapState` 方法
+  computed: {
+    ...mapState(["currentUser", "isAuthenticated"])
   }
 };
 </script>
