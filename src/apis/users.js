@@ -36,7 +36,7 @@ export default {
     })
   },
 
-  getUsersLiked({ userId }) {
+  getUsersLikes({ userId }) {
     return apiHelper.get(`/users/${userId}/likes`, {
       headers: { Authorization: `Bearer ${getToken()}` }
     })
