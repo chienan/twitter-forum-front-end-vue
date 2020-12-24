@@ -5,7 +5,7 @@
       <NavBar />
     </div>
 
-    <div>
+    <div style="display: none">
       <!-- TweetsDetail -->
       <TweetsDetail />
     </div>
@@ -15,7 +15,7 @@
       <FollowRecommend />
     </div>
 
-    <div style="display: none">
+    <div>
       <!-- RepliedContent -->
       <RepliedContent />
     </div>

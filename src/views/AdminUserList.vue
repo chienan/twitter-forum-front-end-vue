@@ -37,9 +37,10 @@ export default {
     async fetchAdminUsers() {
       try {
         const response = await AdminUsersAPI.getUsers();
-        console.log(response);
+        // console.log(response);
         const { data } = response;
         this.adminUsers = data.users;
+        console.log(this.adminUsers);
       } catch (error) {
         console.log("error", error);
       }
