@@ -35,9 +35,15 @@ export default {
     NavBar,
     FollowRecommend,
   },
-  create() {
-    // const { id } = this.$route.params;
-    this.fetchTweet(1);
+  data() {
+    return {
+      Tweet: {},
+    };
+  },
+
+  created() {
+    const { id } = this.$route.params;
+    this.fetchTweet(id);
     console.log(id);
   },
 
@@ -45,7 +51,7 @@ export default {
     async fetchTweet(tweetId) {
       console.log(tweetId);
       try {
-        const response = await tweetAPI.tweet.get(tweetId);
+        const response = await tweetAPI.tweet.get({ tweetId });
         console.log(response);
       } catch (error) {
         console.log("error", error);

@@ -23,7 +23,7 @@
 import AdminBar from "../components/AdminBar.vue";
 import AdminMain from "../components/AdminMain.vue";
 import AdminTweetsAPI from "../apis/admin.js";
-
+import { Toast } from "../utils/helpers.js";
 export default {
   name: "AdminTweets",
 
@@ -45,10 +45,10 @@ export default {
   methods: {
     async fetchAdminTweets() {
       try {
-        const response = await AdminTweetsAPI.adminTweets.get();
+        const { ...response } = await AdminTweetsAPI.adminTweets.get();
         console.log(response);
         const { data } = response;
-        this.admintweets = data.tweets;
+        this.admintweets = data;
         this.isLoading = false;
         if (response.statusText !== "OK") {
           throw new Error(response.statusText);

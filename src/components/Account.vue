@@ -5,18 +5,20 @@
       <ul class="list-group rounded-0" style="width: 1063px; height: 1202px">
         <li class="list-group-item">帳戶設定</li>
         <div>
-          <form class="account-form ml-3">
+          <form @submit.stop.prevent="accountEdit" class="account-form ml-3">
             <div class="mb-3 label-parents">
               <input
                 type="text"
                 class="form-control input1 input-space rounded-0"
-                id="exampleInputEmail1"
+                id="account"
                 aria-describedby="emailHelp"
                 placeholder="帳號"
                 style="width: 642px; height: 48px"
+                v-model="account"
+                required
               />
 
-              <label for="exampleInputEmail1" class="form-label">帳號</label>
+              <label for="account" class="form-label">帳號</label>
               <div id="emailHelp" class="form-text"></div>
             </div>
 
@@ -24,60 +26,65 @@
               <input
                 type="text"
                 class="form-control input1 name rounded-0"
-                id="exampleInputPassword1"
+                id="name"
                 placeholder="名稱"
                 style="width: 642px; height: 48px"
+                v-model="name"
+                required
               />
 
-              <label for="exampleInputPassword1" class="form-label">名稱</label>
+              <label for="name" class="form-label">名稱</label>
             </div>
 
             <div class="label-parents">
               <input
                 type="email"
                 class="form-control input1 email rounded-0"
-                id="exampleInputPassword1"
+                id="email"
                 placeholder="Email"
                 style="width: 642px; height: 48px"
+                v-model="email"
+                required
               />
 
-              <label for="exampleInputPassword1" class="form-label"
-                >Email</label
-              >
+              <label for="email" class="form-label">Email</label>
             </div>
 
             <div class="password label-parents">
               <input
                 type="password"
                 class="form-control input1 rounded-0"
-                id="exampleInputPassword1"
+                id="password"
                 placeholder="密碼"
                 style="width: 642px; height: 48px"
+                v-model="password"
+                required
               />
 
-              <label for="exampleInputPassword1" class="form-label">密碼</label>
+              <label for="password" class="form-label">密碼</label>
             </div>
 
             <div class="mb-3 label-parents">
               <input
                 type="password"
                 class="form-control input1 rounded-0"
-                id="exampleInputPassword1"
+                id="passwordCheck"
                 placeholder="密碼確認"
                 style="width: 642px; height: 48px"
+                v-model="passwordCheck"
+                required
               />
 
-              <label for="exampleInputPassword1" class="form-label"
-                >密碼確認</label
-              >
+              <label for="passwordCheck" class="form-label">密碼確認</label>
             </div>
             <div class="d-flex justify-content-center">
               <button
                 style="width: 122px; height: 50px"
                 type="submit"
                 class="btn bold mt-3"
+                :disabled="isProcessing"
               >
-                儲存
+                {{ isProcessing ? "請稍後" : "儲存" }}
               </button>
             </div>
           </form>
@@ -86,6 +93,111 @@
     </div>
   </div>
 </template>
+
+
+<script>
+import { mapState } from "vuex";
+import userEditAPI from "../apis/userAccount.js";
+import usersAPI from "../apis/users.js";
+import { Toast } from "../utils/helpers.js";
+export default {
+  computed: {
+    ...mapState(["currentUser"]),
+  },
+
+  data() {
+    return {
+      account: "",
+      name: "",
+      email: "",
+      password: "",
+      isProcessing: false,
+    };
+  },
+  created() {
+    const { id } = this.$route.params;
+    this.fetchUser(id);
+    console.log(id);
+  },
+
+  methods: {
+    async fetchUser(userId) {
+      try {
+        const response = await usersAPI.getUsers({ userId });
+        console.log(response);
+        console.log(response.data);
+        const { data } = response;
+        const { id, account, name, email, password } = data;
+        (this.id = id),
+          (this.account = account),
+          (this.name = name),
+          (this.email = email),
+          (this.password = password);
+      } catch (error) {
+        console.log("error", error);
+      }
+    },
+
+    async accountEdit(event) {
+      try {
+        if (!this.account) {
+          Toast.fire({
+            icon: "warning",
+            title: "請輸入帳號，謝謝!",
+          });
+          return;
+        }
+
+        if (!this.name) {
+          Toast.fire({
+            icon: "warning",
+            title: "請輸入姓名，謝謝!",
+          });
+          return;
+        }
+
+        if (!this.email) {
+          Toast.fire({
+            icon: "warning",
+            title: "請輸入email，謝謝!",
+          });
+          return;
+        }
+
+        if (!this.password || !this.passwordCheck) {
+          Toast.fire({
+            icon: "warning",
+            title: "請輸密碼，謝謝!",
+          });
+          return;
+        }
+        this.isProcessing = true;
+        console.log(event.target);
+        const form = event.target;
+        const formData = new FormData(form);
+        const response = await userEditAPI.userEdit({
+          userId: this.id,
+          formData,
+        });
+        console.log(response);
+        const { data } = response;
+        if (data.status !== "success") {
+          throw new Error(data.status);
+        }
+        this.$router.push({ name: "user" });
+      } catch (error) {
+        this.isProcessing = false;
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "目前無法編輯帳戶，請稍後再試",
+        });
+      }
+    },
+  },
+};
+</script>
+
 
 <style scoped>
 * {

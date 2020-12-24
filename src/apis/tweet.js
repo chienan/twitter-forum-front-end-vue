@@ -3,7 +3,7 @@ const getToken = () => localStorage.getItem('token')
 
 export default {
   tweet: {
-    get(tweetId) {
+    get({ tweetId }) {
       return apiHelper.get(`tweets/${tweetId}`, { headers: { Authorization: `Bearer ${getToken()}` } })
     }
   }
