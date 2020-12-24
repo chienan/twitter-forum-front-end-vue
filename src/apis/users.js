@@ -63,6 +63,11 @@ export default {
       headers: { Authorization: `Bearer ${getToken()}` }
     })
   },
+  addFollow({ userId }) {
+    return apiHelper.post('/api/followships', { userId }, {
+      headers: { Authorization: `Bearer ${getToken()}` }
+    })
+  }
 
 
 }

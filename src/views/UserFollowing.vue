@@ -5,11 +5,14 @@
     </div>
 
     <div class="main-content">
-      <UserProfileNav />
+      <UserProfileNav :user="user" :tweetsLength="tweetsLength" />
 
       <!-- User Follow NavTab -->
       <div class="follow-nav-tabs">
-        <a href="/#/users/follower" class="tab-follower">跟隨者</a>
+        <router-link
+          :to="{ name: 'user-follower', params: { id: user.id } }"
+          class="tab-follower"
+        >跟隨者</router-link>
         <a href class="tab-following">正在跟隨</a>
       </div>
       <!-- User Follow List -->
@@ -120,12 +123,57 @@
 import NavBar from "../components/NavBar";
 import FollowRecommend from "../components/FollowRecommend";
 import UserProfileNav from "../components/UserProfileNav";
+import { Toast } from "../utils/helpers";
+import usersAPI from "../apis/users";
 
 export default {
   components: {
     NavBar,
     FollowRecommend,
     UserProfileNav
+  },
+  data() {
+    return {
+      user: {},
+      tweetsLength: ""
+    };
+  },
+  created() {
+    const { id: userId } = this.$route.params;
+    this.fetchUser(userId);
+    this.fetchUserTweetsLength(userId);
+  },
+  methods: {
+    async fetchUser(userId) {
+      try {
+        const response = await usersAPI.getUsers({ userId });
+        console.log("response", response);
+
+        const user = response.data;
+        this.user = user;
+      } catch (error) {
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "無法取得使用者資料"
+        });
+      }
+    },
+    async fetchUserTweetsLength(userId) {
+      try {
+        const response = await usersAPI.getUsersTweets({ userId });
+
+        console.log(response.data.length);
+        const tweetsLength = response.data.length;
+        this.tweetsLength = tweetsLength;
+      } catch (error) {
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "無法取得使用者資料"
+        });
+      }
+    }
   }
 };
 </script>

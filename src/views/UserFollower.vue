@@ -5,12 +5,15 @@
     </div>
 
     <div class="main-content">
-      <UserProfileNav />
+      <UserProfileNav :user="user" :tweetsLength="tweetsLength" />
 
       <!-- User Follow NavTab -->
       <div class="follow-nav-tabs">
-        <a href class="tab-follower">跟隨者</a>
-        <a href="/#/users/following" class="tab-following">正在跟隨</a>
+        <div class="tab-follower">跟隨者</div>
+        <router-link
+          :to="{ name: 'user-following', params: { id: user.id } }"
+          class="tab-following"
+        >正在跟隨</router-link>
       </div>
       <!-- User Follow List -->
       <div class="user-follow-list">
@@ -135,12 +138,57 @@
 import NavBar from "../components/NavBar";
 import FollowRecommend from "../components/FollowRecommend";
 import UserProfileNav from "../components/UserProfileNav";
+import usersAPI from "../apis/users";
+import { Toast } from "../utils/helpers";
 
 export default {
   components: {
     NavBar,
     FollowRecommend,
     UserProfileNav
+  },
+  data() {
+    return {
+      user: {},
+      tweetsLength: ""
+    };
+  },
+  created() {
+    const { id: userId } = this.$route.params;
+    this.fetchUser(userId);
+    this.fetchUserTweetsLength(userId);
+  },
+  methods: {
+    async fetchUser(userId) {
+      try {
+        const response = await usersAPI.getUsers({ userId });
+        console.log("response", response);
+
+        const user = response.data;
+        this.user = user;
+      } catch (error) {
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "無法取得使用者資料"
+        });
+      }
+    },
+    async fetchUserTweetsLength(userId) {
+      try {
+        const response = await usersAPI.getUsersTweets({ userId });
+
+        console.log(response.data.length);
+        const tweetsLength = response.data.length;
+        this.tweetsLength = tweetsLength;
+      } catch (error) {
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "無法取得使用者資料"
+        });
+      }
+    }
   }
 };
 </script>

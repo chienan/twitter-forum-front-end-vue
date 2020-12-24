@@ -36,14 +36,21 @@
           <div class="user-account">@{{user.account}}</div>
           <div class="user-intro">{{user.introduction}}</div>
         </div>
-        <div class="follow-section">
-          <a href class="following-section">
+        <!-- <div class="follow-section">
+          <router-link
+            :to="{ name: 'user-following', params: { id: user.id } }"
+            class="following-section"
+          >
             <div class="following-number">{{followingLength ? followingLength : '0'}} 個</div>跟隨中
-          </a>
-          <a href class="follower-section">
+          </router-link>
+
+          <router-link
+            :to="{ name: 'user-follower', params: { id: user.id } }"
+            class="follower-section"
+          >
             <div class="follower-number">{{followerLength ? followerLength : '0'}} 位</div>跟隨者
-          </a>
-        </div>
+          </router-link>
+        </div>-->
       </div>
     </div>
   </div>
@@ -283,6 +290,8 @@ img {
 }
 
 .user-intro {
+  max-height: 50px;
+  overflow: hidden;
   padding-top: 10px;
   font-weight: 400;
   font-size: 14px;

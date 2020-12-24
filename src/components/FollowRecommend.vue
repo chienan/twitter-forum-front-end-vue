@@ -5,7 +5,9 @@
         <div class="list-group-item list-title">跟隨誰</div>
 
         <!--li start-->
+
         <div class="list-group-item" v-for="user in users" :key="user.id">
+          <!-- @click.stop.prevent="addFollow()"-->
           <div v-if="currentUser.id !== user.id" class="list-container">
             <div class="item d-flex row justify-content-between align-items-center">
               <div class="li-front-part row">
@@ -19,18 +21,18 @@
                 <div class="recommend-title d-flex flex-column">
                   <router-link :to="{name: 'user', params: {id: user.id}}">
                     <!--recommend name-->
-                    <div class="recommend-name">{{user.account}}</div>
+                    <div class="recommend-name">{{user.name}}</div>
 
                     <!--recommend id-->
-                    <div class="recommend-account">@{{user.id}}</div>
+                    <div class="recommend-account">@{{user.account}}</div>
                   </router-link>
                 </div>
               </div>
 
               <div class="btn-follow">
-                <button v-if="user.isFollowed" class="delete-follow">正在跟隨</button>
+                <!-- <button v-if="user.isFollowed" class="delete-follow">正在跟隨</button> -->
 
-                <button v-else class="follow">跟隨</button>
+                <button class="follow" :key="user.id">跟隨</button>
               </div>
             </div>
           </div>
@@ -73,6 +75,22 @@ export default {
           icon: "error",
           title: "無法取得資料，請稍後再試"
         });
+      }
+    },
+    async addFollow() {
+      try {
+        const response = await usersAPI.addFollow({
+          userId: this.user.id
+        });
+
+        console.log(response);
+        // const { data } = response;
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: "無法追蹤使用者，請稍後再試"
+        });
+        console.log("error", error);
       }
     }
   },
