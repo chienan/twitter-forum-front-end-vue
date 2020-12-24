@@ -57,8 +57,8 @@
 </template>
 
 <script>
-// import usersAPI from "../apis/users";
-// import { Toast } from "../utils/helpers";
+import usersAPI from "../apis/users";
+import { Toast } from "../utils/helpers";
 import { mapState } from "vuex";
 
 export default {
@@ -72,8 +72,9 @@ export default {
     };
   },
   created() {
-    // this.getFollowingsNumber();
-    // this.getFollowersNumber();
+    const { id: userId } = this.$route.params;
+    this.getFollowingsNumber(userId);
+    this.getFollowersNumber(userId);
   },
 
   computed: {
@@ -81,42 +82,42 @@ export default {
   },
 
   methods: {
-    // async getFollowingsNumber(userId) {
-    //   try {
-    //     const response = await usersAPI.getUserFollowings({ userId });
-    //     console.log("response", response);
-    //     const followingLength = response.data.length;
-    //     if (followingLength) {
-    //       this.followingLength = followingLength;
-    //     } else {
-    //       this.followingLength = 0;
-    //     }
-    //   } catch (error) {
-    //     console.log("error", error);
-    //     Toast.fire({
-    //       icon: "error",
-    //       title: "無法取得使用者跟隨中資料"
-    //     });
-    //   }
-    // },
-    // async getFollowersNumber(userId) {
-    //   try {
-    //     const response = await usersAPI.getUserFollowers({ userId });
-    //     console.log("response", response);
-    //     const followerLength = response.data.length;
-    //     if (followerLength) {
-    //       this.followerLength = followerLength;
-    //     } else {
-    //       this.followerLength = 0;
-    //     }
-    //   } catch (error) {
-    //     console.log("error", error);
-    //     Toast.fire({
-    //       icon: "error",
-    //       title: "無法取得使用者跟隨者資料"
-    //     });
-    //   }
-    // }
+    async getFollowingsNumber(userId) {
+      try {
+        const response = await usersAPI.getUserFollowings({ userId });
+        console.log("response", response);
+        const followingLength = response.data.length;
+        if (followingLength) {
+          this.followingLength = followingLength;
+        } else {
+          this.followingLength = 0;
+        }
+      } catch (error) {
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "無法取得使用者跟隨中資料"
+        });
+      }
+    },
+    async getFollowersNumber(userId) {
+      try {
+        const response = await usersAPI.getUserFollowers({ userId });
+        console.log("response", response);
+        const followerLength = response.data.length;
+        if (followerLength) {
+          this.followerLength = followerLength;
+        } else {
+          this.followerLength = 0;
+        }
+      } catch (error) {
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "無法取得使用者跟隨者資料"
+        });
+      }
+    }
   }
 };
 </script>

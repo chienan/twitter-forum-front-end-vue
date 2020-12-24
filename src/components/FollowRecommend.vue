@@ -1,13 +1,14 @@
 <template>
   <div class="container mt-3">
     <div class="list-group-container d-flex justify-content-center">
-      <ul class="list-group list-group-flush">
+      <div class="list-group list-group-flush">
         <div class="list-group-item list-title">跟隨誰</div>
 
         <!--li start-->
 
         <div class="list-group-item" v-for="user in users" :key="user.id">
-          <div v-if="currentUser.id !== user.id" class="list-container">
+          <!-- currentUser.id !== user.id -->
+          <div v-if="user.id !== currentUser.id" class="list-container">
             <div class="item d-flex row justify-content-between align-items-center">
               <div class="li-front-part row">
                 <div class="image-container">
@@ -31,7 +32,7 @@
               <div class="btn-follow">
                 <!-- <button v-if="user.isFollowed" class="delete-follow">正在跟隨</button> -->
 
-                <button class="follow" :key="user.id" @click.stop.prevent="addFollow">跟隨</button>
+                <button class="follow" @click.stop.prevent="addFollow(user.id)">跟隨</button>
               </div>
             </div>
           </div>
@@ -40,7 +41,7 @@
         <div class="recommend-bottom">
           <a href class="show-more">顯示更多</a>
         </div>
-      </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -84,6 +85,7 @@ export default {
         });
 
         console.log(response);
+        console.log("追蹤使用者");
         // const { data } = response;
       } catch (error) {
         Toast.fire({

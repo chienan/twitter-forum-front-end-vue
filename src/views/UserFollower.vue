@@ -29,7 +29,6 @@
             <router-link :to="{ name: 'user', params:{id: user.id}}">
               <div class="item-user-info">
                 <div class="user-name">{{user.name}}</div>
-
                 <div class="user-account">@{{user.account}}</div>
               </div>
               <div class="item-content">{{user.introduction}}</div>
@@ -180,7 +179,7 @@ export default {
   border-top: none;
   display: flex;
   padding-top: 3px;
-  padding-bottom: 10px;
+  padding-bottom: 0px;
   position: relative;
 }
 

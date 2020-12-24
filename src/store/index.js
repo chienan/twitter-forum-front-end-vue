@@ -35,14 +35,16 @@ export default new Vuex.Store({
       try {
         const { data } = await usersAPI.getCurrentUser()
 
-        const { id, name, email, image, isAdmin } = data
+        const { id, name, email, avatar, role, Followers, Followings } = data
 
         commit('setCurrentUser', {
           id,
           name,
           email,
-          image,
-          isAdmin
+          avatar,
+          role,
+          Followers,
+          Followings
         })
       } catch (error) {
         console.error(error.message)

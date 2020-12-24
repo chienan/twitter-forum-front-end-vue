@@ -60,12 +60,17 @@ export default {
     })
   },
   deleteLike({ tweetId }) {
-    return apiHelper.post(`tweets/${tweetId}/unlike `, null, {
+    return apiHelper.post(`/tweets/${tweetId}/unlike `, null, {
       headers: { Authorization: `Bearer ${getToken()}` }
     })
   },
   addFollow({ id }) {
-    return apiHelper.post('/api/followships', { id }, {
+    return apiHelper.post('/followships', { id }, {
+      headers: { Authorization: `Bearer ${getToken()}` }
+    })
+  },
+  deleteFollowing({ userId }) {
+    return apiHelper.delete(`/followships/${userId}`, {
       headers: { Authorization: `Bearer ${getToken()}` }
     })
   }

@@ -18,7 +18,7 @@
       <!-- User Follow List -->
       <div class="user-follow-list">
         <div class="follow-item" v-for="user in users" :key="user.id">
-          <button class="delete-follow">正在跟隨</button>
+          <button class="delete-follow" @click.stop.prevent="deleteFollowing(user.id)">正在跟隨</button>
           <div class="item-left">
             <router-link :to="{ name: 'user', params:{id: user.id}}">
               <img :src="user.avatar" class="circle" alt />
@@ -114,6 +114,25 @@ export default {
           title: "無法取得使用者資料"
         });
       }
+    },
+    async deleteFollowing(userId) {
+      try {
+        const { data } = await usersAPI.deleteFollowing({ userId });
+
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+        this.users = {
+          ...this.users
+        };
+        console.log("成功取消追蹤");
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: "無法取消追蹤，請稍後再試"
+        });
+        console.log("error", error);
+      }
     }
   }
 };
@@ -178,7 +197,7 @@ export default {
   border-top: none;
   display: flex;
   padding-top: 3px;
-  padding-bottom: 10px;
+  padding-bottom: 0px;
   position: relative;
 }
 
