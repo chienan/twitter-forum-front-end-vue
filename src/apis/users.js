@@ -25,6 +25,13 @@ export default {
     })
   },
 
+  editUserIntro({ userId }) {
+    return apiHelper.put(`/users/${userId}`, {
+      headers: { Authorization: `Bearer ${getToken()}` }
+    })
+
+  },
+
   getUsersTweets({ userId }) {
     return apiHelper.get(`/users/${userId}/tweets`, {
       headers: { Authorization: `Bearer ${getToken()}` }

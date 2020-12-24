@@ -65,6 +65,11 @@ const router = new Router({
       component: () => import('../views/UserProfileEdit.vue')
     },
     {
+      path: '/users/:id/edit_intro',
+      name: 'users-edit-into',
+      component: () => import('../components/UserEdit.vue')
+    },
+    {
       path: '/users/:id/replied_tweets',
       name: 'users-replied-tweets',
       component: () => import('../views/UserProfileReplied.vue')

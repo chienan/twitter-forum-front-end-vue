@@ -156,26 +156,20 @@ export default {
     ...mapState(["currentUser", "isAuthenticated"])
   },
 
-  // watch: {
-  //   tweets: {
-  //     handler: function() {
-  //       console.log("saveStorage"); //測試用
-  //     },
-  //     deep: true
-  //   }
-  // },
   methods: {
     async addLike(tweetId) {
       try {
         const { data } = await usersAPI.addLike({ tweetId });
-
         if (data.status !== "success") {
           throw new Error(data.message);
         }
-
         this.tweet = {
           ...this.tweet
         };
+
+        // this.$emit("after-add-like", {
+        //   tweetId: data.tweetId,
+        // });
       } catch (error) {
         Toast.fire({
           icon: "error",

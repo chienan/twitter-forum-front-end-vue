@@ -69,6 +69,13 @@ export default {
       });
       console.log("aftercreate");
     }
+    // afterAddLike(payload) {
+    //   const { tweetId } = payload;
+    //   this.tweets.push({
+    //     id: tweetId,
+    //     likeCount: +1
+    //   });
+    // }
   },
   watch: {
     tweets: {

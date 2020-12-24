@@ -9,7 +9,10 @@
       <div class="profile-container">
         <!-- button section -->
         <div v-if="currentUser.id === user.id" class="edit-section">
-          <a href class="btn-edit">編輯個人資料</a>
+          <router-link
+            :to="{ name: 'users-edit-into', params: { id: user.id }}"
+            class="btn-edit"
+          >編輯個人資料</router-link>
         </div>
 
         <div v-else class="btn-section">
