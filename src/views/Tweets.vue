@@ -37,11 +37,11 @@ export default {
   components: {
     NavBar,
     MainTweets,
-    FollowRecommend
+    FollowRecommend,
   },
   data() {
     return {
-      tweets: {}
+      tweets: {},
       // currentUser: {}
       // currentUser: {
       //   id: -1,
@@ -62,7 +62,7 @@ export default {
     async fetchTweets() {
       try {
         const response = await tweetsAPI.getTweets({ tweets });
-        // console.log("response", response);
+        console.log("response", response);
 
         const tweets = response.data;
         this.tweets = tweets;
@@ -70,7 +70,7 @@ export default {
         console.log("error", error);
         Toast.fire({
           icon: "error",
-          title: "無法取得資料，請稍後再試"
+          title: "無法取得資料，請稍後再試",
         });
       }
     },
@@ -91,11 +91,11 @@ export default {
         console.log("error", error);
         Toast.fire({
           icon: "error",
-          title: "無法取得當前使用者"
+          title: "無法取得當前使用者",
         });
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
