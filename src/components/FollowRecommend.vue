@@ -1,43 +1,47 @@
 <template>
   <div class="container mt-3">
     <div class="list-group-container d-flex justify-content-center">
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item list-title">跟隨誰</li>
+      <div class="list-group list-group-flush">
+        <div class="list-group-item list-title">跟隨誰</div>
 
         <!--li start-->
-        <li class="list-group-item" v-for="user in users" :key="user.id">
-          <div class="item d-flex row justify-content-between align-items-center">
-            <div class="li-front-part row">
-              <div class="image-container">
-                <!--recommend image-->
-                <router-link :to="{name: 'user', params: {id: user.id}}">
-                  <img :src="user.avatar" class="user-avatar" width="50px" height="50px" />
-                </router-link>
+
+        <div class="list-group-item" v-for="user in users" :key="user.id">
+          <!-- currentUser.id !== user.id -->
+          <div v-if="user.id !== currentUser.id" class="list-container">
+            <div class="item d-flex row justify-content-between align-items-center">
+              <div class="li-front-part row">
+                <div class="image-container">
+                  <!--recommend image-->
+                  <router-link :to="{name: 'user', params: {id: user.id}}">
+                    <img :src="user.avatar" class="user-avatar" width="50px" height="50px" />
+                  </router-link>
+                </div>
+
+                <div class="recommend-title d-flex flex-column">
+                  <router-link :to="{name: 'user', params: {id: user.id}}">
+                    <!--recommend name-->
+                    <div class="recommend-name">{{user.name}}</div>
+
+                    <!--recommend id-->
+                    <div class="recommend-account">@{{user.account}}</div>
+                  </router-link>
+                </div>
               </div>
 
-              <div class="recommend-title d-flex flex-column">
-                <router-link :to="{name: 'user', params: {id: user.id}}">
-                  <!--recommend name-->
-                  <div class="recommend-name">{{user.account}}</div>
+              <div class="btn-follow">
+                <!-- <button v-if="user.isFollowed" class="delete-follow">正在跟隨</button> -->
 
-                  <!--recommend id-->
-                  <div class="recommend-account">@{{user.id}}</div>
-                </router-link>
+                <button class="follow" @click.stop.prevent="addFollow(user.id)">跟隨</button>
               </div>
-            </div>
-
-            <div class="btn-follow">
-              <button v-if="user.isFollowed" class="delete-follow">正在跟隨</button>
-
-              <button v-else class="follow">跟隨</button>
             </div>
           </div>
-        </li>
+        </div>
 
         <div class="recommend-bottom">
           <a href class="show-more">顯示更多</a>
         </div>
-      </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -46,11 +50,13 @@
 <script>
 import usersAPI from "../apis/users";
 import { Toast } from "../utils/helpers";
+import { mapState } from "vuex";
 
 export default {
   data() {
     return {
-      users: {}
+      users: {},
+      id: ""
     };
   },
   created() {
@@ -71,7 +77,45 @@ export default {
           title: "無法取得資料，請稍後再試"
         });
       }
+    },
+    async addFollow() {
+      try {
+        const response = await usersAPI.addFollow({
+          id: this.userId
+        });
+
+        console.log(response);
+        console.log("追蹤使用者");
+        // const { data } = response;
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: "無法追蹤使用者，請稍後再試"
+        });
+        console.log("error", error);
+      }
     }
+    // async addFollow() {
+    //   try {
+    //     const { data } = await usersAPI.create({
+    //       id: this.id
+    //     });
+    //     if (data.status === "error") {
+    //       throw new Error(data.message);
+    //     }
+    //     console.log("追蹤成功");
+    //   } catch (error) {
+    //     console.error(error.message);
+    //     Toast.fire({
+    //       icon: "error",
+    //       title: "無法追蹤使用者，請稍後再試"
+    //     });
+    //   }
+    // }
+  },
+  //vuex `mapState` 方法
+  computed: {
+    ...mapState(["currentUser", "isAuthenticated"])
   }
 };
 </script>

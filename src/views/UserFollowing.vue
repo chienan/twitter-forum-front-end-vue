@@ -5,108 +5,37 @@
     </div>
 
     <div class="main-content">
-      <UserProfileNav />
+      <UserProfileNav :user="user" :tweetsLength="tweetsLength" />
 
       <!-- User Follow NavTab -->
       <div class="follow-nav-tabs">
-        <a href="/#/users/follower" class="tab-follower">跟隨者</a>
+        <router-link
+          :to="{ name: 'user-follower', params: { id: user.id } }"
+          class="tab-follower"
+        >跟隨者</router-link>
         <a href class="tab-following">正在跟隨</a>
       </div>
       <!-- User Follow List -->
       <div class="user-follow-list">
-        <div class="follow-item">
-          <button class="delete-follow">正在跟隨</button>
-          <a href class="item-left">
-            <div class="circle"></div>
-          </a>
+        <div class="follow-item" v-for="user in users" :key="user.id">
+          <button class="delete-follow" @click.stop.prevent="deleteFollowing(user.id)">正在跟隨</button>
+          <div class="item-left">
+            <router-link :to="{ name: 'user', params:{id: user.id}}">
+              <img :src="user.avatar" class="circle" alt />
+            </router-link>
+          </div>
 
           <div class="item-right">
-            <div class="item-user-info">
-              <a href class="user-name">Walter White</a>
+            <router-link :to="{ name: 'user', params:{id: user.id}}">
+              <div class="item-user-info">
+                <div class="user-name">{{user.name}}</div>
 
-              <a href class="user-id">@wwwww</a>
-            </div>
-            <a
-              href
-              class="item-content"
-            >Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</a>
+                <div class="user-account">@{{user.account}}</div>
+              </div>
+              <div class="item-content">{{user.introduction}}</div>
+            </router-link>
           </div>
         </div>
-
-        <!--  User Follow List Test -->
-        <div class="follow-item">
-          <button class="delete-follow">正在跟隨</button>
-          <a href class="item-left">
-            <div class="circle"></div>
-          </a>
-
-          <div class="item-right">
-            <div class="item-user-info">
-              <a href class="user-name">Walter White</a>
-
-              <a href class="user-id">@wwwww</a>
-            </div>
-            <a
-              href
-              class="item-content"
-            >Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</a>
-          </div>
-        </div>
-        <div class="follow-item">
-          <button class="delete-follow">正在跟隨</button>
-          <a href class="item-left">
-            <div class="circle"></div>
-          </a>
-
-          <div class="item-right">
-            <div class="item-user-info">
-              <a href class="user-name">Walter White</a>
-
-              <a href class="user-id">@wwwww</a>
-            </div>
-            <a
-              href
-              class="item-content"
-            >Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</a>
-          </div>
-        </div>
-        <div class="follow-item">
-          <button class="delete-follow">正在跟隨</button>
-          <a href class="item-left">
-            <div class="circle"></div>
-          </a>
-
-          <div class="item-right">
-            <div class="item-user-info">
-              <a href class="user-name">Walter White</a>
-
-              <a href class="user-id">@wwwww</a>
-            </div>
-            <a
-              href
-              class="item-content"
-            >Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</a>
-          </div>
-        </div>
-        <div class="follow-item">
-          <button class="delete-follow">正在跟隨</button>
-          <a href class="item-left">
-            <div class="circle"></div>
-          </a>
-
-          <div class="item-right">
-            <div class="item-user-info">
-              <a href class="user-name">Walter White</a>
-
-              <a href class="user-id">@wwwww</a>
-            </div>
-            <a
-              href
-              class="item-content"
-            >Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</a>
-          </div>
-        </div>
-        <!-- User Follow List Test End -->
       </div>
     </div>
 
@@ -120,12 +49,91 @@
 import NavBar from "../components/NavBar";
 import FollowRecommend from "../components/FollowRecommend";
 import UserProfileNav from "../components/UserProfileNav";
+import { Toast } from "../utils/helpers";
+import usersAPI from "../apis/users";
 
 export default {
   components: {
     NavBar,
     FollowRecommend,
     UserProfileNav
+  },
+  data() {
+    return {
+      user: {},
+      tweetsLength: "",
+      users: {}
+    };
+  },
+  created() {
+    const { id: userId } = this.$route.params;
+    this.fetchUser(userId);
+    this.fetchUserTweetsLength(userId);
+    this.fetchUserFollowing(userId);
+  },
+  methods: {
+    async fetchUser(userId) {
+      try {
+        const response = await usersAPI.getUsers({ userId });
+        console.log("response", response);
+
+        const user = response.data;
+        this.user = user;
+      } catch (error) {
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "無法取得使用者資料"
+        });
+      }
+    },
+    async fetchUserTweetsLength(userId) {
+      try {
+        const response = await usersAPI.getUsersTweets({ userId });
+        const tweetsLength = response.data.length;
+        this.tweetsLength = tweetsLength;
+      } catch (error) {
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "無法取得使用者資料"
+        });
+      }
+    },
+    async fetchUserFollowing(userId) {
+      try {
+        const response = await usersAPI.getUserFollowings({ userId });
+        console.log("response", response);
+
+        const users = response.data;
+        this.users = users;
+      } catch (error) {
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "無法取得使用者資料"
+        });
+      }
+    },
+    async deleteFollowing(userId) {
+      try {
+        const { data } = await usersAPI.deleteFollowing({ userId });
+
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+        this.users = {
+          ...this.users
+        };
+        console.log("成功取消追蹤");
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: "無法取消追蹤，請稍後再試"
+        });
+        console.log("error", error);
+      }
+    }
   }
 };
 </script>
@@ -189,7 +197,7 @@ export default {
   border-top: none;
   display: flex;
   padding-top: 3px;
-  padding-bottom: 10px;
+  padding-bottom: 0px;
   position: relative;
 }
 
@@ -228,7 +236,7 @@ export default {
   margin-top: -3px;
 }
 
-.user-id {
+.user-account {
   font-weight: 400;
   font-size: 15px;
   line-height: 22px;

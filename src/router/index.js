@@ -2,8 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import NotFound from '../views/NotFound'
 import SignIn from '../views/SignIn.vue'
-import UserFollower from '../views/UserFollower'
-import UserFollowing from '../views/UserFollowing'
 import store from './../store'
 
 // import UserProfileLiked from '../views/UserProfileLiked'
@@ -67,6 +65,11 @@ const router = new Router({
       component: () => import('../views/UserProfileEdit.vue')
     },
     {
+      path: '/users/:id/edit_intro',
+      name: 'users-edit-into',
+      component: () => import('../components/UserEdit.vue')
+    },
+    {
       path: '/users/:id/replied_tweets',
       name: 'users-replied-tweets',
       component: () => import('../views/UserProfileReplied.vue')
@@ -76,40 +79,19 @@ const router = new Router({
       name: 'users-likes',
       component: () => import('../views/UserProfileLiked.vue')
     },
-
-
-    /*********  test  **********/
     {
-      path: '/users/follower',
+      path: '/users/:id/followers',
       name: 'user-follower',
-      component: UserFollower
+      component: () => import('../views/UserFollower.vue')
     },
-    /*********  test ***********/
     {
-      path: '/users/following',
+      path: '/users/:id/followings',
       name: 'user-following',
-      component: UserFollowing
+      component: () => import('../views/UserFollowing.vue')
     },
-    /*********  test  **********/
-    // {
-    //   path: '/userOther',
-    //   name: 'user-other',
-    //   component: UserOtherProfile
-    // },
-    // {
-    //   path: '/userOther/replied',
-    //   name: 'user-other-replied',
-    //   component: UserOtherReplied
-    // },
-    // {
-    //   path: '/userOther/liked',
-    //   name: 'user-other-liked',
-    //   component: UserOtherLiked
-    // },
 
-
+    /***** admin *****/
     {
-
       path: '/admin',
       name: 'admin-signIn',
       component: () => import('../views/AdminSignIn.vue')
@@ -124,11 +106,6 @@ const router = new Router({
       name: 'admin-userList',
       component: () => import('../views/AdminUserList.vue')
     },
-    // {
-    //   path: '/users/following',
-    //   name: 'user-following',
-    //   component: UserFollowing
-    // },
 
     {
       path: '*',

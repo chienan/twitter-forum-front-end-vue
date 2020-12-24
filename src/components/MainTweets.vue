@@ -20,81 +20,116 @@
             <div class="user-input">有什麼新鮮事？</div>
           </div>
           <div class="input-content-bottom">
-            <button class="btn-tweet">推文</button>
+            <button class="btn-tweet" @click="openModal">推文</button>
           </div>
         </div>
       </div>
+
       <!-- tweet-list -->
       <div class="tweet-list">
         <!--tweet item start-->
 
         <div class="tweet-item" v-for="tweet in tweets" :key="tweet.id">
-          <router-link
-            :to="{ name: 'user', params: { id: tweet.UserId } }"
-            class="item-left"
-          >
+
+          <router-link :to="{ name: 'user', params:{id: tweet.UserId}}" class="item-left">
+            <img :src="tweet.User.avatar" width="50" height="50" class="user-avatar" />
           </router-link>
 
-          <img
-            :src="tweet.User.avatar"
-            width="50"
-            height="50"
-            class="user-avatar"
-          />
-
-          <!-- </router-link> -->
 
           <div class="item-right">
             <div class="item-user-info d-flex">
               <router-link
                 :to="{ name: 'tweet', params: { id: tweet.id } }"
                 class="user-name"
-                >{{ tweet.User.name }}</router-link
-              >
+              >{{ tweet.User.name }}</router-link>
 
-              <a href class="user-account">@{{ tweet.User.account }}</a>
+              <router-link
+                :to="{ name: 'tweet', params: { id: tweet.id } }"
+                class="user-name" class="user-account">@{{tweet.User.account}}</router-link>
+
+
 
               <div class="time">・{{ tweet.createdAt | fromNow }}</div>
             </div>
             <router-link
               :to="{ name: 'tweet', params: { id: tweet.id } }"
               class="item-content"
-              >{{ tweet.description }}</router-link
-            >
+            >{{ tweet.description }}</router-link>
             <div class="item-interaction">
               <a href class="tweet-reply">
-                <img
-                  src="https://i.imgur.com/I3DHrNy.png"
-                  id="icon-reply"
-                  alt
-                />
-                <p>{{ tweet.Replies.length }}</p>
+
+                <img src="https://i.imgur.com/I3DHrNy.png" id="icon-reply" alt />
+                <p>{{tweet.replyCount}}</p>
+
               </a>
 
               <div class="tweet-like">
-                <div class="unlike-container">
-                  <img
-                    src="https://i.imgur.com/7Mp1UdA.png"
-                    id="icon-unlike"
-                    @click.stop.prevent="deleteLike(tweet.id)"
-                    alt
-                  />
-                </div>
                 <div class="like-container">
                   <img
                     src="https://i.imgur.com/gCFSWst.png"
                     id="icon-like"
+                    @click="isLiked=true"
                     @click.stop.prevent="addLike(tweet.id)"
                     alt
                   />
                 </div>
+                <div class="unlike-container">
+                  <img
+                    src="https://i.imgur.com/7Mp1UdA.png"
+                    id="icon-unlike"
+                    @click="isLiked=false"
+                    @click.stop.prevent="deleteLike(tweet.id)"
+                    alt
+                  />
+                </div>
 
-                <p>5</p>
+                <p>{{tweet.likeCount}}</p>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <!-- tweet Modal start -->
+      <div v-if="myModal">
+        <transition name="modal">
+          <div class="modal-mask">
+            <div class="modal-wrapper">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" @click="myModal=false">
+                      <span area-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <form @submit.stop.prevent="handleSubmit">
+                    <div class="modal-body">
+                      <img
+                        :src="currentUser.avatar"
+                        height="50px"
+                        width="50px"
+                        class="user-avatar"
+                        id="modal-avatar"
+                      />
+                      <textarea
+                        name="description"
+                        rows="2"
+                        cols="40"
+                        required
+                        v-model="description"
+                        style="height: 150px; width: 380px;border:none"
+                      >
+                      有什麼新鮮事？
+                      </textarea>
+                      <button class="btn-tweet">推文</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </transition>
+      </div>
+      <!-- tweet Modal end -->
     </div>
   </div>
 </template>
@@ -104,6 +139,8 @@ import moment from "moment";
 import { mapState } from "vuex";
 import { Toast } from "../utils/helpers";
 import usersAPI from "../apis/users";
+import tweetsAPI from "../apis/tweets";
+
 // let isLiked = false;
 export default {
   filters: {
@@ -112,22 +149,25 @@ export default {
         return "-";
       }
       return moment(datetime).fromNow();
-    },
+    }
   },
   data() {
     return {
-      // isLiked: ""
+      myModal: false,
+      isLiked: true,
+      description: ""
     };
   },
   props: {
     tweets: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   computed: {
     ...mapState(["currentUser", "isAuthenticated"]),
   },
+
   methods: {
     async addLike(tweetId) {
       try {
@@ -136,10 +176,14 @@ export default {
           throw new Error(data.message);
         }
         this.tweet = {
-          ...this.tweet,
-          // isLiked = true
+
+          ...this.tweet
         };
-        console.log(this.tweet);
+
+        // this.$emit("after-add-like", {
+        //   tweetId: data.tweetId,
+        // });
+
       } catch (error) {
         Toast.fire({
           icon: "error",
@@ -157,7 +201,7 @@ export default {
         this.tweet = {
           ...this.tweet,
         };
-        this.tweet.isLiked = false;
+
         console.log(this.tweet);
       } catch (error) {
         console.error(error.message);
@@ -167,7 +211,45 @@ export default {
         });
       }
     },
-  },
+
+    openModal() {
+      this.myModal = true;
+    },
+
+    async handleSubmit() {
+      try {
+        if (!this.description) {
+          Toast.fire({
+            icon: "warning",
+            title: "您尚未填寫任何文字"
+          });
+          return;
+        }
+        // this.isProcessing = true;
+        const { data } = await tweetsAPI.create({
+          description: this.description
+        });
+        if (data.status === "error") {
+          throw new Error(data.message);
+        }
+
+        this.$emit("after-create-tweet", {
+          tweetId: data.tweetId,
+          description: this.description
+        });
+
+        this.myModal = false;
+        this.description = "";
+      } catch (error) {
+        console.error(error.message);
+        Toast.fire({
+          icon: "error",
+          title: "無法新增tweet，請稍後再試"
+        });
+      }
+    }
+  }
+
 };
 </script>
 
@@ -354,4 +436,28 @@ p {
   width: 20px;
   margin-right: 11.35px;
 }
+
+
+.modal-mask {
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: table;
+  transition: opacity 0.3s ease;
+}
+
+.modal-body {
+  height: 245px;
+  display: flex;
+  vertical-align: text-top;
+}
+.modal-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+}
 </style>
+
