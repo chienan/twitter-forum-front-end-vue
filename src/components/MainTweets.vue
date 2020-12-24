@@ -97,13 +97,16 @@
                         class="user-avatar"
                         id="modal-avatar"
                       />
-                      <input
-                        type="text"
-                        class="form-control"
+                      <textarea
+                        name="description"
+                        rows="2"
+                        cols="40"
+                        required
                         v-model="description"
-                        placeholder="有什麼新鮮事？"
-                        style="height: 150px; width: 380px;"
-                      />
+                        style="height: 150px; width: 380px;border:none"
+                      >
+                      有什麼新鮮事？
+                      </textarea>
                       <button class="btn-tweet">推文</button>
                     </div>
                   </form>
@@ -152,6 +155,15 @@ export default {
   computed: {
     ...mapState(["currentUser", "isAuthenticated"])
   },
+
+  // watch: {
+  //   tweets: {
+  //     handler: function() {
+  //       console.log("saveStorage"); //測試用
+  //     },
+  //     deep: true
+  //   }
+  // },
   methods: {
     async addLike(tweetId) {
       try {
@@ -163,12 +175,7 @@ export default {
 
         this.tweet = {
           ...this.tweet
-          // isLiked = true
         };
-
-        this.isLiked = true;
-
-        console.log(this.tweet);
       } catch (error) {
         Toast.fire({
           icon: "error",
@@ -188,7 +195,6 @@ export default {
           ...this.tweet
         };
 
-        this.isLiked = false;
         console.log(this.tweet);
       } catch (error) {
         console.error(error.message);
@@ -218,10 +224,12 @@ export default {
         if (data.status === "error") {
           throw new Error(data.message);
         }
-        // this.$emit("after-create-tweet", {
-        //   tweetId: data.tweetId,
-        //   description: this.description
-        // });
+
+        this.$emit("after-create-tweet", {
+          tweetId: data.tweetId,
+          description: this.description
+        });
+
         this.myModal = false;
         this.description = "";
       } catch (error) {

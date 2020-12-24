@@ -47,9 +47,6 @@
               </div>
             </div>
           </div>
-          <!-- tweet-item-test -->
-
-          <!-- tweet-item-test-end -->
         </div>
       </div>
     </div>
