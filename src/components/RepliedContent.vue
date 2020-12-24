@@ -36,9 +36,7 @@
 
           <div id="thumbnail">
             <img src="https://i.postimg.cc/tRhFH1cM/Photo.png" alt="" />
-            <span style="color: #9197a3; font-weight: bold" class="push"
-              >推你的回覆</span
-            >
+            <span class="push">推你的回覆</span>
             <div>
               <input
                 style="width: 380px; height: 140px; border: none; outline: none"
@@ -114,8 +112,10 @@
 }
 .push {
   position: absolute;
-  top: 10px;
+  top: 14px;
   left: 60px;
+  color: #9197a3;
+  font-size: 18px;
 }
 button {
   border-radius: 35px;
@@ -124,4 +124,24 @@ button {
   background-color: #ff6600;
   color: white;
 }
+button:hover {
+  color: white;
+  background-color: #ff6600;
+}
+button:focus {
+  /* outline: 0; */
+  border-color: #ccc;
+  outline: none;
+  box-shadow: none;
+  background-color: #ff6600;
+  border: none;
+}
+/* button:active {
+  color: white;
+  background-color: #ff6600;
+}
+.btn-warning {
+  background-color: #ff6600;
+  border: none;
+} */
 </style>
