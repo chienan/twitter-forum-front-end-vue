@@ -26,11 +26,13 @@ export default {
   components: {
     NavBar,
     MainTweets,
-    FollowRecommend
+    FollowRecommend,
   },
   data() {
     return {
+
       tweets: {}
+
     };
   },
   created() {
@@ -40,7 +42,7 @@ export default {
     async fetchTweets() {
       try {
         const response = await tweetsAPI.getTweets({ tweets });
-        // console.log("response", response);
+        console.log("response", response);
 
         const tweets = response.data;
         this.tweets = tweets;
@@ -48,10 +50,11 @@ export default {
         console.log("error", error);
         Toast.fire({
           icon: "error",
-          title: "無法取得資料，請稍後再試"
+          title: "無法取得資料，請稍後再試",
         });
       }
     },
+
     afterCreateTweet(payload) {
       const { tweetId, description } = payload;
       this.tweets.push({
@@ -88,6 +91,7 @@ export default {
   computed: {
     ...mapState(["currentUser", "isAuthenticated"])
   }
+
 };
 </script>
 

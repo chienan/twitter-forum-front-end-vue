@@ -15,9 +15,9 @@
       <FollowRecommend />
     </div>
 
-    <div style="display: none">
+    <div>
       <!-- RepliedContent -->
-      <RepliedContent />
+      <RepliedContent style="display: none" />
     </div>
   </div>
 </template> 
@@ -36,16 +36,16 @@ export default {
     FollowRecommend,
   },
   create() {
-    const { id } = this.$route.params;
-    this.fetchTweet(id);
+    // const { id } = this.$route.params;
+    this.fetchTweet(1);
     console.log(id);
   },
 
   methods: {
-    async fetchTweet(tweetUserId) {
-      console.log(tweetUserId);
+    async fetchTweet(tweetId) {
+      console.log(tweetId);
       try {
-        const response = await tweetAPI.tweet.get({ tweetUserId });
+        const response = await tweetAPI.tweet.get(tweetId);
         console.log(response);
       } catch (error) {
         console.log("error", error);

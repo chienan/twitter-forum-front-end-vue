@@ -10,7 +10,12 @@
           <div class="input-content-top">
             <!--current-user-image-->
             <div class="user-image">
-              <img :src="currentUser.avatar" height="50px" width="50px" class="user-avatar" />
+              <img
+                :src="currentUser.avatar"
+                height="50px"
+                width="50px"
+                class="user-avatar"
+              />
             </div>
             <div class="user-input">有什麼新鮮事？</div>
           </div>
@@ -25,9 +30,11 @@
         <!--tweet item start-->
 
         <div class="tweet-item" v-for="tweet in tweets" :key="tweet.id">
+
           <router-link :to="{ name: 'user', params:{id: tweet.UserId}}" class="item-left">
             <img :src="tweet.User.avatar" width="50" height="50" class="user-avatar" />
           </router-link>
+
 
           <div class="item-right">
             <div class="item-user-info d-flex">
@@ -36,7 +43,11 @@
                 class="user-name"
               >{{ tweet.User.name }}</router-link>
 
-              <a href class="user-account">@{{tweet.User.account}}</a>
+              <router-link
+                :to="{ name: 'tweet', params: { id: tweet.id } }"
+                class="user-name" class="user-account">@{{tweet.User.account}}</router-link>
+
+
 
               <div class="time">・{{ tweet.createdAt | fromNow }}</div>
             </div>
@@ -46,8 +57,10 @@
             >{{ tweet.description }}</router-link>
             <div class="item-interaction">
               <a href class="tweet-reply">
+
                 <img src="https://i.imgur.com/I3DHrNy.png" id="icon-reply" alt />
                 <p>{{tweet.replyCount}}</p>
+
               </a>
 
               <div class="tweet-like">
@@ -129,7 +142,6 @@ import usersAPI from "../apis/users";
 import tweetsAPI from "../apis/tweets";
 
 // let isLiked = false;
-
 export default {
   filters: {
     fromNow(datetime) {
@@ -153,7 +165,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(["currentUser", "isAuthenticated"])
+    ...mapState(["currentUser", "isAuthenticated"]),
   },
 
   methods: {
@@ -164,16 +176,18 @@ export default {
           throw new Error(data.message);
         }
         this.tweet = {
+
           ...this.tweet
         };
 
         // this.$emit("after-add-like", {
         //   tweetId: data.tweetId,
         // });
+
       } catch (error) {
         Toast.fire({
           icon: "error",
-          title: "無法like，請稍後再試"
+          title: "無法like，請稍後再試",
         });
         console.log("error", error);
       }
@@ -181,12 +195,11 @@ export default {
     async deleteLike(tweetId) {
       try {
         const { data } = await usersAPI.deleteLike({ tweetId });
-
         if (data.status === "error") {
           throw new Error(data.message);
         }
         this.tweet = {
-          ...this.tweet
+          ...this.tweet,
         };
 
         console.log(this.tweet);
@@ -194,10 +207,11 @@ export default {
         console.error(error.message);
         Toast.fire({
           icon: "error",
-          title: "無法取消按讚，請稍後再試"
+          title: "無法取消按讚，請稍後再試",
         });
       }
     },
+
     openModal() {
       this.myModal = true;
     },
@@ -235,6 +249,7 @@ export default {
       }
     }
   }
+
 };
 </script>
 
@@ -244,7 +259,6 @@ body {
   margin: 0;
   padding: 0;
 }
-
 h1,
 h2,
 h3,
@@ -255,19 +269,16 @@ p {
   margin: 0px;
   padding: 0px;
 }
-
 /* style start */
 .container {
   position: relative;
 }
-
 .main-content {
   height: 100%;
   width: 600px;
   position: absolute;
   left: 300px;
 }
-
 .main-header {
   width: 600px;
   height: 55px;
@@ -276,7 +287,6 @@ p {
   border-bottom: none;
   box-sizing: border-box;
 }
-
 .header-title {
   height: 100%;
   margin: 15px 15px 15px;
@@ -285,7 +295,6 @@ p {
   line-height: 26px;
   color: #1c1c1c;
 }
-
 .tweet-input {
   width: 600px;
   height: 120px;
@@ -294,33 +303,27 @@ p {
   border-bottom: 10px solid #e6ecf0;
   box-sizing: border-box;
 }
-
 .input-content {
   /* border: 1px solid gray; */
   box-sizing: border-box;
   height: 100%;
 }
-
 .input-content-top {
   height: 50%;
   display: flex;
 }
-
 .user-image {
   height: 100%;
   width: 10%;
   /* border: 1px solid gray; */
 }
-
 .circle {
   border-radius: 50%;
 }
-
 .user-avatar {
   border-radius: 50%;
   margin: 9px 10px auto 15px;
 }
-
 .user-input {
   height: 100%;
   width: 90%;
@@ -332,13 +335,11 @@ p {
   color: #9197a3;
   letter-spacing: 0.5px;
 }
-
 .input-content-bottom {
   position: relative;
   height: 50%;
   /* border: 1px solid gray; */
 }
-
 .btn-tweet {
   position: absolute;
   right: 15px;
@@ -352,7 +353,6 @@ p {
   line-height: 18px;
   color: #ffffff;
 }
-
 .tweet-item {
   border: 1px solid #e6ecf0;
   background: #ffffff;
@@ -360,15 +360,12 @@ p {
   display: flex;
   flex-direction: row;
 }
-
 .item-right {
   padding-right: 25px;
 }
-
 .item-user-info {
   margin: 5px auto 0px auto;
 }
-
 .user-name {
   font-weight: bold;
   font-size: 15px;
@@ -378,7 +375,6 @@ p {
   flex-grow: 0;
   margin: 5px 5px 5px 0px;
 }
-
 .user-account,
 .time {
   font-weight: 400;
@@ -390,7 +386,6 @@ p {
   flex-grow: 0;
   margin: 5px 0px;
 }
-
 .item-content {
   font-weight: 400;
   font-size: 15px;
@@ -399,20 +394,17 @@ p {
   text-align: left;
   text-justify: inter-ideograph;
 }
-
 .item-interaction {
   /* margin: 14px 0px; */
   position: relative;
   height: 40px;
 }
-
 .item-interaction,
 .tweet-reply,
 .tweet-like {
   display: flex;
   vertical-align: middle;
 }
-
 .tweet-reply,
 .tweet-like {
   position: absolute;
@@ -422,33 +414,29 @@ p {
   line-height: 13px;
   color: #657786;
 }
-
 .tweet-reply {
   width: 20%;
 }
-
 .tweet-like {
   width: 80%;
   left: 90px;
 }
-
 #icon-reply {
   width: 12.34px;
   height: 12.34px;
   margin-right: 11.35px;
 }
-
 #icon-like {
   height: 11.82px;
   width: 12.56px;
   margin-right: 11.35px;
 }
-
 #icon-unlike {
   height: 19px;
   width: 20px;
   margin-right: 11.35px;
 }
+
 
 .modal-mask {
   position: fixed;
@@ -472,3 +460,4 @@ p {
   vertical-align: middle;
 }
 </style>
+
