@@ -7,7 +7,6 @@
         <!--li start-->
 
         <div class="list-group-item" v-for="user in users" :key="user.id">
-          <!-- @click.stop.prevent="addFollow()"-->
           <div v-if="currentUser.id !== user.id" class="list-container">
             <div class="item d-flex row justify-content-between align-items-center">
               <div class="li-front-part row">
@@ -32,7 +31,7 @@
               <div class="btn-follow">
                 <!-- <button v-if="user.isFollowed" class="delete-follow">正在跟隨</button> -->
 
-                <button class="follow" :key="user.id">跟隨</button>
+                <button class="follow" :key="user.id" @click.stop.prevent="addFollow">跟隨</button>
               </div>
             </div>
           </div>
@@ -55,7 +54,8 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-      users: {}
+      users: {},
+      id: ""
     };
   },
   created() {
@@ -80,7 +80,7 @@ export default {
     async addFollow() {
       try {
         const response = await usersAPI.addFollow({
-          userId: this.user.id
+          id: this.userId
         });
 
         console.log(response);
@@ -93,6 +93,23 @@ export default {
         console.log("error", error);
       }
     }
+    // async addFollow() {
+    //   try {
+    //     const { data } = await usersAPI.create({
+    //       id: this.id
+    //     });
+    //     if (data.status === "error") {
+    //       throw new Error(data.message);
+    //     }
+    //     console.log("追蹤成功");
+    //   } catch (error) {
+    //     console.error(error.message);
+    //     Toast.fire({
+    //       icon: "error",
+    //       title: "無法追蹤使用者，請稍後再試"
+    //     });
+    //   }
+    // }
   },
   //vuex `mapState` 方法
   computed: {

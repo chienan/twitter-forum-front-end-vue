@@ -22,17 +22,6 @@ import tweetsAPI from "../apis/tweets";
 import usersAPI from "../apis/users";
 import { Toast } from "../utils/helpers";
 
-// const dummyUser = {
-//   currentUser: {
-//     id: 1,
-//     name: "user1",
-//     email: "user1@example.com",
-//     image: "https://i.pravatar.cc/300",
-//     isAdmin: true
-//   }
-//   // isAuthenticated: true
-// };
-
 export default {
   components: {
     NavBar,
@@ -42,21 +31,10 @@ export default {
   data() {
     return {
       tweets: {}
-      // currentUser: {}
-      // currentUser: {
-      //   id: -1,
-      //   name: "",
-      //   email: "",
-      //   image: "",
-      //   isAdmin: false
-      // }
-      // // isAuthenticated: false
     };
   },
   created() {
     this.fetchTweets();
-    // this.getCurrentUser()
-    // this.fetchUser();
   },
   methods: {
     async fetchTweets() {
@@ -74,12 +52,6 @@ export default {
         });
       }
     },
-    // fetchUser() {
-    //   this.currentUser = {
-    //     ...this.currentUser,
-    //     ...dummyUser.currentUser
-    //   };
-    // },
     async getCurrentUser() {
       try {
         const response = await usersAPI.getCurrentUser();

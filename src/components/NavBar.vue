@@ -3,19 +3,11 @@
   <nav class="nav d-flex flex-column align-items-center">
     <div class="nav-list">
       <div class="nav-top">
-        <img
-          src="https://i.imgur.com/FwTYXrW.png"
-          style="width: 30px"
-          alt="logo"
-        />
+        <img src="https://i.imgur.com/FwTYXrW.png" style="width: 30px" alt="logo" />
       </div>
       <div class="nav-item d-flex align-items-center">
         <div>
-          <img
-            src="https://i.imgur.com/OxLE5Bf.png"
-            style="width: 20.25px"
-            alt
-          />
+          <img src="https://i.imgur.com/OxLE5Bf.png" style="width: 20.25px" alt />
         </div>
         <div>
           <a href="/#/tweets" class="nav-link">首頁</a>
@@ -52,6 +44,11 @@
 import { mapState } from "vuex";
 
 export default {
+  data() {
+    return {
+      description: ""
+    };
+  },
   //vuex `mapState` 方法
   computed: {
     ...mapState(["currentUser", "isAuthenticated"])
@@ -110,6 +107,29 @@ export default {
 .nav-bottom {
   width: 100%;
   margin-left: 55px;
+}
+
+.modal-mask {
+  position: fixed;
+  /* z-index: 9998; */
+
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: table;
+  transition: opacity 0.3s ease;
+}
+
+.modal-body {
+  height: 245px;
+  display: flex;
+  vertical-align: text-top;
+}
+.modal-wrapper {
+  display: table-cell;
+  vertical-align: middle;
 }
 </style>
 

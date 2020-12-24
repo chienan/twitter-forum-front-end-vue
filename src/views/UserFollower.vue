@@ -17,112 +17,23 @@
       </div>
       <!-- User Follow List -->
       <div class="user-follow-list">
-        <div class="follow-item">
+        <div class="follow-item" v-for="user in users" :key="user.id">
           <button class="delete-follow">正在跟隨</button>
-          <a href class="item-left">
-            <div class="circle"></div>
-          </a>
-
-          <div class="item-right">
-            <div class="item-user-info">
-              <a href class="user-name">Super Mario</a>
-
-              <a href class="user-id">@supermario</a>
-            </div>
-            <a
-              href
-              class="item-content"
-            >Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</a>
+          <div class="item-left">
+            <router-link :to="{ name: 'user', params:{id: user.id}}">
+              <img :src="user.avatar" class="circle" alt />
+            </router-link>
           </div>
-        </div>
-        <div class="follow-item">
-          <button class="follow">跟隨</button>
-          <a href class="item-left">
-            <div class="circle"></div>
-          </a>
 
           <div class="item-right">
-            <div class="item-user-info">
-              <a href class="user-name">Super Mario</a>
+            <router-link :to="{ name: 'user', params:{id: user.id}}">
+              <div class="item-user-info">
+                <div class="user-name">{{user.name}}</div>
 
-              <a href class="user-id">@supermario</a>
-            </div>
-            <a
-              href
-              class="item-content"
-            >Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</a>
-          </div>
-        </div>
-        <div class="follow-item">
-          <button class="follow">跟隨</button>
-          <a href class="item-left">
-            <div class="circle"></div>
-          </a>
-
-          <div class="item-right">
-            <div class="item-user-info">
-              <a href class="user-name">Super Mario</a>
-
-              <a href class="user-id">@supermario</a>
-            </div>
-            <a
-              href
-              class="item-content"
-            >Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</a>
-          </div>
-        </div>
-        <div class="follow-item">
-          <button class="follow">跟隨</button>
-          <a href class="item-left">
-            <div class="circle"></div>
-          </a>
-
-          <div class="item-right">
-            <div class="item-user-info">
-              <a href class="user-name">Super Mario</a>
-
-              <a href class="user-id">@supermario</a>
-            </div>
-            <a
-              href
-              class="item-content"
-            >Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</a>
-          </div>
-        </div>
-        <div class="follow-item">
-          <button class="follow">跟隨</button>
-          <a href class="item-left">
-            <div class="circle"></div>
-          </a>
-
-          <div class="item-right">
-            <div class="item-user-info">
-              <a href class="user-name">Super Mario</a>
-
-              <a href class="user-id">@supermario</a>
-            </div>
-            <a
-              href
-              class="item-content"
-            >Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</a>
-          </div>
-        </div>
-        <div class="follow-item">
-          <button class="follow">跟隨</button>
-          <a href class="item-left">
-            <div class="circle"></div>
-          </a>
-
-          <div class="item-right">
-            <div class="item-user-info">
-              <a href class="user-name">Super Mario</a>
-
-              <a href class="user-id">@supermario</a>
-            </div>
-            <a
-              href
-              class="item-content"
-            >Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</a>
+                <div class="user-account">@{{user.account}}</div>
+              </div>
+              <div class="item-content">{{user.introduction}}</div>
+            </router-link>
           </div>
         </div>
       </div>
@@ -150,13 +61,15 @@ export default {
   data() {
     return {
       user: {},
-      tweetsLength: ""
+      tweetsLength: "",
+      users: {}
     };
   },
   created() {
     const { id: userId } = this.$route.params;
     this.fetchUser(userId);
     this.fetchUserTweetsLength(userId);
+    this.fetchUserFollower(userId);
   },
   methods: {
     async fetchUser(userId) {
@@ -181,6 +94,21 @@ export default {
         console.log(response.data.length);
         const tweetsLength = response.data.length;
         this.tweetsLength = tweetsLength;
+      } catch (error) {
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "無法取得使用者資料"
+        });
+      }
+    },
+    async fetchUserFollower(userId) {
+      try {
+        const response = await usersAPI.getUserFollowers({ userId });
+        console.log("response", response);
+
+        const users = response.data;
+        this.users = users;
       } catch (error) {
         console.log("error", error);
         Toast.fire({
@@ -302,7 +230,7 @@ export default {
   margin-top: -3px;
 }
 
-.user-id {
+.user-account {
   font-weight: 400;
   font-size: 15px;
   line-height: 22px;

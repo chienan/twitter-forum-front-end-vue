@@ -47,28 +47,30 @@
             <div class="item-interaction">
               <a href class="tweet-reply">
                 <img src="https://i.imgur.com/I3DHrNy.png" id="icon-reply" alt />
-                <p>{{tweet.Replies.length}}</p>
+                <p>{{tweet.replyCount}}</p>
               </a>
 
               <div class="tweet-like">
-                <div class="unlike-container">
-                  <img
-                    src="https://i.imgur.com/7Mp1UdA.png"
-                    id="icon-unlike"
-                    @click.stop.prevent="deleteLike(tweet.id)"
-                    alt
-                  />
-                </div>
                 <div class="like-container">
                   <img
                     src="https://i.imgur.com/gCFSWst.png"
                     id="icon-like"
+                    @click="isLiked=true"
                     @click.stop.prevent="addLike(tweet.id)"
                     alt
                   />
                 </div>
+                <div class="unlike-container">
+                  <img
+                    src="https://i.imgur.com/7Mp1UdA.png"
+                    id="icon-unlike"
+                    @click="isLiked=false"
+                    @click.stop.prevent="deleteLike(tweet.id)"
+                    alt
+                  />
+                </div>
 
-                <p>5</p>
+                <p>{{tweet.likeCount}}</p>
               </div>
             </div>
           </div>
@@ -137,8 +139,8 @@ export default {
   data() {
     return {
       myModal: false,
+      isLiked: true,
       description: ""
-      // isLiked: ""
     };
   },
   props: {
@@ -164,6 +166,8 @@ export default {
           // isLiked = true
         };
 
+        this.isLiked = true;
+
         console.log(this.tweet);
       } catch (error) {
         Toast.fire({
@@ -184,7 +188,7 @@ export default {
           ...this.tweet
         };
 
-        this.tweet.isLiked = false;
+        this.isLiked = false;
         console.log(this.tweet);
       } catch (error) {
         console.error(error.message);
@@ -198,8 +202,6 @@ export default {
       this.myModal = true;
     },
 
-    // console.log(this.description);
-    // this.myModal = false;
     async handleSubmit() {
       try {
         if (!this.description) {
@@ -229,15 +231,6 @@ export default {
           title: "無法新增tweet，請稍後再試"
         });
       }
-
-      // TODO: 向 API 發送 POST 請求
-      // 伺服器新增 Comment 成功後...
-      // this.$emit("after-create-comment", {
-      //   commentId: uuidv4, // 尚未串接 API 暫時使用隨機的 id
-      //   restaurantId: this.restaurantId,
-      //   text: this.text
-      // });
-      // this.text = ""; // 將表單內的資料清空
     }
   }
 };
