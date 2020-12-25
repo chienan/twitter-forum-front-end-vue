@@ -8,7 +8,7 @@
 
         <div class="list-group-item" v-for="user in users" :key="user.id">
           <!-- currentUser.id !== user.id -->
-          <div v-if="user.id !== currentUser.id" class="list-container">
+          <div class="list-container">
             <div class="item d-flex row justify-content-between align-items-center">
               <div class="li-front-part row">
                 <div class="image-container">

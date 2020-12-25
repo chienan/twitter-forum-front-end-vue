@@ -1,11 +1,13 @@
 <template>
   <div>
-    <form class="d-flex justify-content-center">
+    <form class="d-flex justify-content-center" @submit="handleSubmit">
       <div class="card" style="width: 600px; height: 654px">
         <div class="d-flex flex-row title">
-          <div>
-            <img src="https://i.postimg.cc/3JLWjBwj/icon-close.png" alt class="cross" />
-          </div>
+          <router-link :to="{ name: 'user', params:{id: id}}">
+            <div>
+              <img src="https://i.postimg.cc/3JLWjBwj/icon-close.png" alt class="cross" />
+            </div>
+          </router-link>
           <div>
             <p class="bold info" style="font-size: 19px">編輯個人資料</p>
           </div>
@@ -15,6 +17,7 @@
           </div>
         </div>
         <div>
+          <!--  user cover  -->
           <div class="photo-relative">
             <!-- https://i.postimg.cc/zGr93SJ5/Cover-Photo.png -->
             <!-- <img
@@ -25,26 +28,45 @@
             />-->
             <img :src="cover" class="card-img-top cover-photo" alt style="height: 200px" />
 
-            <img
+            <!-- <img
               src="https://i.postimg.cc/8cst7cYh/icon-upload-Photo.png"
               class="card-img-top icon-upload-photo2"
               alt
               style="height: 24px; width: 24px"
               @change="handleFileChange"
-            />
+            />-->
 
-            <a href>
-              <img
-                src="https://i.postimg.cc/02S2SfDB/icon-delete.png"
-                class="card-img-top icon-delete"
-                alt
-                style="height: 24px; width: 24px"
+            <label for="cover" class="upload-container">
+              <input
+                name="image"
+                type="file"
+                accept="image/*"
+                class="upload-input-cover"
+                @click="handleCoverChange"
               />
-            </a>
+              <span class="upload-icon-cover">+</span>
+              <!-- <img
+              src="https://i.postimg.cc/8cst7cYh/icon-upload-Photo.png"
+              class="card-img-top icon-upload-photo1"
+              id="upload-avatar"
+              alt
+              style="height: 24px; width: 24px"
+              />-->
+            </label>
+
+            <img
+              src="https://i.postimg.cc/02S2SfDB/icon-delete.png"
+              class="card-img-top icon-delete"
+              alt
+              style="height: 24px; width: 24px"
+            />
           </div>
+
+          <!-- user avatar -->
           <div class="circle-relative">
             <p class="circle"></p>
             <img
+              name="avatar"
               :src="avatar"
               class="card-img-top thumbnail"
               id="user-avatar"
@@ -53,13 +75,7 @@
             />
           </div>
           <label class="upload-container">
-            <input
-              type="file"
-              name="image"
-              accept="image/*"
-              class="upload-input"
-              @change="handleFileChange"
-            />
+            <input type="file" accept="image/*" class="upload-input" @change="handleAvatarChange" />
             <span class="upload_icon">+</span>
             <!-- <img
               src="https://i.postimg.cc/8cst7cYh/icon-upload-Photo.png"
@@ -72,7 +88,9 @@
         </div>
         <div class="card-body">
           <div class="mb-3 label-parents">
+            <label for="exampleInputEmail1" class="form-label">名稱</label>
             <input
+              name="name"
               type="text"
               v-model="name"
               class="form-control input1 input-space rounded-0"
@@ -82,7 +100,6 @@
               style="width: 570px; height: 54px"
             />
 
-            <label for="exampleInputEmail1" class="form-label">名稱</label>
             <div id="emailHelp" class="form-text"></div>
           </div>
           <div class="number">
@@ -90,7 +107,9 @@
             <span>50</span>
           </div>
           <div class="mb-3 label-parents">
+            <label for="exampleInputEmail1" class="form-label">自我介紹</label>
             <input
+              name="introduction"
               type="text"
               v-model="introduction"
               class="form-control input1 input-space rounded-0"
@@ -100,7 +119,6 @@
               style="width: 570px; height: 150px"
             />
 
-            <label for="exampleInputEmail1" class="form-label">自我介紹</label>
             <div id="emailHelp" class="form-text"></div>
             <div class="number1">
               <span>0</span>/
@@ -121,6 +139,7 @@ import { Toast } from "./../utils/helpers";
 export default {
   data() {
     return {
+      name: "",
       id: 0,
       cover: "",
       avatar: "",
@@ -164,11 +183,21 @@ export default {
       this.name = name;
       this.introduction = introduction;
     },
-    handleFileChange(e) {
+    handleCoverChange(e) {
       const files = e.target.files;
+      console.log("files", files);
       if (!files.length) return;
-      const imageURL = window.URL.createObjectURL(files[0]);
-      this.image = imageURL;
+      const coverURL = window.URL.createObjectURL(files[1]);
+      this.cover = coverURL;
+      console.log(coverURL);
+    },
+    handleAvatarChange(e) {
+      const files = e.target.files;
+      console.log("files", files);
+      if (!files.length) return;
+      const avatarURL = window.URL.createObjectURL(files[0]);
+      this.avatar = avatarURL;
+      console.log(avatarURL);
     },
 
     async handleSubmit(e) {
@@ -176,21 +205,31 @@ export default {
         if (!this.name) {
           Toast.fire({
             icon: "warning",
-            title: "您尚未填寫姓名"
+            title: "您尚未填入資料"
           });
           return;
         }
+
         const form = e.target;
         const formData = new FormData(form);
         this.isProcessing = true;
+
         const { data } = await usersAPI.update({
           userId: this.id,
           formData
         });
+
         if (data.status === "error") {
           throw new Error(data.message);
         }
+
+        console.log(formData);
+
+        // console.log(data);
+
         this.$router.push({ name: "user", params: { id: this.id } });
+
+        console.log("back to profile");
       } catch (error) {
         console.error(error.message);
         this.isProcessing = false;
@@ -357,6 +396,32 @@ label {
 }
 
 .upload-container {
+  position: relative;
+}
+
+.upload-input-cover {
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  bottom: 110px;
+  left: 200px;
+  display: none;
+}
+
+.upload-icon-cover {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 180%;
+  position: absolute;
+  right: 340px;
+  bottom: -22px;
+}
+
+.upload-icon-cover:hover {
+  cursor: pointer;
+}
+
+.upload-container {
   /* border: 1px solid black; */
   position: relative;
 }
@@ -381,10 +446,14 @@ label {
   bottom: -5px;
 }
 
+.upload_icon:hover {
+  cursor: pointer;
+}
+
 #upload-avatar {
   position: absolute;
 }
-
+/* 
 #user-avatar {
-}
+} */
 </style>
