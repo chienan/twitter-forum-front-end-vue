@@ -3,8 +3,8 @@
     <div>
       <NavBar />
     </div>
-
-    <div class="main-content">
+    <Spinner v-if="isLoading" />
+    <div v-else class="main-content">
       <UserProfileNav :user="user" :tweetsLength="tweetsLength" />
 
       <!-- User Follow NavTab -->
@@ -51,18 +51,21 @@ import FollowRecommend from "../components/FollowRecommend";
 import UserProfileNav from "../components/UserProfileNav";
 import { Toast } from "../utils/helpers";
 import usersAPI from "../apis/users";
+import Spinner from "../components/Spinner";
 
 export default {
   components: {
     NavBar,
     FollowRecommend,
-    UserProfileNav
+    UserProfileNav,
+    Spinner
   },
   data() {
     return {
       user: {},
       tweetsLength: "",
-      users: {}
+      users: {},
+      isLoading: true
     };
   },
   created() {
@@ -79,8 +82,11 @@ export default {
 
         const user = response.data;
         this.user = user;
+        this.isLoading = false;
       } catch (error) {
         console.log("error", error);
+        this.isLoading = false;
+
         Toast.fire({
           icon: "error",
           title: "無法取得使用者資料"
@@ -125,7 +131,10 @@ export default {
         this.users = {
           ...this.users
         };
-        console.log("成功取消追蹤");
+        Toast.fire({
+          icon: "success",
+          title: "成功取消追蹤"
+        });
       } catch (error) {
         Toast.fire({
           icon: "error",

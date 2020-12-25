@@ -66,7 +66,7 @@ const router = new Router({
     },
     {
       path: '/users/:id/edit_intro',
-      name: 'users-edit-into',
+      name: 'users-edit-intro',
       component: () => import('../components/UserEdit.vue')
     },
     {

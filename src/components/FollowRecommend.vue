@@ -8,7 +8,7 @@
 
         <div class="list-group-item" v-for="user in users" :key="user.id">
           <!-- currentUser.id !== user.id -->
-          <div v-if="user.id !== currentUser.id" class="list-container">
+          <div class="list-container">
             <div class="item d-flex row justify-content-between align-items-center">
               <div class="li-front-part row">
                 <div class="image-container">
@@ -32,14 +32,18 @@
               <div class="btn-follow">
                 <!-- <button v-if="user.isFollowed" class="delete-follow">正在跟隨</button> -->
 
-                <button class="follow" @click.stop.prevent="addFollow(user.id)">跟隨</button>
+                <form @click.stop.prevent="addFollow(user.id)">
+                  <input type="text" :value="user.id" class="user-id-input" />
+                  <button class="follow">跟隨</button>
+                </form>
               </div>
             </div>
           </div>
         </div>
 
         <div class="recommend-bottom">
-          <a href class="show-more">顯示更多</a>
+          <!--           
+          <a href class="show-more">顯示更多</a>-->
         </div>
       </div>
     </div>
@@ -56,7 +60,9 @@ export default {
   data() {
     return {
       users: {},
-      id: ""
+      user: {
+        id: ""
+      }
     };
   },
   created() {
@@ -78,28 +84,37 @@ export default {
         });
       }
     },
-    async addFollow() {
+    async addFollow(id) {
       try {
-        const response = await usersAPI.addFollow({
-          id: this.userId
-        });
+        console.log("追蹤");
 
-        console.log(response);
-        console.log("追蹤使用者");
-        // const { data } = response;
+        const { data } = await usersAPI.addFollow({
+          id
+        });
+        console.log("user.id:", id);
+        if (data.status === "error") {
+          throw new Error(data.message);
+        }
+        Toast.fire({
+          icon: "success",
+          title: "追蹤成功"
+        });
       } catch (error) {
+        console.error(error.message);
         Toast.fire({
           icon: "error",
-          title: "無法追蹤使用者，請稍後再試"
+          title: "您已經追蹤使用者"
         });
-        console.log("error", error);
       }
     }
     // async addFollow() {
     //   try {
+    //     console.log("追蹤");
+
     //     const { data } = await usersAPI.create({
-    //       id: this.id
+    //       id: this.user.id
     //     });
+    //     console.log("user.id:", this.user.id);
     //     if (data.status === "error") {
     //       throw new Error(data.message);
     //     }
@@ -165,6 +180,7 @@ export default {
 }
 
 .recommend-name {
+  max-width: 150px;
   font-weight: 550;
   font-size: 15px;
   line-height: 15px;
@@ -214,5 +230,9 @@ export default {
   font-size: 15px;
   line-height: 22px;
   color: #ff6600;
+}
+
+.user-id-input {
+  display: none;
 }
 </style>

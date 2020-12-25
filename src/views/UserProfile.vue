@@ -3,8 +3,8 @@
     <div>
       <NavBar />
     </div>
-
-    <div class="main-content">
+    <Spinner v-if="isLoading" />
+    <div v-else class="main-content">
       <UserProfileNav :user="user" :tweets="tweets" :tweetsLength="tweetsLength" />
       <UserProfileDetail :user="user" />
       <!-- UserProfileNavTabs  -->
@@ -42,7 +42,7 @@
 
                 <a href class="tweet-like">
                   <img src="https://i.imgur.com/gCFSWst.png" id="icon-like" alt />
-                  <p class="like-count">76</p>
+                  <p class="like-count">{{tweet.Likes ? tweet.Likes.length : '0'}}</p>
                 </a>
               </div>
             </div>
@@ -65,13 +65,15 @@ import UserProfileDetail from "../components/UserProfileDetail";
 import usersAPI from "../apis/users";
 import { Toast } from "../utils/helpers";
 import moment from "moment";
+import Spinner from "../components/Spinner";
 
 export default {
   components: {
     NavBar,
     UserProfileNav,
     FollowRecommend,
-    UserProfileDetail
+    UserProfileDetail,
+    Spinner
   },
   filters: {
     fromNow(datetime) {
@@ -85,7 +87,8 @@ export default {
     return {
       user: {},
       tweets: {},
-      tweetsLength: ""
+      tweetsLength: "",
+      isLoading: true
     };
   },
   created() {
@@ -107,7 +110,9 @@ export default {
 
         const user = response.data;
         this.user = user;
+        this.isLoading = false;
       } catch (error) {
+        this.isLoading = false;
         console.log("error", error);
         Toast.fire({
           icon: "error",
