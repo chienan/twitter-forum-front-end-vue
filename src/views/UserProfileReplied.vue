@@ -3,8 +3,8 @@
     <div>
       <NavBar />
     </div>
-
-    <div class="main-content">
+    <Spinner v-if="isLoading" />
+    <div v-else class="main-content">
       <UserProfileNav :user="user" :tweetsLength="tweetsLength" />
       <UserProfileDetail :user="user" />
       <!-- UserProfileNavTabs  -->
@@ -71,13 +71,15 @@ import UserProfileDetail from "../components/UserProfileDetail";
 import usersAPI from "../apis/users";
 import { Toast } from "../utils/helpers";
 import moment from "moment";
+import Spinner from "../components/Spinner";
 
 export default {
   components: {
     NavBar,
     FollowRecommend,
     UserProfileNav,
-    UserProfileDetail
+    UserProfileDetail,
+    Spinner
   },
   filters: {
     fromNow(datetime) {
@@ -91,7 +93,8 @@ export default {
     return {
       user: {},
       tweets: {},
-      tweetsLength: ""
+      tweetsLength: "",
+      isLoading: true
     };
   },
   created() {
@@ -110,6 +113,7 @@ export default {
         this.user = user;
       } catch (error) {
         console.log("error", error);
+
         Toast.fire({
           icon: "error",
           title: "無法取得使用者資料"
@@ -123,8 +127,10 @@ export default {
 
         const tweets = response.data;
         this.tweets = tweets;
+        this.isLoading = false;
       } catch (error) {
         console.log("error", error);
+        this.isLoading = false;
         Toast.fire({
           icon: "error",
           title: "無法取得使用者回覆資料，請稍後再試"

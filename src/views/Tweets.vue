@@ -5,7 +5,10 @@
     </div>
 
     <div>
-      <MainTweets :tweets="tweets" @after-create-tweet="afterCreateTweet" />
+      <Spinner v-if="isLoading" />
+      <!-- <template v-else> -->
+      <MainTweets v-else :tweets="tweets" @after-create-tweet="afterCreateTweet" />
+      <!-- </template> -->
     </div>
 
     <div>
@@ -21,18 +24,19 @@ import FollowRecommend from "../components/FollowRecommend";
 import tweetsAPI from "../apis/tweets";
 import { Toast } from "../utils/helpers";
 import { mapState } from "vuex";
+import Spinner from "../components/Spinner";
 
 export default {
   components: {
     NavBar,
     MainTweets,
     FollowRecommend,
+    Spinner
   },
   data() {
     return {
-
-      tweets: {}
-
+      tweets: {},
+      isLoading: true
     };
   },
   created() {
@@ -46,11 +50,14 @@ export default {
 
         const tweets = response.data;
         this.tweets = tweets;
+        this.isLoading = false;
       } catch (error) {
         console.log("error", error);
+        this.isLoading = false;
+
         Toast.fire({
           icon: "error",
-          title: "無法取得資料，請稍後再試",
+          title: "無法取得資料，請稍後再試"
         });
       }
     },
@@ -91,7 +98,6 @@ export default {
   computed: {
     ...mapState(["currentUser", "isAuthenticated"])
   }
-
 };
 </script>
 

@@ -31,7 +31,7 @@
 
               <div class="btn-follow">
                 <!-- <button v-if="user.isFollowed" class="delete-follow">正在跟隨</button> -->
-
+                <!-- <input type="text" name="follow-user" v-model="user.id" class="follow-user" /> -->
                 <button class="follow" @click.stop.prevent="addFollow(user.id)">跟隨</button>
               </div>
             </div>
@@ -56,8 +56,7 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-      users: {},
-      id: ""
+      users: {}
     };
   },
   created() {
@@ -82,10 +81,16 @@ export default {
     async addFollow() {
       try {
         const response = await usersAPI.addFollow({
-          id: this.userId
+          id: this.user.id
         });
 
-        console.log(response);
+        const { data } = response;
+
+        if (data.status === "error") {
+          throw new Error(data.message);
+        }
+
+        console.log(data);
         console.log("追蹤使用者");
         // const { data } = response;
       } catch (error) {

@@ -2,9 +2,9 @@
   <div class="container">
     <div class="row main-content">
       <div class="icon-container">
-        <a href>
+        <router-link :to="{ name: 'user', params:{id: user.id}}">
           <img src="https://i.imgur.com/cyFMsT7.png" class="icon-back" alt />
-        </a>
+        </router-link>
       </div>
 
       <div class="title">

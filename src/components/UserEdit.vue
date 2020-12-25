@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <Spinner v-if="isLoading" />
+  <div v-else>
     <form class="d-flex justify-content-center" @submit="handleSubmit">
       <div class="card" style="width: 600px; height: 654px">
         <div class="d-flex flex-row title">
@@ -135,6 +136,7 @@
 import { mapState } from "vuex";
 import usersAPI from "./../apis/users";
 import { Toast } from "./../utils/helpers";
+import Spinner from "../components/Spinner";
 
 export default {
   data() {
@@ -144,8 +146,12 @@ export default {
       cover: "",
       avatar: "",
       introduction: "",
-      isProcessing: false
+      isProcessing: false,
+      isLoading: true
     };
+  },
+  components: {
+    Spinner
   },
   computed: {
     ...mapState(["currentUser"])
@@ -182,6 +188,7 @@ export default {
       this.avatar = avatar;
       this.name = name;
       this.introduction = introduction;
+      this.isLoading = false;
     },
     handleCoverChange(e) {
       const files = e.target.files;
