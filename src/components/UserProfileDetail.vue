@@ -29,10 +29,10 @@
           </a>-->
 
           <!-- 取消跟隨 -->
-          <a href class="btn-unfollow">正在跟隨</a>
+          <button class="btn-unfollow">正在跟隨</button>
 
           <!--跟隨-->
-          <!-- <a href class="btn-follow">跟隨</a> -->
+          <button class="btn-follow">跟隨</button>
         </div>
         <div class="profile-section">
           <div class="user-name">{{user.name}}</div>
@@ -119,6 +119,80 @@ export default {
           icon: "error",
           title: "無法取得使用者跟隨者資料"
         });
+      }
+    },
+    async fetchUserFollower(userId) {
+      try {
+        const response = await usersAPI.getUserFollowers({ userId });
+        console.log("response", response);
+
+        const users = response.data;
+        this.users = users;
+      } catch (error) {
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "無法取得使用者資料"
+        });
+      }
+    },
+    async addFollow(id) {
+      try {
+        const { data } = await usersAPI.addFollow({
+          id
+        });
+        if (data.status === "error") {
+          throw new Error(data.message);
+        }
+        Toast.fire({
+          icon: "success",
+          title: "追蹤成功"
+        });
+        this.users = this.users.map(user => {
+          if (user.id !== id) {
+            return user;
+          } else {
+            return {
+              ...user,
+              isFollowed: true
+            };
+          }
+        });
+      } catch (error) {
+        console.error(error.message);
+        Toast.fire({
+          icon: "error",
+          title: "您已經追蹤使用者"
+        });
+      }
+    },
+    async deleteFollowing(userId) {
+      try {
+        const { data } = await usersAPI.deleteFollowing({ userId });
+
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+        this.users = this.users.map(user => {
+          if (user.id !== userId) {
+            return user;
+          } else {
+            return {
+              ...user,
+              isFollowed: false
+            };
+          }
+        });
+        Toast.fire({
+          icon: "success",
+          title: "成功取消追蹤"
+        });
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: "無法取消追蹤，請稍後再試"
+        });
+        console.log("error", error);
       }
     }
   }

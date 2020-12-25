@@ -102,7 +102,9 @@ export default {
 .list-group {
   height: 100%;
 }
-
+.list-group-item {
+  /* border-left: none; */
+}
 .group-item-border {
   border-top: none;
   font-size: 18px;
