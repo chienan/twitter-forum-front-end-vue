@@ -18,7 +18,13 @@
       <!-- User Follow List -->
       <div class="user-follow-list">
         <div class="follow-item" v-for="user in users" :key="user.id">
-          <button class="delete-follow" @click.stop.prevent="deleteFollowing(user.id)">正在跟隨</button>
+          <button
+            v-if="user.isFollowed"
+            class="delete-follow"
+            @click.stop.prevent="deleteFollowing(user.id)"
+          >正在跟隨</button>
+          <button v-else class="follow" @click.stop.prevent="addFollow(user.id)">跟隨</button>
+
           <div class="item-left">
             <router-link :to="{ name: 'user', params:{id: user.id}}">
               <img :src="user.avatar" class="circle" alt />
@@ -229,6 +235,17 @@ export default {
   color: #ffffff;
 }
 
+.follow {
+  width: 62px;
+  height: 30px;
+  border: 1px solid #ff6600;
+  border-radius: 100px;
+  color: #ff6600;
+  font-size: 15px;
+  font-weight: 550;
+  line-height: 15px;
+}
+
 .item-user-info {
   display: flex;
   flex-direction: column;
@@ -258,6 +275,7 @@ export default {
 }
 
 .item-content {
+  max-width: 500px;
   font-weight: 400;
   font-size: 15px;
   line-height: 22px;
