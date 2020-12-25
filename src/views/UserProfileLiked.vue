@@ -23,36 +23,36 @@
         <div class="tweet-list">
           <!--tweet item start-->
           <div v-for="tweet in tweets" :key="tweet.id" class="tweet-item">
-            <a href class="item-left">
+            <div class="item-left">
               <div class="circle"></div>
-            </a>
+            </div>
 
             <div class="item-right">
               <div class="item-user-info d-flex">
                 <!-- UserName -->
-                <a href class="user-name">name</a>
+                <div class="user-name">name</div>
 
                 <!-- UserId -->
-                <a href class="user-account">@account</a>
+                <div class="user-account">@account</div>
 
                 <!-- time -->
                 <div class="time">・{{tweet.createdAt | fromNow}}</div>
               </div>
 
               <!-- description -->
-              <a href class="item-content">{{tweet.description}}</a>
+              <div class="item-content">{{tweet.description}}</div>
               <div class="item-interaction">
                 <!--reply-->
-                <a href class="tweet-reply">
+                <div class="tweet-reply">
                   <img src="https://i.imgur.com/I3DHrNy.png" id="icon-reply" alt />
                   <p class="reply-count">13</p>
-                </a>
+                </div>
 
                 <!-- like -->
-                <a href class="tweet-like">
+                <div class="tweet-like">
                   <img src="https://i.imgur.com/gCFSWst.png" id="icon-like" alt />
                   <p class="like-count">{{tweet.Likes.length}}</p>
-                </a>
+                </div>
               </div>
             </div>
           </div>

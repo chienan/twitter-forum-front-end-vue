@@ -12,7 +12,7 @@
             <div class="user-image">
               <img :src="currentUser.avatar" height="50px" width="50px" class="user-avatar" />
             </div>
-            <div class="user-input">有什麼新鮮事？</div>
+            <div class="user-input" @click="openModal">有什麼新鮮事？</div>
           </div>
           <div class="input-content-bottom">
             <button class="btn-tweet" @click="openModal">推文</button>
@@ -324,6 +324,11 @@ p {
   color: #9197a3;
   letter-spacing: 0.5px;
 }
+
+.user-input:hover {
+  cursor: pointer;
+}
+
 .input-content-bottom {
   position: relative;
   height: 50%;

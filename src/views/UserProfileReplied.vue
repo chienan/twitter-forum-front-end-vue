@@ -20,25 +20,25 @@
         <div class="tweet-list">
           <!--tweet item start-->
           <div class="tweet-item" v-for="tweet in tweets" :key="tweet.if">
-            <a href class="item-left">
+            <div class="item-left">
               <img :src="user.avatar" class="circle" alt />
               <!-- <div class="circle"></div> -->
-            </a>
+            </div>
 
             <div class="item-right">
               <div class="item-user-info d-flex">
                 <!-- UserName -->
-                <a href class="user-name">{{user.name}}</a>
+                <div class="user-name">{{user.name}}</div>
 
                 <!-- UserId -->
-                <a href class="user-account">@{{user.account}}</a>
+                <div class="user-account">@{{user.account}}</div>
 
                 <!-- time -->
                 <div class="time">・{{tweet.createdAt | fromNow}}</div>
               </div>
 
               <!-- description -->
-              <a href class="item-content">{{tweet.comment}}</a>
+              <div class="item-content">{{tweet.comment}}</div>
               <div class="item-interaction">
                 <!--reply-->
                 <!-- <a href class="tweet-reply">
