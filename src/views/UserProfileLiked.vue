@@ -3,8 +3,8 @@
     <div>
       <NavBar />
     </div>
-
-    <div class="main-content">
+    <Spinner v-if="isLoading" />
+    <div v-else class="main-content">
       <UserProfileNav :user="user" :tweetsLength="tweetsLength" />
       <UserProfileDetail :user="user" />
       <!-- UserProfileNavTabs  -->
@@ -22,7 +22,7 @@
         <!-- tweet-list -->
         <div class="tweet-list">
           <!--tweet item start-->
-          <div class="tweet-item">
+          <div v-for="tweet in tweets" :key="tweet.id" class="tweet-item">
             <a href class="item-left">
               <div class="circle"></div>
             </a>
@@ -30,20 +30,17 @@
             <div class="item-right">
               <div class="item-user-info d-flex">
                 <!-- UserName -->
-                <a href class="user-name">Disney</a>
+                <a href class="user-name">name</a>
 
                 <!-- UserId -->
-                <a href class="user-id">@disney</a>
+                <a href class="user-account">@account</a>
 
                 <!-- time -->
-                <div class="time">・3 小時</div>
+                <div class="time">・{{tweet.createdAt | fromNow}}</div>
               </div>
 
               <!-- description -->
-              <a
-                href
-                class="item-content"
-              >Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</a>
+              <a href class="item-content">{{tweet.description}}</a>
               <div class="item-interaction">
                 <!--reply-->
                 <a href class="tweet-reply">
@@ -54,7 +51,7 @@
                 <!-- like -->
                 <a href class="tweet-like">
                   <img src="https://i.imgur.com/gCFSWst.png" id="icon-like" alt />
-                  <p class="like-count">76</p>
+                  <p class="like-count">{{tweet.Likes.length}}</p>
                 </a>
               </div>
             </div>
@@ -76,24 +73,38 @@ import UserProfileNav from "../components/UserProfileNav";
 import UserProfileDetail from "../components/UserProfileDetail";
 import usersAPI from "../apis/users";
 import { Toast } from "../utils/helpers";
+import moment from "moment";
+import Spinner from "../components/Spinner";
 
 export default {
   components: {
     NavBar,
     FollowRecommend,
     UserProfileNav,
-    UserProfileDetail
+    UserProfileDetail,
+    Spinner
   },
   data() {
     return {
       user: {},
-      tweets: {}
+      tweets: {},
+      tweetsLength: "",
+      isLoading: true
     };
+  },
+  filters: {
+    fromNow(datetime) {
+      if (!datetime) {
+        return "-";
+      }
+      return moment(datetime).fromNow();
+    }
   },
   created() {
     const { id: userId } = this.$route.params;
     this.fetchUser(userId);
     this.fetchUserLiked(userId);
+    this.fetchUserTweetsLength(userId);
   },
   methods: {
     async fetchUser(userId) {
@@ -103,17 +114,20 @@ export default {
 
         const user = response.data;
         this.user = user;
+        this.isLoading = false;
       } catch (error) {
         console.log("error", error);
+        this.isLoading = false;
+
         Toast.fire({
           icon: "error",
           title: "無法取得使用者資料"
         });
       }
     },
-    async fetchUserRepliedTweets(userId) {
+    async fetchUserLiked(userId) {
       try {
-        const response = await usersAPI.getUsersLiked({ userId });
+        const response = await usersAPI.getUsersLikes({ userId });
         console.log("response", response);
 
         const tweets = response.data;
@@ -122,7 +136,22 @@ export default {
         console.log("error", error);
         Toast.fire({
           icon: "error",
-          title: "無法取得使用者回覆資料，請稍後再試"
+          title: "無法取得使用者like資料，請稍後再試"
+        });
+      }
+    },
+    async fetchUserTweetsLength(userId) {
+      try {
+        const response = await usersAPI.getUsersTweets({ userId });
+
+        console.log(response.data.length);
+        const tweetsLength = response.data.length;
+        this.tweetsLength = tweetsLength;
+      } catch (error) {
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "無法取得使用者資料"
         });
       }
     }
@@ -230,7 +259,7 @@ p {
   margin: 5px 5px 5px 0px;
 }
 
-.user-id,
+.user-account,
 .time {
   font-weight: 400;
   font-size: 15px;

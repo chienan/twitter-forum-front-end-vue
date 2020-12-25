@@ -5,7 +5,10 @@
     </div>
 
     <div>
-      <MainTweets :tweets="tweets" />
+      <Spinner v-if="isLoading" />
+      <!-- <template v-else> -->
+      <MainTweets v-else :tweets="tweets" @after-create-tweet="afterCreateTweet" />
+      <!-- </template> -->
     </div>
 
     <div>
@@ -19,44 +22,25 @@ import NavBar from "../components/NavBar";
 import MainTweets from "../components/MainTweets";
 import FollowRecommend from "../components/FollowRecommend";
 import tweetsAPI from "../apis/tweets";
-import usersAPI from "../apis/users";
 import { Toast } from "../utils/helpers";
-
-// const dummyUser = {
-//   currentUser: {
-//     id: 1,
-//     name: "user1",
-//     email: "user1@example.com",
-//     image: "https://i.pravatar.cc/300",
-//     isAdmin: true
-//   }
-//   // isAuthenticated: true
-// };
+import { mapState } from "vuex";
+import Spinner from "../components/Spinner";
 
 export default {
   components: {
     NavBar,
     MainTweets,
     FollowRecommend,
+    Spinner
   },
   data() {
     return {
       tweets: {},
-      // currentUser: {}
-      // currentUser: {
-      //   id: -1,
-      //   name: "",
-      //   email: "",
-      //   image: "",
-      //   isAdmin: false
-      // }
-      // // isAuthenticated: false
+      isLoading: true
     };
   },
   created() {
     this.fetchTweets();
-    // this.getCurrentUser()
-    // this.fetchUser();
   },
   methods: {
     async fetchTweets() {
@@ -66,36 +50,54 @@ export default {
 
         const tweets = response.data;
         this.tweets = tweets;
+        this.isLoading = false;
       } catch (error) {
         console.log("error", error);
-        Toast.fire({
-          icon: "error",
-          title: "無法取得資料，請稍後再試",
-        });
-      }
-    },
-    // fetchUser() {
-    //   this.currentUser = {
-    //     ...this.currentUser,
-    //     ...dummyUser.currentUser
-    //   };
-    // },
-    async getCurrentUser() {
-      try {
-        const response = await usersAPI.getCurrentUser();
-        console.log("response", response);
+        this.isLoading = false;
 
-        const currentUser = response.data;
-        this.currentUser = currentUser;
-      } catch (error) {
-        console.log("error", error);
         Toast.fire({
           icon: "error",
-          title: "無法取得當前使用者",
+          title: "無法取得資料，請稍後再試"
         });
       }
     },
+
+    afterCreateTweet(payload) {
+      const { tweetId, description } = payload;
+      this.tweets.push({
+        id: tweetId,
+        description: description,
+        User: {
+          id: this.currentUser.id,
+          name: this.currentUser.name,
+          account: this.currentUser.account,
+          avatar: this.currentUser.avatar
+        },
+        createdAt: new Date(),
+        replyCount: "0",
+        likeCount: "0"
+      });
+      console.log("aftercreate");
+    }
+    // afterAddLike(payload) {
+    //   const { tweetId } = payload;
+    //   this.tweets.push({
+    //     id: tweetId,
+    //     likeCount: +1
+    //   });
+    // }
   },
+  watch: {
+    tweets: {
+      handler: function() {
+        console.log("watch is on"); //測試用
+      },
+      deep: true
+    }
+  },
+  computed: {
+    ...mapState(["currentUser", "isAuthenticated"])
+  }
 };
 </script>
 

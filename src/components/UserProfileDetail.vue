@@ -9,7 +9,10 @@
       <div class="profile-container">
         <!-- button section -->
         <div v-if="currentUser.id === user.id" class="edit-section">
-          <a href class="btn-edit">編輯個人資料</a>
+          <router-link
+            :to="{ name: 'users-edit-intro', params: { id: user.id }}"
+            class="btn-edit"
+          >編輯個人資料</router-link>
         </div>
 
         <div v-else class="btn-section">
@@ -37,12 +40,19 @@
           <div class="user-intro">{{user.introduction}}</div>
         </div>
         <div class="follow-section">
-          <a href class="following-section">
+          <router-link
+            :to="{ name: 'user-following', params: { id: user.id } }"
+            class="following-section"
+          >
             <div class="following-number">{{followingLength ? followingLength : '0'}} 個</div>跟隨中
-          </a>
-          <a href class="follower-section">
+          </router-link>
+
+          <router-link
+            :to="{ name: 'user-follower', params: { id: user.id } }"
+            class="follower-section"
+          >
             <div class="follower-number">{{followerLength ? followerLength : '0'}} 位</div>跟隨者
-          </a>
+          </router-link>
         </div>
       </div>
     </div>
@@ -65,8 +75,9 @@ export default {
     };
   },
   created() {
-    this.getFollowingsNumber();
-    this.getFollowersNumber();
+    const { id: userId } = this.$route.params;
+    this.getFollowingsNumber(userId);
+    this.getFollowersNumber(userId);
   },
 
   computed: {
@@ -78,9 +89,8 @@ export default {
       try {
         const response = await usersAPI.getUserFollowings({ userId });
         console.log("response", response);
-
         const followingLength = response.data.length;
-        if (followingLength > 0) {
+        if (followingLength) {
           this.followingLength = followingLength;
         } else {
           this.followingLength = 0;
@@ -97,9 +107,8 @@ export default {
       try {
         const response = await usersAPI.getUserFollowers({ userId });
         console.log("response", response);
-
         const followerLength = response.data.length;
-        if (followerLength > 0) {
+        if (followerLength) {
           this.followerLength = followerLength;
         } else {
           this.followerLength = 0;
@@ -283,6 +292,8 @@ img {
 }
 
 .user-intro {
+  max-height: 50px;
+  overflow: hidden;
   padding-top: 10px;
   font-weight: 400;
   font-size: 14px;

@@ -3,19 +3,11 @@
   <nav class="nav d-flex flex-column align-items-center">
     <div class="nav-list">
       <div class="nav-top">
-        <img
-          src="https://i.imgur.com/FwTYXrW.png"
-          style="width: 30px"
-          alt="logo"
-        />
+        <img src="https://i.imgur.com/FwTYXrW.png" style="width: 30px" alt="logo" />
       </div>
       <div class="nav-item d-flex align-items-center">
         <div>
-          <img
-            src="https://i.imgur.com/OxLE5Bf.png"
-            style="width: 20.25px"
-            alt
-          />
+          <img src="https://i.imgur.com/OxLE5Bf.png" style="width: 20.25px" alt />
         </div>
         <div>
           <a href="/#/tweets" class="nav-link">首頁</a>
@@ -24,11 +16,7 @@
 
       <div class="nav-item d-flex align-items-center">
         <img src="https://i.imgur.com/MBiFHBl.png" style="width: 16.7px" alt />
-        <router-link
-          :to="{ name: 'user', params: { id: currentUser.id } }"
-          class="nav-link"
-          >個人資料</router-link
-        >
+        <router-link :to="{ name: 'user', params: { id: currentUser.id } }" class="nav-link">個人資料</router-link>
       </div>
 
       <div class="nav-item d-flex align-items-center">
@@ -36,12 +24,11 @@
         <router-link
           :to="{ name: 'set-account', params: { id: currentUser.id } }"
           class="nav-link"
-          >設定</router-link
-        >
+        >設定</router-link>
       </div>
 
       <div>
-        <button class="btn-tweet">推文</button>
+        <!-- <button class="btn-tweet">推文</button> -->
       </div>
     </div>
 
@@ -54,7 +41,6 @@
       </div>
     </div>
   </nav>
-  <!-- </div> -->
 </template>
 
 
@@ -62,8 +48,14 @@
 import { mapState } from "vuex";
 
 export default {
+  data() {
+    return {
+      description: ""
+    };
+  },
   //vuex `mapState` 方法
   computed: {
+
     ...mapState(["currentUser", "isAuthenticated"]),
   },
   methods: {
@@ -72,6 +64,7 @@ export default {
       this.$router.push("/signin");
     },
   },
+
 };
 </script>
 
@@ -126,6 +119,29 @@ export default {
 .nav-bottom {
   width: 100%;
   margin-left: 55px;
+}
+
+.modal-mask {
+  position: fixed;
+  /* z-index: 9998; */
+
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: table;
+  transition: opacity 0.3s ease;
+}
+
+.modal-body {
+  height: 245px;
+  display: flex;
+  vertical-align: text-top;
+}
+.modal-wrapper {
+  display: table-cell;
+  vertical-align: middle;
 }
 </style>
 

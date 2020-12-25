@@ -3,8 +3,8 @@
     <div>
       <NavBar />
     </div>
-
-    <div class="main-content">
+    <Spinner v-if="isLoading" />
+    <div v-else class="main-content">
       <UserProfileNav :user="user" :tweetsLength="tweetsLength" />
       <UserProfileDetail :user="user" />
       <!-- UserProfileNavTabs  -->
@@ -21,7 +21,8 @@
           <!--tweet item start-->
           <div class="tweet-item" v-for="tweet in tweets" :key="tweet.if">
             <a href class="item-left">
-              <div class="circle"></div>
+              <img :src="user.avatar" class="circle" alt />
+              <!-- <div class="circle"></div> -->
             </a>
 
             <div class="item-right">
@@ -40,16 +41,16 @@
               <a href class="item-content">{{tweet.comment}}</a>
               <div class="item-interaction">
                 <!--reply-->
-                <a href class="tweet-reply">
+                <!-- <a href class="tweet-reply">
                   <img src="https://i.imgur.com/I3DHrNy.png" id="icon-reply" alt />
                   <p class="reply-count">13</p>
-                </a>
+                </a>-->
 
                 <!-- like -->
-                <a href class="tweet-like">
+                <!-- <a href class="tweet-like">
                   <img src="https://i.imgur.com/gCFSWst.png" id="icon-like" alt />
                   <p class="like-count">76</p>
-                </a>
+                </a>-->
               </div>
             </div>
           </div>
@@ -71,13 +72,15 @@ import UserProfileDetail from "../components/UserProfileDetail";
 import usersAPI from "../apis/users";
 import { Toast } from "../utils/helpers";
 import moment from "moment";
+import Spinner from "../components/Spinner";
 
 export default {
   components: {
     NavBar,
     FollowRecommend,
     UserProfileNav,
-    UserProfileDetail
+    UserProfileDetail,
+    Spinner
   },
   filters: {
     fromNow(datetime) {
@@ -91,7 +94,8 @@ export default {
     return {
       user: {},
       tweets: {},
-      tweetsLength: ""
+      tweetsLength: "",
+      isLoading: true
     };
   },
   created() {
@@ -110,6 +114,7 @@ export default {
         this.user = user;
       } catch (error) {
         console.log("error", error);
+
         Toast.fire({
           icon: "error",
           title: "無法取得使用者資料"
@@ -123,8 +128,10 @@ export default {
 
         const tweets = response.data;
         this.tweets = tweets;
+        this.isLoading = false;
       } catch (error) {
         console.log("error", error);
+        this.isLoading = false;
         Toast.fire({
           icon: "error",
           title: "無法取得使用者回覆資料，請稍後再試"
@@ -234,6 +241,7 @@ p {
   display: flex;
   flex-direction: row;
   padding: 2px 0px;
+  /* margin-bottom: 5px; */
 }
 
 .item-user-info {
@@ -273,10 +281,10 @@ p {
 
 .item-interaction {
   position: relative;
-  height: 30px;
+  height: 10px;
 }
 
-.item-interaction,
+/* .item-interaction,
 .tweet-reply,
 .tweet-like {
   display: flex;
@@ -312,5 +320,5 @@ p {
   height: 11.82px;
   width: 12.56px;
   margin-right: 11.35px;
-}
+} */
 </style>
