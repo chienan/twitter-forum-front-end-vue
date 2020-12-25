@@ -39,7 +39,8 @@
         </div>
 
         <div class="recommend-bottom">
-          <a href class="show-more">顯示更多</a>
+          <!--           
+          <a href class="show-more">顯示更多</a>-->
         </div>
       </div>
     </div>
@@ -165,6 +166,7 @@ export default {
 }
 
 .recommend-name {
+  max-width: 150px;
   font-weight: 550;
   font-size: 15px;
   line-height: 15px;
