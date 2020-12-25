@@ -131,7 +131,10 @@ export default {
         this.users = {
           ...this.users
         };
-        console.log("成功取消追蹤");
+        Toast.fire({
+          icon: "success",
+          title: "成功取消追蹤"
+        });
       } catch (error) {
         Toast.fire({
           icon: "error",
