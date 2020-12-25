@@ -32,12 +32,12 @@
           <div class="item-right">
             <div class="item-user-info d-flex">
               <router-link
-                :to="{ name: 'tweet', params: { id: tweet.id } }"
+                :to="{ name: 'user', params: { id: tweet.UserId } }"
                 class="user-name"
               >{{ tweet.User.name }}</router-link>
 
               <router-link
-                :to="{ name: 'tweet', params: { id: tweet.id } }"
+                :to="{ name: 'user', params: { id: tweet.UserId } }"
                 class="user-account"
               >@{{tweet.User.account}}</router-link>
 
@@ -200,7 +200,7 @@ export default {
         console.error(error.message);
         Toast.fire({
           icon: "error",
-          title: "您已經取消like"
+          title: "您沒有like這條tweet"
         });
       }
     },

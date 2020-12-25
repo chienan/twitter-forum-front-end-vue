@@ -4,7 +4,6 @@
       <NavBar />
     </div>
     <Spinner v-if="isLoading" />
-
     <div v-else class="main-content">
       <UserProfileNav :user="user" :tweetsLength="tweetsLength" />
       <UserProfileDetail :user="user" />

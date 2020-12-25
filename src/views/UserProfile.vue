@@ -42,7 +42,7 @@
 
                 <a href class="tweet-like">
                   <img src="https://i.imgur.com/gCFSWst.png" id="icon-like" alt />
-                  <p class="like-count">76</p>
+                  <p class="like-count">{{tweet.Likes ? tweet.Likes.length : '0'}}</p>
                 </a>
               </div>
             </div>
