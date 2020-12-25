@@ -27,23 +27,23 @@
 
             <div class="item-right">
               <div class="item-user-info d-flex">
-                <a href class="user-name">{{user.name}}</a>
+                <div class="user-name">{{user.name}}</div>
 
-                <a href class="user-account">@{{user.account}}</a>
+                <div class="user-account">@{{user.account}}</div>
 
                 <div class="time">・{{tweet.createdAt | fromNow}}</div>
               </div>
-              <a href class="item-content">{{tweet.description}}</a>
+              <div class="item-content">{{tweet.description}}</div>
               <div class="item-interaction">
-                <a href class="tweet-reply">
+                <div class="tweet-reply">
                   <img src="https://i.imgur.com/I3DHrNy.png" id="icon-reply" alt />
                   <p class="reply-count">{{tweet.Replies.length}}</p>
-                </a>
+                </div>
 
-                <a href class="tweet-like">
+                <div class="tweet-like">
                   <img src="https://i.imgur.com/gCFSWst.png" id="icon-like" alt />
                   <p class="like-count">{{tweet.Likes ? tweet.Likes.length : '0'}}</p>
-                </a>
+                </div>
               </div>
             </div>
           </div>

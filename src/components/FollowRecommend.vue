@@ -30,12 +30,15 @@
               </div>
 
               <div class="btn-follow">
-                <!-- <button v-if="user.isFollowed" class="delete-follow">正在跟隨</button> -->
+                <button
+                  v-if="user.isFollowed"
+                  class="delete-follow"
+                  @click.stop.prevent="deleteFollowing(user.id)"
+                >正在跟隨</button>
 
-                <form @click.stop.prevent="addFollow(user.id)">
-                  <input type="text" :value="user.id" class="user-id-input" />
-                  <button class="follow">跟隨</button>
-                </form>
+                <button v-else-if="user.id === currentUser.id" class="follow-self">您本人</button>
+
+                <button v-else class="follow" @click.stop.prevent="addFollow(user.id)">跟隨</button>
               </div>
             </div>
           </div>
@@ -59,11 +62,12 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-      users: {},
+      users: {
+        isLiked: false
+      },
       user: {
         id: ""
-      },
-      isFollowed: false
+      }
     };
   },
   created() {
@@ -92,12 +96,9 @@ export default {
     },
     async addFollow(id) {
       try {
-        console.log("追蹤");
-
         const { data } = await usersAPI.addFollow({
           id
         });
-        console.log("user.id:", id);
         if (data.status === "error") {
           throw new Error(data.message);
         }
@@ -105,12 +106,53 @@ export default {
           icon: "success",
           title: "追蹤成功"
         });
+
+        this.users = this.users.map(user => {
+          if (user.id !== id) {
+            return user;
+          } else {
+            return {
+              ...user,
+              isFollowed: true
+            };
+          }
+        });
       } catch (error) {
         console.error(error.message);
         Toast.fire({
           icon: "error",
           title: "您已經追蹤使用者"
         });
+      }
+    },
+    async deleteFollowing(userId) {
+      try {
+        const { data } = await usersAPI.deleteFollowing({ userId });
+
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+
+        this.users = this.users.map(user => {
+          if (user.id !== userId) {
+            return user;
+          } else {
+            return {
+              ...user,
+              isFollowed: false
+            };
+          }
+        });
+        Toast.fire({
+          icon: "success",
+          title: "成功取消追蹤"
+        });
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: "無法取消追蹤，請稍後再試"
+        });
+        console.log("error", error);
       }
     }
   },
@@ -182,6 +224,17 @@ export default {
 }
 
 .follow {
+  width: 62px;
+  height: 30px;
+  border: 1px solid #ff6600;
+  border-radius: 100px;
+  color: #ff6600;
+  font-size: 15px;
+  font-weight: 550;
+  line-height: 15px;
+}
+
+.follow-self {
   width: 62px;
   height: 30px;
   border: 1px solid #ff6600;

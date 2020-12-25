@@ -16,13 +16,13 @@
         </div>
 
         <div v-else class="btn-section">
-          <a href class="btn-mail">
+          <div class="btn-mail">
             <img class="icon-mail" src="https://i.imgur.com/TDfyaS9.png" alt />
-          </a>
+          </div>
           <!-- notice off(小鈴鐺關) -->
-          <a href class="btn-notice-off">
+          <div class="btn-notice-off">
             <img class="icon-notice-off" src="https://i.imgur.com/p1FX7TV.png" alt />
-          </a>
+          </div>
           <!--notice on(小鈴鐺開)-->
           <!-- <a href class="btn-notice-on">
             <img class="icon-notice-on" src="https://i.imgur.com/aYdKhit.png" alt />
