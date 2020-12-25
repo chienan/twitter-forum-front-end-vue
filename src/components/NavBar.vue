@@ -16,12 +16,20 @@
 
       <div class="nav-item d-flex align-items-center">
         <img src="https://i.imgur.com/MBiFHBl.png" style="width: 16.7px" alt />
-        <router-link :to="{name: 'user',  params: {id: currentUser.id}}" class="nav-link">個人資料</router-link>
+        <router-link
+          :to="{ name: 'user', params: { id: currentUser.id } }"
+          class="nav-link"
+          >個人資料</router-link
+        >
       </div>
 
       <div class="nav-item d-flex align-items-center">
         <img src="https://i.imgur.com/Ce7aQj4.png" style="width: 20.75px" alt />
-        <a class="nav-link" href="#">設定</a>
+        <router-link
+          :to="{ name: 'set-account', params: { id: currentUser.id } }"
+          class="nav-link"
+          >設定</router-link
+        >
       </div>
 
       <div>
@@ -51,8 +59,8 @@ export default {
   },
   //vuex `mapState` 方法
   computed: {
-    ...mapState(["currentUser", "isAuthenticated"])
-  }
+    ...mapState(["currentUser", "isAuthenticated"]),
+  },
 };
 </script>
 
