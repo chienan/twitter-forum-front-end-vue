@@ -127,6 +127,36 @@ export default {
         });
       }
     },
+    async addFollow(id) {
+      try {
+        const { data } = await usersAPI.addFollow({
+          id
+        });
+        if (data.status === "error") {
+          throw new Error(data.message);
+        }
+        Toast.fire({
+          icon: "success",
+          title: "追蹤成功"
+        });
+        this.users = this.users.map(user => {
+          if (user.id !== id) {
+            return user;
+          } else {
+            return {
+              ...user,
+              isFollowed: true
+            };
+          }
+        });
+      } catch (error) {
+        console.error(error.message);
+        Toast.fire({
+          icon: "error",
+          title: "您已經追蹤使用者"
+        });
+      }
+    },
     async deleteFollowing(userId) {
       try {
         const { data } = await usersAPI.deleteFollowing({ userId });
@@ -134,9 +164,16 @@ export default {
         if (data.status !== "success") {
           throw new Error(data.message);
         }
-        this.users = {
-          ...this.users
-        };
+        this.users = this.users.map(user => {
+          if (user.id !== userId) {
+            return user;
+          } else {
+            return {
+              ...user,
+              isFollowed: false
+            };
+          }
+        });
         Toast.fire({
           icon: "success",
           title: "成功取消追蹤"

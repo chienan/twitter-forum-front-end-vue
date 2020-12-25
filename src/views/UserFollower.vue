@@ -140,8 +140,16 @@ export default {
           icon: "success",
           title: "追蹤成功"
         });
-
-        this.user.isFollowed = true;
+        this.users = this.users.map(user => {
+          if (user.id !== id) {
+            return user;
+          } else {
+            return {
+              ...user,
+              isFollowed: true
+            };
+          }
+        });
       } catch (error) {
         console.error(error.message);
         Toast.fire({
@@ -157,10 +165,16 @@ export default {
         if (data.status !== "success") {
           throw new Error(data.message);
         }
-        this.users = {
-          ...this.users,
-          isFollowed: false
-        };
+        this.users = this.users.map(user => {
+          if (user.id !== userId) {
+            return user;
+          } else {
+            return {
+              ...user,
+              isFollowed: false
+            };
+          }
+        });
         Toast.fire({
           icon: "success",
           title: "成功取消追蹤"

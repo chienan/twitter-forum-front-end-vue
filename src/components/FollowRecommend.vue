@@ -62,7 +62,9 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-      users: {},
+      users: {
+        isLiked: false
+      },
       user: {
         id: ""
       }
@@ -94,12 +96,9 @@ export default {
     },
     async addFollow(id) {
       try {
-        console.log("追蹤");
-
         const { data } = await usersAPI.addFollow({
           id
         });
-        console.log("user.id:", id);
         if (data.status === "error") {
           throw new Error(data.message);
         }
@@ -108,7 +107,16 @@ export default {
           title: "追蹤成功"
         });
 
-        this.user.isFollowed = true;
+        this.users = this.users.map(user => {
+          if (user.id !== id) {
+            return user;
+          } else {
+            return {
+              ...user,
+              isFollowed: true
+            };
+          }
+        });
       } catch (error) {
         console.error(error.message);
         Toast.fire({
@@ -124,10 +132,17 @@ export default {
         if (data.status !== "success") {
           throw new Error(data.message);
         }
-        this.users = {
-          ...this.users,
-          isFollowed: false
-        };
+
+        this.users = this.users.map(user => {
+          if (user.id !== userId) {
+            return user;
+          } else {
+            return {
+              ...user,
+              isFollowed: false
+            };
+          }
+        });
         Toast.fire({
           icon: "success",
           title: "成功取消追蹤"
