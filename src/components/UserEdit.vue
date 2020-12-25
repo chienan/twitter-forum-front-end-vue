@@ -1,7 +1,7 @@
 <template>
   <Spinner v-if="isLoading" />
   <div v-else>
-    <form class="d-flex justify-content-center" @submit="handleSubmit">
+    <form class="d-flex justify-content-center" @submit.stop.prevent="handleSubmit">
       <div class="card" style="width: 600px; height: 654px">
         <div class="d-flex flex-row title">
           <router-link :to="{ name: 'user', params:{id: id}}">
@@ -76,7 +76,7 @@
             />
           </div>
           <label class="upload-container">
-            <input type="file" accept="image/*" class="upload-input" @change="handleAvatarChange" />
+            <input type="file" accept="image/*" class="upload-input" @click="handleAvatarChange" />
             <span class="upload_icon">+</span>
             <!-- <img
               src="https://i.postimg.cc/8cst7cYh/icon-upload-Photo.png"
@@ -146,7 +146,6 @@ export default {
       cover: "",
       avatar: "",
       introduction: "",
-      isProcessing: false,
       isLoading: true
     };
   },
@@ -209,6 +208,7 @@ export default {
 
     async handleSubmit(e) {
       try {
+        console.log("submit");
         if (!this.name) {
           Toast.fire({
             icon: "warning",
@@ -219,7 +219,6 @@ export default {
 
         const form = e.target;
         const formData = new FormData(form);
-        this.isProcessing = true;
 
         const { data } = await usersAPI.update({
           userId: this.id,
@@ -239,7 +238,7 @@ export default {
         console.log("back to profile");
       } catch (error) {
         console.error(error.message);
-        this.isProcessing = false;
+
         Toast.fire({
           icon: "error",
           title: "無法更新使用者資料，請稍後再試"

@@ -227,6 +227,7 @@ export default {
           tweetId: data.tweetId,
           description: this.description
         });
+
         this.myModal = false;
         this.description = "";
       } catch (error) {
