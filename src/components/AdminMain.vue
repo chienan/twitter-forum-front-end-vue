@@ -9,37 +9,26 @@
         :key="admintweet.id"
       >
         <div>
-          <img
-            :src="admintweet.User.avatar"
-            alt=""
-            class="circle"
-            style="width: 50px; height: 50px"
-          />
+          <img :src="admintweet.User.avatar" alt class="circle" style="width: 50px; height: 50px" />
         </div>
         <div class="ml-3 apple">
           <div>
-            <span class="bold">{{ admintweet.User.name }}</span
-            ><span style="color: #657786"
-              >@{{ admintweet.User.account }}・{{
-                admintweet.createdAt | fromNow
-              }}</span
-            >
+            <span class="bold">{{ admintweet.User.name }}</span>
+            <span style="color: #657786">
+              @{{ admintweet.User.account }}・{{
+              admintweet.createdAt | fromNow
+              }}
+            </span>
 
             <div>
               <button type="button" @click="deleteAdminTweet(admintweet.id)">
                 <span class="d-flex justify-content-end cross1-relative">
-                  <img
-                    src="https://i.postimg.cc/d3tcy7N0/Vector-3.png"
-                    alt=""
-                    class="cross1"
-                  />
+                  <img src="https://i.postimg.cc/d3tcy7N0/Vector-3.png" alt class="cross1" />
                 </span>
               </button>
             </div>
           </div>
-          <p class="info1">
-            {{ admintweet.description }}
-          </p>
+          <p class="info1">{{ admintweet.description }}</p>
         </div>
       </li>
     </ul>
@@ -56,19 +45,17 @@ export default {
   props: {
     initialAdmintweets: {
       type: Array,
-      required: true,
-    },
+      required: true
+    }
   },
   // data() {
   //   return {
   //     Admintweets: {},
   //   };
   // },
-
   // created() {
   //   this.fetchAdmintweet();
   // },
-
   // watch: {
   //   initialAdmintweets(newValue, oldValue) {
   //     console.log("watch", { newValue, oldValue });
@@ -77,12 +64,11 @@ export default {
   //     };
   //   },
   // },
-
   methods: {
     async deleteAdminTweet(admintweetId) {
       try {
         const response = await AdminTweetsAPI.adminTweets.delete({
-          admintweetId,
+          admintweetId
         });
         console.log(response);
         const { data } = response;
@@ -93,20 +79,19 @@ export default {
         console.log("error", error);
         Toast.fire({
           icon: "error",
-          title: "無法刪除推文，請稍後再試",
+          title: "無法刪除推文，請稍後再試"
         });
       }
       // console.log(admintweetId);
       this.$emit("after-delete-admintweet", admintweetId);
-    },
-
+    }
     // fetchAdmintweet() {
     //   this.Admintweets = {
     //     ...this.Admintweets,
     //     ...this.initialAdmintweets,
     //   };
     // },
-  },
+  }
 };
 </script>
 
