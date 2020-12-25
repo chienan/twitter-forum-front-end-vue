@@ -62,7 +62,8 @@ export default {
       users: {},
       user: {
         id: ""
-      }
+      },
+      isFollowed: false
     };
   },
   created() {
@@ -76,6 +77,11 @@ export default {
 
         const users = response.data;
         this.users = users;
+        // console.log(this.currentUser.Followings);
+        let recommendFollows = this.currentUser.Followings.filter(
+          user => user.id !== response.data.id
+        );
+        console.log(recommendFollows);
       } catch (error) {
         console.log("error", error);
         Toast.fire({
@@ -107,26 +113,6 @@ export default {
         });
       }
     }
-    // async addFollow() {
-    //   try {
-    //     console.log("追蹤");
-
-    //     const { data } = await usersAPI.create({
-    //       id: this.user.id
-    //     });
-    //     console.log("user.id:", this.user.id);
-    //     if (data.status === "error") {
-    //       throw new Error(data.message);
-    //     }
-    //     console.log("追蹤成功");
-    //   } catch (error) {
-    //     console.error(error.message);
-    //     Toast.fire({
-    //       icon: "error",
-    //       title: "無法追蹤使用者，請稍後再試"
-    //     });
-    //   }
-    // }
   },
   //vuex `mapState` 方法
   computed: {
