@@ -48,7 +48,9 @@
     <div class="p-2 nav-bottom">
       <div class="d-flex align-items-center">
         <img src="https://i.imgur.com/4v9ZADO.png" style="width: 16px" alt />
-        <a class="nav-link" href="#">登出</a>
+        <button @click="logout">
+          <a class="nav-link" href="#">登出</a>
+        </button>
       </div>
     </div>
   </nav>
@@ -63,6 +65,12 @@ export default {
   //vuex `mapState` 方法
   computed: {
     ...mapState(["currentUser", "isAuthenticated"]),
+  },
+  methods: {
+    logout() {
+      this.$store.commit("revokeAuthentication");
+      this.$router.push("/signin");
+    },
   },
 };
 </script>

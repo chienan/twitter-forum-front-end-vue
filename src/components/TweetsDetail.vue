@@ -24,24 +24,18 @@
       <li class="list-group-item" style="border-bottom: none">
         <div class="d-flex flex-row">
           <div>
-            <img
-              src="https://i.postimg.cc/vH7wW6pv/User-Photo.png"
-              alt=""
-              class="Photo"
-            />
+            <img :src="Tweet.avatar" alt="" class="Photo" />
           </div>
           <div class="ml-2">
-            <p class="bold">Apple</p>
-            <p class="color-gray apple">@apple</p>
+            <p class="bold">{{ Tweet.name }}</p>
+            <p class="color-gray apple">@{{ initialTweet.accoun }}</p>
           </div>
         </div>
 
         <div class="text bold">
-          Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco
-          cillum dolor. Voluptate exercitation incididunt aliquip deserunt
-          reprehenderit elit laborum.
+          {{ Tweet.description }}
         </div>
-        <p class="color-gray time">上午 10:05・2020年6月10日</p>
+        <p class="color-gray time">{{ Tweet.createdAt }}</p>
         <hr />
       </li>
 
@@ -51,11 +45,11 @@
       >
         <div class="d-flex flex-row count">
           <div class="mr-3">
-            <span class="bold">34</span
+            <span class="bold">{{ Tweet.replies }}</span
             ><span class="color-gray bold"> 回覆</span>
           </div>
           <div>
-            <span class="bold">808</span
+            <span class="bold">{{ Tweet.likes }}</span
             ><span class="color-gray bold"> 喜歡次數</span>
           </div>
         </div>
@@ -63,140 +57,77 @@
 
       <li class="list-group-item line-relative" style="height: 50px">
         <p class="line"></p>
-        <img
-          src="https://i.postimg.cc/ZqS9w3RK/Vector-3.png"
-          alt=""
-          class="replied-icon"
-        />
-        <img
-          src="https://i.postimg.cc/26P3BBPD/Vector.png"
-          alt=""
-          class="ml-3"
-        />
-      </li>
-
-      <li class="list-group-item d-flex flex-row list">
-        <div>
-          <img
-            src="https://i.postimg.cc/dVpMFmdw/Photo.png"
-            alt=""
-            class="mt-1"
-          />
-        </div>
-        <div class="ml-2" style="line-height: 27px">
-          <span class="bold mr-2">Mary Jane</span>
-          <span class="color-gray">@mjjane・13 小時</span>
+        <div class="d-flex flex-row">
           <div>
-            <span class="color-gray bold"> 回覆 </span>
-            <span style="color: #ff6600">@apple</span>
+            <img
+              src="https://i.postimg.cc/ZqS9w3RK/Vector-3.png"
+              alt=""
+              class="replied-icon"
+            />
           </div>
-
-          <p>Great~</p>
+          <div>
+            <img
+              src="https://i.postimg.cc/26P3BBPD/Vector.png"
+              alt=""
+              class="heart-icon"
+            />
+          </div>
         </div>
       </li>
 
-      <li class="list-group-item d-flex flex-row list">
+      <li
+        class="list-group-item d-flex flex-row list"
+        v-for="tweetReplie in tweetReplies"
+        :key="tweetReplie.id"
+      >
         <div>
-          <img
-            src="https://i.postimg.cc/vH7wW6pv/User-Photo.png"
-            alt=""
-            class="mt-1"
-          />
+          <img :src="tweetReplie.User.avatar" alt="" class="mt-1 avatar" />
         </div>
         <div class="ml-2" style="line-height: 27px">
-          <span class="bold mr-2">Squishy Tom</span>
-          <span class="color-gray">@sushiTom・13 小時</span>
+          <span class="bold mr-2">{{ tweetReplie.User.name }}</span>
+          <span class="color-gray"
+            >@{{ tweetReplie.User.account }}・{{ tweetReplie.createdAt }}</span
+          >
           <div>
             <span class="color-gray bold"> 回覆 </span>
-            <span style="color: #ff6600">@apple</span>
+            <span style="color: #ff6600">@{{ initialTweet.accoun }}</span>
           </div>
 
-          <p>Good Job!</p>
-        </div>
-      </li>
-
-      <li class="list-group-item d-flex flex-row list">
-        <div>
-          <img
-            src="https://i.postimg.cc/vH7wW6pv/User-Photo.png"
-            alt=""
-            class="mt-1"
-          />
-        </div>
-        <div class="ml-2" style="line-height: 27px">
-          <span class="bold mr-2">Squishy Tom</span>
-          <span class="color-gray">@sushiTom・13 小時</span>
-          <div>
-            <span class="color-gray bold"> 回覆 </span>
-            <span style="color: #ff6600">@apple</span>
-          </div>
-
-          <p>Good Job!</p>
-        </div>
-      </li>
-
-      <li class="list-group-item d-flex flex-row list">
-        <div>
-          <img
-            src="https://i.postimg.cc/vH7wW6pv/User-Photo.png"
-            alt=""
-            class="mt-1"
-          />
-        </div>
-        <div class="ml-2" style="line-height: 27px">
-          <span class="bold mr-2">Squishy Tom</span>
-          <span class="color-gray">@sushiTom・13 小時</span>
-          <div>
-            <span class="color-gray bold"> 回覆 </span>
-            <span style="color: #ff6600">@apple</span>
-          </div>
-
-          <p>Good Job!</p>
-        </div>
-      </li>
-
-      <li class="list-group-item d-flex flex-row list">
-        <div>
-          <img
-            src="https://i.postimg.cc/vH7wW6pv/User-Photo.png"
-            alt=""
-            class="mt-1"
-          />
-        </div>
-        <div class="ml-2" style="line-height: 27px">
-          <span class="bold mr-2">Squishy Tom</span>
-          <span class="color-gray">@sushiTom・13 小時</span>
-          <div>
-            <span class="color-gray bold"> 回覆 </span>
-            <span style="color: #ff6600">@apple</span>
-          </div>
-
-          <p>Good Job!</p>
-        </div>
-      </li>
-
-      <li class="list-group-item d-flex flex-row list">
-        <div>
-          <img
-            src="https://i.postimg.cc/vH7wW6pv/User-Photo.png"
-            alt=""
-            class="mt-1"
-          />
-        </div>
-        <div class="ml-2" style="line-height: 27px">
-          <span class="bold mr-2">Squishy Tom</span>
-          <span class="color-gray">@sushiTom・13 小時</span>
-          <div>
-            <span class="color-gray bold"> 回覆 </span>
-            <span style="color: #ff6600">@apple</span>
-          </div>
-
-          <p>Good Job!</p>
+          <p>{{ tweetReplie.comment }}</p>
         </div>
       </li>
     </ul>
   </div>
 </template>
+
+<script>
+export default {
+  props: {
+    initialTweet: {
+      type: Object,
+      required: true,
+    },
+    tweetReplies: {
+      type: Array,
+      required: true,
+    },
+  },
+  data() {
+    return {
+      Tweet: this.initialTweet,
+      // islike: this.initialTweet.isLike,
+    };
+  },
+  watch: {
+    initialTweet(newValue) {
+      this.Tweet = {
+        ...this.Tweet,
+        ...newValue,
+      };
+    },
+  },
+};
+</script>
 
 <style scoped>
 .list-group-item {
@@ -214,9 +145,17 @@
 .apple {
   margin-top: -17px;
 }
+.avatar {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+}
 
 .Photo {
   margin-left: -6px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
 }
 .text {
   margin-left: -3px;
@@ -242,6 +181,9 @@ hr {
   border-bottom: 1px solid #e6ecf0;
   margin-top: -25px;
   margin-left: -3px;
+}
+.heart-icon {
+  margin-left: -19px;
 }
 .count-relative {
   position: relative;

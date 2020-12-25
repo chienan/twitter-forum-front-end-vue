@@ -56,7 +56,9 @@
               />
             </div>
             <div>
-              <p class="bold icon-logout" style="font-size: 18px">登出</p>
+              <button @click="logout">
+                <p class="bold icon-logout" style="font-size: 18px">登出</p>
+              </button>
             </div>
           </div>
         </div>
@@ -66,6 +68,25 @@
 
   <!-- "d-flex flex-direction: column align-items-end" -->
 </template>
+
+<script>
+import { mapState } from "vuex";
+export default {
+  computed: {
+    ...mapState(["currentUser", "isAuthenticated"]),
+  },
+  methods: {
+    logout() {
+      this.$store.commit("revokeAuthentication");
+      this.$router.push("/signin");
+    },
+  },
+};
+</script>
+
+
+
+
 
 <style scoped>
 * {

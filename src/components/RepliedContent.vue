@@ -11,7 +11,7 @@
       <div class="card-body d-flex flex-row">
         <div>
           <div class="Photo">
-            <img src="https://i.postimg.cc/sXL7D7rk/Post-Photo.png" alt="" />
+            <img :src="initialTweet.avatar" alt="" class="style2" />
           </div>
 
           <div class="divider">
@@ -21,46 +21,109 @@
 
         <div class="replied-relative">
           <div class="d-flex flex-row">
-            <h5 class="card-title mr-2 bold">Apple</h5>
-            <p style="color: #657786">@apple・3 小時</p>
+            <h5 class="card-title mr-2 bold">{{ initialTweet.name }}</h5>
+            <p style="color: #657786">
+              @{{ initialTweet.accoun }}・{{ initialTweet.createdAt }}
+            </p>
           </div>
           <p class="card-text">
-            Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco
-            cillum dolor. Voluptate exercitation incididunt aliquip deserunt
-            reprehenderit elit laborum.
+            {{ initialTweet.description }}
           </p>
           <small class="replied"
             ><span style="color: #657786; font-weight: bold">回覆給</span
-            ><span style="color: #ff6600"> @apple</span></small
+            ><span style="color: #ff6600">
+              @{{ initialTweet.accoun }}</span
+            ></small
           >
 
           <div id="thumbnail">
-            <img src="https://i.postimg.cc/tRhFH1cM/Photo.png" alt="" />
+            <div class="currentUser">
+              <img :src="currentUser.avatar" alt="" class="style2" />
+            </div>
             <span class="push">推你的回覆</span>
             <div>
-              <input
-                style="width: 380px; height: 140px; border: none; outline: none"
-                type="text"
-              />
+              <form @submit.stop.prevent="tweet(initialTweet.id)">
+                <input
+                  style="
+                    width: 380px;
+                    height: 140px;
+                    border: none;
+                    outline: none;
+                  "
+                  v-model="text"
+                  type="text"
+                />
+
+                <div class="button-relative">
+                  <button
+                    style="width: 80px; height: 40px"
+                    type="submit"
+                    class="btn btn-warning"
+                  >
+                    回覆
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
-      </div>
-
-      <div class="d-flex flex-row justify-content-end">
-        <button
-          style="width: 60px; height: 40px"
-          type="submit"
-          class="btn btn-warning"
-        >
-          回覆
-        </button>
       </div>
     </div>
   </div>
 </template>
 
+
+<script>
+import { mapState } from "vuex";
+import tweetAPI from "../apis/tweet.js";
+export default {
+  props: {
+    initialTweet: {
+      type: Object,
+      required: true,
+    },
+  },
+  computed: {
+    ...mapState(["currentUser"]),
+  },
+  data() {
+    return {
+      text: "",
+      Tweet: this.initialTweet,
+    };
+  },
+  methods: {
+    async tweet(tweetId) {
+      try {
+        // const data1 = {
+        //   text: this.text,
+        //   id: this.id,
+        // };
+        // console.log(tweetId);
+        // const response = await tweetAPI.tweet.post({ tweetId, data1 });
+        // console.log(response);
+
+        this.$emit("after-create-comment", {
+          text: this.text,
+          id: this.id,
+        });
+        this.text = "";
+      } catch (error) {
+        console.log("error", error);
+      }
+    },
+  },
+};
+</script>
+
+
+
 <style scoped>
+.style2 {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
 .bold {
   font-weight: bold;
 }
@@ -92,6 +155,9 @@
   margin-left: 10px;
   position: relative;
 }
+.currentUser {
+  margin-top: 100px;
+}
 .Photo {
   margin-left: -5px;
   margin-top: 3px;
@@ -117,10 +183,16 @@
   color: #9197a3;
   font-size: 18px;
 }
+.button-relative {
+  position: relative;
+}
 button {
   border-radius: 35px;
-  margin-bottom: 10px;
-  margin-right: 10px;
+  /* margin-bottom: -100px;
+  margin-right: 10px; */
+  position: absolute;
+  right: -80px;
+  bottom: -10px;
   background-color: #ff6600;
   color: white;
 }
@@ -128,20 +200,4 @@ button:hover {
   color: white;
   background-color: #ff6600;
 }
-button:focus {
-  /* outline: 0; */
-  border-color: #ccc;
-  outline: none;
-  box-shadow: none;
-  background-color: #ff6600;
-  border: none;
-}
-/* button:active {
-  color: white;
-  background-color: #ff6600;
-}
-.btn-warning {
-  background-color: #ff6600;
-  border: none;
-} */
 </style>
