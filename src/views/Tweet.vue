@@ -64,12 +64,12 @@ export default {
     const { id } = this.$route.params;
     this.fetchTweet(id);
     this.fetchReplies(id);
-    console.log(id);
+    // console.log(id);
   },
 
   methods: {
     async fetchTweet(tweetId) {
-      console.log(tweetId);
+      // console.log(tweetId);
       try {
         const response = await tweetAPI.tweet.get({ tweetId });
         console.log(response);
@@ -78,7 +78,7 @@ export default {
           id: data.id,
           description: data.description,
           name: data.User.name,
-          accoun: data.User.account,
+          account: data.User.account,
           createdAt: data.createdAt,
           avatar: data.User.avatar,
           likes: data.Likes.length,
@@ -101,15 +101,20 @@ export default {
       }
     },
     afterCreateComment(payload) {
-      console.log("ok");
-      const { text, id } = payload;
+      console.log(payload);
+      // console.log(tweetId);
+      const { text, account, createdAt } = payload;
+      console.log(text, account, createdAt);
       this.tweetReplies.push({
-        text: text,
-        id: tweetId,
+        comment: text,
+        createdAt: new Date(),
         User: {
           id: this.currentUser.id,
           name: this.currentUser.name,
-          createdAt: new Date(),
+          // account: this.currentUser.account,
+          account: account,
+          avatar: this.currentUser.avatar,
+          createdAt: createdAt,
         },
       });
     },
@@ -119,8 +124,9 @@ export default {
 <style scoped>
 .repliedContent {
   margin-top: -700px;
-  margin-left: -60px;
+  margin-left: 800px;
 }
+/* -60px */
 </style>
   
 

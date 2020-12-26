@@ -28,7 +28,7 @@
           </div>
           <div class="ml-2">
             <p class="bold">{{ Tweet.name }}</p>
-            <p class="color-gray apple">@{{ initialTweet.accoun }}</p>
+            <p class="color-gray apple">@{{ initialTweet.account }}</p>
           </div>
         </div>
 
@@ -90,7 +90,7 @@
           >
           <div>
             <span class="color-gray bold"> 回覆 </span>
-            <span style="color: #ff6600">@{{ initialTweet.accoun }}</span>
+            <span style="color: #ff6600">@{{ initialTweet.account }}</span>
           </div>
 
           <p>{{ tweetReplie.comment }}</p>

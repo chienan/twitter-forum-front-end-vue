@@ -23,7 +23,7 @@
           <div class="d-flex flex-row">
             <h5 class="card-title mr-2 bold">{{ initialTweet.name }}</h5>
             <p style="color: #657786">
-              @{{ initialTweet.accoun }}・{{ initialTweet.createdAt }}
+              @{{ initialTweet.account }}・{{ initialTweet.createdAt }}
             </p>
           </div>
           <p class="card-text">
@@ -32,7 +32,7 @@
           <small class="replied"
             ><span style="color: #657786; font-weight: bold">回覆給</span
             ><span style="color: #ff6600">
-              @{{ initialTweet.accoun }}</span
+              @{{ initialTweet.account }}</span
             ></small
           >
 
@@ -53,15 +53,16 @@
                   v-model="text"
                   type="text"
                 />
-
-                <div class="button-relative">
-                  <button
-                    style="width: 80px; height: 40px"
-                    type="submit"
-                    class="btn btn-warning"
-                  >
-                    回覆
-                  </button>
+                <div>
+                  <div class="button-relative">
+                    <button
+                      style="width: 80px; height: 40px"
+                      type="submit"
+                      class="btn btn-warning"
+                    >
+                      回覆
+                    </button>
+                  </div>
                 </div>
               </form>
             </div>
@@ -82,6 +83,10 @@ export default {
       type: Object,
       required: true,
     },
+    tweetReplies: {
+      type: Array,
+      required: true,
+    },
   },
   computed: {
     ...mapState(["currentUser"]),
@@ -92,8 +97,10 @@ export default {
       Tweet: this.initialTweet,
     };
   },
+  // (tweetId)
   methods: {
-    async tweet(tweetId) {
+    async tweet() {
+      // console.log(tweetId);
       try {
         // const data1 = {
         //   text: this.text,
@@ -105,9 +112,12 @@ export default {
 
         this.$emit("after-create-comment", {
           text: this.text,
-          id: this.id,
+          // id:tweetId,
+          account: this.initialTweet.account,
+          createdAt: this.initialTweet.createdAt,
         });
         this.text = "";
+        console.log("ok");
       } catch (error) {
         console.log("error", error);
       }
