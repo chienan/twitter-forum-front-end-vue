@@ -127,11 +127,11 @@ export default {
         console.log(response);
         console.log(response.data);
         const { data } = response;
-        const { id, account, name, email, password } = data;
+        const { id, account, name, email } = data;
         (this.id = id),
           (this.account = account),
           (this.name = name),
-          (this.email = email),
+          (this.email = email);
           // (this.password = password);
       } catch (error) {
         console.log("error", error);
