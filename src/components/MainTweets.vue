@@ -48,10 +48,10 @@
               class="item-content"
             >{{ tweet.description }}</router-link>
             <div class="item-interaction">
-              <a href class="tweet-reply">
+              <router-link :to="{ name: 'tweet', params: { id: tweet.id } }" class="tweet-reply">
                 <img src="https://i.imgur.com/I3DHrNy.png" id="icon-reply" alt />
                 <p>{{tweet.replyCount}}</p>
-              </a>
+              </router-link>
 
               <div class="tweet-like">
                 <div class="like-container">
