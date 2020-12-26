@@ -2,7 +2,7 @@
   <div class="d-flex justify-content-center signin">
     <div class="logo">
       <div class="d-flex justify-content-center">
-        <img src="https://i.postimg.cc/LsddLPp9/Logo.png" alt="" />
+        <img src="https://i.postimg.cc/LsddLPp9/Logo.png" alt />
       </div>
       <div class="bold Admin">後台登入</div>
     </div>
@@ -20,7 +20,7 @@
             required
           />
 
-          <label for="exampleInputEmail1" class="form-label">帳號</label>
+          <label for="exampleInputEmail1" class="form-label">email</label>
           <div id="emailHelp" class="form-text"></div>
         </div>
 
@@ -43,19 +43,11 @@
           type="submit"
           class="btn bold mt-3"
           :disabled="isProcessing"
-        >
-          {{ isProcessing ? "處理中，請稍後" : "登入" }}
-        </button>
+        >{{ isProcessing ? "處理中，請稍後" : "登入" }}</button>
       </form>
 
       <div class="signup-alphitter d-flex justify-content-end">
-        <router-link
-          to="/signin"
-          class="bold"
-          href="#"
-          style="color: #0099ff; font-size: 18px"
-          >前台登入</router-link
-        >
+        <router-link to="/signin" class="bold" href="#" style="color: #0099ff; font-size: 18px">前台登入</router-link>
       </div>
     </div>
   </div>
@@ -72,23 +64,23 @@ export default {
     return {
       email: "",
       password: "",
-      isProcessing: false,
+      isProcessing: false
     };
   },
   methods: {
-    async handleSubmit(e) {
+    async handleSubmit() {
       try {
         if (!this.email || !this.password) {
           Toast.fire({
             icon: "warning",
-            title: "請填入 email 和 password",
+            title: "請填入 email 和 password"
           });
           return;
         }
         this.isProcessing = true;
         const response = await authorizationAPI.authorization.AdminSignIn({
           email: this.email,
-          password: this.password,
+          password: this.password
         });
         console.log(response);
         const { data } = response;
@@ -104,11 +96,11 @@ export default {
         this.isProcessing = false;
         Toast.fire({
           icon: "warning",
-          title: "請確認您輸入了正確的帳號密碼",
+          title: "請確認您輸入了正確的帳號密碼"
         });
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
