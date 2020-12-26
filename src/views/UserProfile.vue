@@ -41,8 +41,23 @@
                 </div>
 
                 <div class="tweet-like">
-                  <img src="https://i.imgur.com/gCFSWst.png" id="icon-like" alt />
-                  <p class="like-count">{{tweet.Likes ? tweet.Likes.length : '0'}}</p>
+                  <div class="like-container">
+                    <img
+                      v-if="!tweet.isLiked"
+                      src="https://i.imgur.com/gCFSWst.png"
+                      id="icon-like"
+                      @click.stop.prevent="addLike(tweet.id)"
+                      alt
+                    />
+                    <img
+                      v-else
+                      src="https://i.imgur.com/7Mp1UdA.png"
+                      id="icon-unlike"
+                      @click.stop.prevent="deleteLike(tweet.id)"
+                      alt
+                    />
+                  </div>
+                  <p class="like-count">{{tweet.likeCount}}</p>
                 </div>
               </div>
             </div>
@@ -134,6 +149,64 @@ export default {
         Toast.fire({
           icon: "error",
           title: "無法取得使用者資料"
+        });
+      }
+    },
+    async addLike(tweetId) {
+      try {
+        const { data } = await usersAPI.addLike({ tweetId });
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+        this.tweets = this.tweets.map(tweet => {
+          if (tweet.id !== tweetId) {
+            return tweet;
+          } else {
+            return {
+              ...tweet,
+              isLiked: true
+            };
+          }
+        });
+
+        Toast.fire({
+          icon: "success",
+          title: "like tweet"
+        });
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: "您已經like這條tweet"
+        });
+        console.log("error", error);
+      }
+    },
+    async deleteLike(tweetId) {
+      try {
+        const { data } = await usersAPI.deleteLike({ tweetId });
+        if (data.status === "error") {
+          throw new Error(data.message);
+        }
+        this.tweets = this.tweets.map(tweet => {
+          if (tweet.id !== tweetId) {
+            return tweet;
+          } else {
+            return {
+              ...tweet,
+              isLiked: false
+            };
+          }
+        });
+        console.log(this.tweet);
+        Toast.fire({
+          icon: "success",
+          title: "unlike tweet"
+        });
+      } catch (error) {
+        console.error(error.message);
+        Toast.fire({
+          icon: "error",
+          title: "您沒有like這條tweet"
         });
       }
     }
@@ -297,6 +370,7 @@ p {
 }
 
 .item-content {
+  padding-right: 10px;
   font-weight: 400;
   font-size: 15px;
   line-height: 22px;
@@ -342,9 +416,31 @@ p {
   margin-right: 11.35px;
 }
 
+.like-count {
+  position: absolute;
+  left: 30px;
+  bottom: 0px;
+}
+
 #icon-like {
   height: 11.82px;
   width: 12.56px;
   margin-right: 11.35px;
+}
+
+#icon-unlike {
+  position: absolute;
+  left: -4px;
+  bottom: -2px;
+  height: 19px;
+  width: 20px;
+  /* margin-right: -1px; */
+  /* margin-left: -10;
+  margin-bottom: -1px; */
+}
+
+#icon-like,
+#icon-unlike:hover {
+  cursor: pointer;
 }
 </style>

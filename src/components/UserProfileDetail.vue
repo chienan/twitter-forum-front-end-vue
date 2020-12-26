@@ -29,10 +29,14 @@
           </a>-->
 
           <!-- 取消跟隨 -->
-          <a href class="btn-unfollow">正在跟隨</a>
+          <button
+            v-if="user.isFollowed"
+            class="btn-unfollow"
+            @click.stop.prevent="deleteFollowing(user.id)"
+          >正在跟隨</button>
 
           <!--跟隨-->
-          <!-- <a href class="btn-follow">跟隨</a> -->
+          <button v-else class="btn-follow" @click.stop.prevent="addFollow(user.id)">跟隨</button>
         </div>
         <div class="profile-section">
           <div class="user-name">{{user.name}}</div>
@@ -66,7 +70,8 @@ import { mapState } from "vuex";
 
 export default {
   props: {
-    user: {}
+    user: {},
+    users: {}
   },
   data() {
     return {
@@ -78,6 +83,7 @@ export default {
     const { id: userId } = this.$route.params;
     this.getFollowingsNumber(userId);
     this.getFollowersNumber(userId);
+    // this.fetchUserFollower(userId);
   },
 
   computed: {
@@ -119,6 +125,63 @@ export default {
           icon: "error",
           title: "無法取得使用者跟隨者資料"
         });
+      }
+    },
+    // async fetchUserFollower(userId) {
+    //   try {
+    //     const response = await usersAPI.getUserFollowers({ userId });
+    //     console.log("response", response);
+
+    //     const users = response.data;
+    //     this.users = users;
+    //   } catch (error) {
+    //     console.log("error", error);
+    //     Toast.fire({
+    //       icon: "error",
+    //       title: "無法取得使用者資料"
+    //     });
+    //   }
+    // },
+    async addFollow(id) {
+      try {
+        const { data } = await usersAPI.addFollow({
+          id
+        });
+        if (data.status === "error") {
+          throw new Error(data.message);
+        }
+        Toast.fire({
+          icon: "success",
+          title: "追蹤成功"
+        });
+        this.user.isFollowed = true;
+      } catch (error) {
+        console.error(error.message);
+        Toast.fire({
+          icon: "error",
+          title: "您已經追蹤使用者"
+        });
+      }
+    },
+    async deleteFollowing(userId) {
+      try {
+        const { data } = await usersAPI.deleteFollowing({ userId });
+
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+        this.user.isFollowed = false;
+
+        Toast.fire({
+          icon: "success",
+          title: "成功取消追蹤"
+        });
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: "無法取消追蹤，請稍後再試"
+        });
+        console.log("error", error);
       }
     }
   }

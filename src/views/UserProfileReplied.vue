@@ -271,6 +271,7 @@ p {
 }
 
 .item-content {
+  padding-right: 15px;
   font-weight: 400;
   font-size: 15px;
   line-height: 22px;
