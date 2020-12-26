@@ -23,36 +23,57 @@
         <div class="tweet-list">
           <!--tweet item start-->
           <div v-for="tweet in tweets" :key="tweet.id" class="tweet-item">
-            <a href class="item-left">
-              <div class="circle"></div>
-            </a>
+            <div class="item-left">
+              <router-link :to="{ name: 'user', params:{id: tweet.User.id}}">
+                <img :src="tweet.User.avatar" class="circle" alt />
+              </router-link>
+            </div>
 
             <div class="item-right">
               <div class="item-user-info d-flex">
                 <!-- UserName -->
-                <a href class="user-name">name</a>
+                <router-link :to="{ name: 'user', params:{id: tweet.User.id}}">
+                  <div class="user-name">{{tweet.User.name}}</div>
+                </router-link>
 
                 <!-- UserId -->
-                <a href class="user-account">@account</a>
+                <router-link :to="{ name: 'user', params:{id: tweet.User.id}}">
+                  <div class="user-account">@{{tweet.User.account}}</div>
+                </router-link>
 
                 <!-- time -->
                 <div class="time">・{{tweet.createdAt | fromNow}}</div>
               </div>
 
               <!-- description -->
-              <a href class="item-content">{{tweet.description}}</a>
+              <div class="item-content">{{tweet.description}}</div>
               <div class="item-interaction">
                 <!--reply-->
-                <a href class="tweet-reply">
+                <div class="tweet-reply">
                   <img src="https://i.imgur.com/I3DHrNy.png" id="icon-reply" alt />
-                  <p class="reply-count">13</p>
-                </a>
+                  <p class="reply-count">{{tweet.replyCount}}</p>
+                </div>
 
                 <!-- like -->
-                <a href class="tweet-like">
-                  <img src="https://i.imgur.com/gCFSWst.png" id="icon-like" alt />
-                  <p class="like-count">{{tweet.Likes.length}}</p>
-                </a>
+                <div class="tweet-like">
+                  <div class="like-container">
+                    <img
+                      v-if="!tweet.isLiked"
+                      src="https://i.imgur.com/gCFSWst.png"
+                      id="icon-like"
+                      @click.stop.prevent="addLike(tweet.id)"
+                      alt
+                    />
+                    <img
+                      v-else
+                      src="https://i.imgur.com/7Mp1UdA.png"
+                      id="icon-unlike"
+                      @click.stop.prevent="deleteLike(tweet.id)"
+                      alt
+                    />
+                  </div>
+                  <p class="like-count">{{tweet.likeCount}}</p>
+                </div>
               </div>
             </div>
           </div>
@@ -152,6 +173,60 @@ export default {
         Toast.fire({
           icon: "error",
           title: "無法取得使用者資料"
+        });
+      }
+    },
+    async addLike(tweetId) {
+      try {
+        const { data } = await usersAPI.addLike({ tweetId });
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+        this.tweets = this.tweets.map(tweet => {
+          if (tweet.id === tweetId) {
+            (tweet.isLiked = true), tweet.likeCount++;
+            return tweet;
+          } else {
+            return tweet;
+          }
+        });
+
+        Toast.fire({
+          icon: "success",
+          title: "like tweet"
+        });
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: "您已經like這條tweet"
+        });
+        console.log("error", error);
+      }
+    },
+    async deleteLike(tweetId) {
+      try {
+        const { data } = await usersAPI.deleteLike({ tweetId });
+        if (data.status === "error") {
+          throw new Error(data.message);
+        }
+        this.tweets = this.tweets.map(tweet => {
+          if (tweet.id === tweetId) {
+            (tweet.isLiked = false), tweet.likeCount--;
+            return tweet;
+          } else {
+            return tweet;
+          }
+        });
+        console.log(this.tweet);
+        Toast.fire({
+          icon: "success",
+          title: "unlike tweet"
+        });
+      } catch (error) {
+        console.error(error.message);
+        Toast.fire({
+          icon: "error",
+          title: "您沒有like這條tweet"
         });
       }
     }
@@ -272,6 +347,7 @@ p {
 }
 
 .item-content {
+  padding-right: 15px;
   font-weight: 400;
   font-size: 15px;
   line-height: 22px;
@@ -311,6 +387,12 @@ p {
   left: 90px;
 }
 
+.like-count {
+  position: absolute;
+  left: 30px;
+  bottom: 0px;
+}
+
 #icon-reply {
   width: 12.34px;
   height: 12.34px;
@@ -321,5 +403,21 @@ p {
   height: 11.82px;
   width: 12.56px;
   margin-right: 11.35px;
+}
+
+#icon-unlike {
+  position: absolute;
+  left: -4px;
+  bottom: -2px;
+  height: 19px;
+  width: 20px;
+  /* margin-right: -1px; */
+  /* margin-left: -10;
+  margin-bottom: -1px; */
+}
+
+#icon-like,
+#icon-unlike:hover {
+  cursor: pointer;
 }
 </style>

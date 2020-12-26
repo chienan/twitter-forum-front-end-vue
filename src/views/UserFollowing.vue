@@ -18,7 +18,13 @@
       <!-- User Follow List -->
       <div class="user-follow-list">
         <div class="follow-item" v-for="user in users" :key="user.id">
-          <button class="delete-follow" @click.stop.prevent="deleteFollowing(user.id)">正在跟隨</button>
+          <button
+            v-if="user.isFollowed"
+            class="delete-follow"
+            @click.stop.prevent="deleteFollowing(user.id)"
+          >正在跟隨</button>
+          <button v-else class="follow" @click.stop.prevent="addFollow(user.id)">跟隨</button>
+
           <div class="item-left">
             <router-link :to="{ name: 'user', params:{id: user.id}}">
               <img :src="user.avatar" class="circle" alt />
@@ -121,6 +127,36 @@ export default {
         });
       }
     },
+    async addFollow(id) {
+      try {
+        const { data } = await usersAPI.addFollow({
+          id
+        });
+        if (data.status === "error") {
+          throw new Error(data.message);
+        }
+        Toast.fire({
+          icon: "success",
+          title: "追蹤成功"
+        });
+        this.users = this.users.map(user => {
+          if (user.id !== id) {
+            return user;
+          } else {
+            return {
+              ...user,
+              isFollowed: true
+            };
+          }
+        });
+      } catch (error) {
+        console.error(error.message);
+        Toast.fire({
+          icon: "error",
+          title: "您已經追蹤使用者"
+        });
+      }
+    },
     async deleteFollowing(userId) {
       try {
         const { data } = await usersAPI.deleteFollowing({ userId });
@@ -128,9 +164,16 @@ export default {
         if (data.status !== "success") {
           throw new Error(data.message);
         }
-        this.users = {
-          ...this.users
-        };
+        this.users = this.users.map(user => {
+          if (user.id !== userId) {
+            return user;
+          } else {
+            return {
+              ...user,
+              isFollowed: false
+            };
+          }
+        });
         Toast.fire({
           icon: "success",
           title: "成功取消追蹤"
@@ -229,6 +272,17 @@ export default {
   color: #ffffff;
 }
 
+.follow {
+  width: 62px;
+  height: 30px;
+  border: 1px solid #ff6600;
+  border-radius: 100px;
+  color: #ff6600;
+  font-size: 15px;
+  font-weight: 550;
+  line-height: 15px;
+}
+
 .item-user-info {
   display: flex;
   flex-direction: column;
@@ -258,6 +312,7 @@ export default {
 }
 
 .item-content {
+  max-width: 500px;
   font-weight: 400;
   font-size: 15px;
   line-height: 22px;

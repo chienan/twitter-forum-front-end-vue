@@ -12,7 +12,7 @@
             <div class="user-image">
               <img :src="currentUser.avatar" height="50px" width="50px" class="user-avatar" />
             </div>
-            <div class="user-input">有什麼新鮮事？</div>
+            <div class="user-input" @click="openModal">有什麼新鮮事？</div>
           </div>
           <div class="input-content-bottom">
             <button class="btn-tweet" @click="openModal">推文</button>
@@ -48,32 +48,33 @@
               class="item-content"
             >{{ tweet.description }}</router-link>
             <div class="item-interaction">
-              <a href class="tweet-reply">
+              <router-link :to="{ name: 'tweet', params: { id: tweet.id } }" class="tweet-reply">
                 <img src="https://i.imgur.com/I3DHrNy.png" id="icon-reply" alt />
                 <p>{{tweet.replyCount}}</p>
-              </a>
+              </router-link>
 
               <div class="tweet-like">
                 <div class="like-container">
                   <img
+                    v-if="tweet.isLiked"
+                    src="https://i.imgur.com/7Mp1UdA.png"
+                    id="icon-unlike"
+                    @click.stop.prevent="deleteLike(tweet.id)"
+                    alt
+                  />
+                  <img
+                    v-else
                     src="https://i.imgur.com/gCFSWst.png"
                     id="icon-like"
-                    @click="isLiked=true"
                     @click.stop.prevent="addLike(tweet.id)"
                     alt
                   />
                 </div>
                 <p class="like-count">{{tweet.likeCount}}</p>
-                <div class="unlike-container">
-                  <!-- <img
-                    src="https://i.imgur.com/7Mp1UdA.png"
-                    id="icon-unlike"
-                    @click="isLiked=false"
-                    @click.stop.prevent="deleteLike(tweet.id)"
-                    alt
-                  />-->
+                <!-- <div class="unlike-container">
+
                   <div class="btn-unlike" @click.stop.prevent="deleteLike(tweet.id)">unlike</div>
-                </div>
+                </div>-->
               </div>
             </div>
           </div>
@@ -143,7 +144,6 @@ export default {
   data() {
     return {
       myModal: false,
-      isLiked: true,
       description: ""
     };
   },
@@ -163,17 +163,20 @@ export default {
         if (data.status !== "success") {
           throw new Error(data.message);
         }
-        this.tweet = {
-          ...this.tweet
-        };
+
+        this.tweets = this.tweets.map(tweet => {
+          if (tweet.id === tweetId) {
+            (tweet.isLiked = true), tweet.likeCount++;
+            return tweet;
+          } else {
+            return tweet;
+          }
+        });
+
         Toast.fire({
           icon: "success",
           title: "like tweet"
         });
-
-        // this.$emit("after-add-like", {
-        //   tweetId: data.tweetId,
-        // });
       } catch (error) {
         Toast.fire({
           icon: "error",
@@ -188,9 +191,26 @@ export default {
         if (data.status === "error") {
           throw new Error(data.message);
         }
-        this.tweet = {
-          ...this.tweet
-        };
+        this.tweets = this.tweets.map(tweet => {
+          if (tweet.id === tweetId) {
+            (tweet.isLiked = false), tweet.likeCount--;
+            return tweet;
+          } else {
+            return tweet;
+          }
+        });
+
+        // this.tweets = this.tweets.map(tweet => {
+        //   if (tweet.id !== tweetId) {
+        //     return tweet;
+        //   } else {
+        //     return {
+        //       ...tweet,
+        //       isLiked: false
+        //       // likeCount: newLikeCount
+        //     };
+        //   }
+        // });
         console.log(this.tweet);
         Toast.fire({
           icon: "success",
@@ -216,7 +236,6 @@ export default {
           });
           return;
         }
-        // this.isProcessing = true;
         const { data } = await tweetsAPI.create({
           description: this.description
         });
@@ -324,6 +343,11 @@ p {
   color: #9197a3;
   letter-spacing: 0.5px;
 }
+
+.user-input:hover {
+  cursor: pointer;
+}
+
 .input-content-bottom {
   position: relative;
   height: 50%;
@@ -424,6 +448,7 @@ p {
   height: 19px;
   width: 20px;
   margin-right: 11.35px;
+  margin-bottom: -1px;
 }
 .modal-mask {
   position: fixed;
@@ -453,14 +478,20 @@ p {
 }
 
 #icon-like,
-.btn-unlike:hover {
+#icon-unlike:hover {
   cursor: pointer;
 }
 
-.btn-unlike {
+#icon-unlike {
+  position: absolute;
+  left: -5px;
+  bottom: -1px;
+}
+
+/* .btn-unlike {
   position: absolute;
   left: 90px;
   bottom: 0px;
   color: gray;
-}
+} */
 </style>

@@ -7,15 +7,13 @@
           <div>
             <div class="card" style="width: 245px; height: 314px">
               <div class="icon-relative">
-                <img :src="adminUser.cover" class="card-img-top" alt="" />
+                <img :src="adminUser.cover" class="card-img-top" alt />
                 <p class="circle3"></p>
-                <img :src="adminUser.avatar" alt="" class="thumbnail3" />
+                <img :src="adminUser.avatar" alt class="thumbnail3" />
               </div>
               <div class="card-body">
                 <div class="card-text">
-                  <p class="bold">
-                    {{ adminUser.name }}
-                  </p>
+                  <p class="bold">{{ adminUser.name }}</p>
 
                   <p class="account color3">@{{ adminUser.account }}</p>
                 </div>
@@ -24,10 +22,7 @@
                   <div class="d-flex flex-row vector">
                     <div class="d-flex flex-row">
                       <div class="mr-1">
-                        <img
-                          src="https://i.postimg.cc/65Z7T5qC/Vector-3.png"
-                          alt=""
-                        />
+                        <img src="https://i.postimg.cc/65Z7T5qC/Vector-3.png" alt />
                       </div>
                       <div class="mr-3">
                         <p>{{ adminUser.Tweets.length }}</p>
@@ -36,10 +31,7 @@
 
                     <div class="d-flex flex-row">
                       <div class="mr-1">
-                        <img
-                          src="https://i.postimg.cc/Jhp0SsYC/Vector-2.png"
-                          alt=""
-                        />
+                        <img src="https://i.postimg.cc/Jhp0SsYC/Vector-2.png" alt />
                       </div>
                       <p>{{ adminUser.likeCount }}</p>
                     </div>
@@ -48,14 +40,12 @@
 
                   <div class="d-flex flex-row follow test">
                     <div class="mr-2">
-                      {{ adminUser.Followings.length }}個<span class="color3"
-                        >跟隨中</span
-                      >
+                      {{ adminUser.Followings.length }}個
+                      <span class="color3">跟隨中</span>
                     </div>
                     <div>
-                      {{ adminUser.Followers.length }}位<span class="color3"
-                        >跟隨者</span
-                      >
+                      {{ adminUser.Followers.length }}位
+                      <span class="color3">跟隨者</span>
                     </div>
                   </div>
                 </div>
@@ -66,6 +56,7 @@
           </div>
           <!-- 1 -->
         </div>
+
       </div>
     </ul>
   </div>
@@ -76,9 +67,9 @@ export default {
   props: {
     adminUsers: {
       type: Array,
-      required: true,
-    },
-  },
+      required: true
+    }
+  }
 };
 </script>
 

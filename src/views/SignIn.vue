@@ -20,7 +20,7 @@
             required
           />
 
-          <label for="exampleInputEmail1" class="form-label">帳號</label>
+          <label for="exampleInputEmail1" class="form-label">e-mail</label>
           <div id="emailHelp" class="form-text"></div>
         </div>
 
