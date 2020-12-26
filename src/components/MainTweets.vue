@@ -163,14 +163,13 @@ export default {
         if (data.status !== "success") {
           throw new Error(data.message);
         }
+
         this.tweets = this.tweets.map(tweet => {
-          if (tweet.id !== tweetId) {
+          if (tweet.id === tweetId) {
+            (tweet.isLiked = true), tweet.likeCount++;
             return tweet;
           } else {
-            return {
-              ...tweet,
-              isLiked: true
-            };
+            return tweet;
           }
         });
 
@@ -193,15 +192,25 @@ export default {
           throw new Error(data.message);
         }
         this.tweets = this.tweets.map(tweet => {
-          if (tweet.id !== tweetId) {
+          if (tweet.id === tweetId) {
+            (tweet.isLiked = false), tweet.likeCount--;
             return tweet;
           } else {
-            return {
-              ...tweet,
-              isLiked: false
-            };
+            return tweet;
           }
         });
+
+        // this.tweets = this.tweets.map(tweet => {
+        //   if (tweet.id !== tweetId) {
+        //     return tweet;
+        //   } else {
+        //     return {
+        //       ...tweet,
+        //       isLiked: false
+        //       // likeCount: newLikeCount
+        //     };
+        //   }
+        // });
         console.log(this.tweet);
         Toast.fire({
           icon: "success",
@@ -471,6 +480,12 @@ p {
 #icon-like,
 #icon-unlike:hover {
   cursor: pointer;
+}
+
+#icon-unlike {
+  position: absolute;
+  left: -5px;
+  bottom: -1px;
 }
 
 /* .btn-unlike {

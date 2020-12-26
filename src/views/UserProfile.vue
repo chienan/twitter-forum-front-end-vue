@@ -158,14 +158,13 @@ export default {
         if (data.status !== "success") {
           throw new Error(data.message);
         }
+
         this.tweets = this.tweets.map(tweet => {
-          if (tweet.id !== tweetId) {
+          if (tweet.id === tweetId) {
+            (tweet.isLiked = true), tweet.likeCount++;
             return tweet;
           } else {
-            return {
-              ...tweet,
-              isLiked: true
-            };
+            return tweet;
           }
         });
 
@@ -188,13 +187,11 @@ export default {
           throw new Error(data.message);
         }
         this.tweets = this.tweets.map(tweet => {
-          if (tweet.id !== tweetId) {
+          if (tweet.id === tweetId) {
+            (tweet.isLiked = false), tweet.likeCount--;
             return tweet;
           } else {
-            return {
-              ...tweet,
-              isLiked: false
-            };
+            return tweet;
           }
         });
         console.log(this.tweet);
