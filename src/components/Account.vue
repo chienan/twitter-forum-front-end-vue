@@ -132,7 +132,7 @@ export default {
           (this.account = account),
           (this.name = name),
           (this.email = email);
-        this.password = password;
+        // this.password = password;
       } catch (error) {
         console.log("error", error);
       }
