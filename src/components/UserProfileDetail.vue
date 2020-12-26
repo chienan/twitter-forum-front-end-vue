@@ -29,10 +29,16 @@
           </a>-->
 
           <!-- 取消跟隨 -->
-          <button class="btn-unfollow">正在跟隨</button>
+
+          <button
+            v-if="user.isFollowed"
+            class="btn-unfollow"
+            @click.stop.prevent="deleteFollowing(user.id)"
+          >正在跟隨</button>
 
           <!--跟隨-->
-          <button class="btn-follow">跟隨</button>
+          <button v-else class="btn-follow" @click.stop.prevent="addFollow(user.id)">跟隨</button>
+
         </div>
         <div class="profile-section">
           <div class="user-name">{{user.name}}</div>
@@ -66,7 +72,8 @@ import { mapState } from "vuex";
 
 export default {
   props: {
-    user: {}
+    user: {},
+    users: {}
   },
   data() {
     return {
@@ -78,6 +85,7 @@ export default {
     const { id: userId } = this.$route.params;
     this.getFollowingsNumber(userId);
     this.getFollowersNumber(userId);
+    // this.fetchUserFollower(userId);
   },
 
   computed: {
@@ -121,21 +129,23 @@ export default {
         });
       }
     },
-    async fetchUserFollower(userId) {
-      try {
-        const response = await usersAPI.getUserFollowers({ userId });
-        console.log("response", response);
 
-        const users = response.data;
-        this.users = users;
-      } catch (error) {
-        console.log("error", error);
-        Toast.fire({
-          icon: "error",
-          title: "無法取得使用者資料"
-        });
-      }
-    },
+    // async fetchUserFollower(userId) {
+    //   try {
+    //     const response = await usersAPI.getUserFollowers({ userId });
+    //     console.log("response", response);
+
+    //     const users = response.data;
+    //     this.users = users;
+    //   } catch (error) {
+    //     console.log("error", error);
+    //     Toast.fire({
+    //       icon: "error",
+    //       title: "無法取得使用者資料"
+    //     });
+    //   }
+    // },
+
     async addFollow(id) {
       try {
         const { data } = await usersAPI.addFollow({
@@ -148,6 +158,7 @@ export default {
           icon: "success",
           title: "追蹤成功"
         });
+
         this.users = this.users.map(user => {
           if (user.id !== id) {
             return user;
@@ -158,6 +169,7 @@ export default {
             };
           }
         });
+
       } catch (error) {
         console.error(error.message);
         Toast.fire({
@@ -173,6 +185,10 @@ export default {
         if (data.status !== "success") {
           throw new Error(data.message);
         }
+
+        this.user.isFollowed = false;
+
+
         this.users = this.users.map(user => {
           if (user.id !== userId) {
             return user;
@@ -183,6 +199,7 @@ export default {
             };
           }
         });
+
         Toast.fire({
           icon: "success",
           title: "成功取消追蹤"
