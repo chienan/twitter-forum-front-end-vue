@@ -24,16 +24,22 @@
           <!--tweet item start-->
           <div v-for="tweet in tweets" :key="tweet.id" class="tweet-item">
             <div class="item-left">
-              <img :src="tweet.Likes[0].User.avatar" class="circle" alt />
+              <router-link :to="{ name: 'user', params:{id: tweet.User.id}}">
+                <img :src="tweet.User.avatar" class="circle" alt />
+              </router-link>
             </div>
 
             <div class="item-right">
               <div class="item-user-info d-flex">
                 <!-- UserName -->
-                <div class="user-name">{{tweet.Likes[0].User.name}}</div>
+                <router-link :to="{ name: 'user', params:{id: tweet.User.id}}">
+                  <div class="user-name">{{tweet.User.name}}</div>
+                </router-link>
 
                 <!-- UserId -->
-                <div class="user-account">@{{tweet.Likes[0].User.account}}</div>
+                <router-link :to="{ name: 'user', params:{id: tweet.User.id}}">
+                  <div class="user-account">@{{tweet.User.account}}</div>
+                </router-link>
 
                 <!-- time -->
                 <div class="time">・{{tweet.createdAt | fromNow}}</div>
