@@ -49,12 +49,11 @@ a:hover,
 a:focus {
   text-decoration: none;
 }
-/* 
+
 img {
-  width: 100%;
-  height: 100%;
   display: block;
-} */
+  object-fit: cover;
+}
 
 .btn,
 button,

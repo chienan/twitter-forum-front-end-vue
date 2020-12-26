@@ -235,6 +235,7 @@ p {
 }
 
 .tweet-item {
+  width: 600px;
   border: 1px solid #e6ecf0;
   background: #ffffff;
   border-top: none;
