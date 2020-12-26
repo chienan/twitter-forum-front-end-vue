@@ -4,7 +4,7 @@ import { apiHelper } from "../utils/helpers.js"
 export default {
   authorization: {
     AdminSignIn({ email, password }) {
-      return apiHelper.post('signin', { email, password })
+      return apiHelper.post('admin/signin', { email, password })
 
     },
     signIn({ email, password }) {
