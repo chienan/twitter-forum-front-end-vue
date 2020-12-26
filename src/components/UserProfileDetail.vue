@@ -29,6 +29,7 @@
           </a>-->
 
           <!-- 取消跟隨 -->
+
           <button
             v-if="user.isFollowed"
             class="btn-unfollow"
@@ -37,6 +38,7 @@
 
           <!--跟隨-->
           <button v-else class="btn-follow" @click.stop.prevent="addFollow(user.id)">跟隨</button>
+
         </div>
         <div class="profile-section">
           <div class="user-name">{{user.name}}</div>
@@ -127,6 +129,7 @@ export default {
         });
       }
     },
+
     // async fetchUserFollower(userId) {
     //   try {
     //     const response = await usersAPI.getUserFollowers({ userId });
@@ -142,6 +145,7 @@ export default {
     //     });
     //   }
     // },
+
     async addFollow(id) {
       try {
         const { data } = await usersAPI.addFollow({
@@ -154,7 +158,18 @@ export default {
           icon: "success",
           title: "追蹤成功"
         });
-        this.user.isFollowed = true;
+
+        this.users = this.users.map(user => {
+          if (user.id !== id) {
+            return user;
+          } else {
+            return {
+              ...user,
+              isFollowed: true
+            };
+          }
+        });
+
       } catch (error) {
         console.error(error.message);
         Toast.fire({
@@ -170,7 +185,20 @@ export default {
         if (data.status !== "success") {
           throw new Error(data.message);
         }
+
         this.user.isFollowed = false;
+
+
+        this.users = this.users.map(user => {
+          if (user.id !== userId) {
+            return user;
+          } else {
+            return {
+              ...user,
+              isFollowed: false
+            };
+          }
+        });
 
         Toast.fire({
           icon: "success",
