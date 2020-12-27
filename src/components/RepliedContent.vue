@@ -23,7 +23,7 @@
           <div class="d-flex flex-row">
             <h5 class="card-title mr-2 bold">{{ initialTweet.name }}</h5>
             <p style="color: #657786">
-              @{{ initialTweet.accoun }}・{{ initialTweet.createdAt }}
+              @{{ initialTweet.account }}・{{ initialTweet.createdAt }}
             </p>
           </div>
           <p class="card-text">
@@ -32,15 +32,17 @@
           <small class="replied"
             ><span style="color: #657786; font-weight: bold">回覆給</span
             ><span style="color: #ff6600">
-              @{{ initialTweet.accoun }}</span
+              @{{ initialTweet.account }}</span
             ></small
           >
 
           <div id="thumbnail">
-            <div class="currentUser">
-              <img :src="currentUser.avatar" alt="" class="style2" />
+            <div>
+              <div class="currentUser">
+                <img :src="currentUser.avatar" alt="" class="style2" />
+              </div>
+              <span class="push">推你的回覆</span>
             </div>
-            <span class="push">推你的回覆</span>
             <div>
               <form @submit.stop.prevent="tweet(initialTweet.id)">
                 <input
@@ -53,19 +55,21 @@
                   v-model="text"
                   type="text"
                 />
-
-                <div class="button-relative">
-                  <button
-                    style="width: 80px; height: 40px"
-                    type="submit"
-                    class="btn btn-warning"
-                  >
-                    回覆
-                  </button>
+                <div>
+                  <div class="button-relative">
+                    <button
+                      style="width: 80px; height: 40px"
+                      type="submit"
+                      class="btn btn-warning"
+                    >
+                      回覆
+                    </button>
+                  </div>
                 </div>
               </form>
             </div>
           </div>
+          <!--form下2個  -->
         </div>
       </div>
     </div>
@@ -82,6 +86,10 @@ export default {
       type: Object,
       required: true,
     },
+    tweetReplies: {
+      type: Array,
+      required: true,
+    },
   },
   computed: {
     ...mapState(["currentUser"]),
@@ -92,22 +100,27 @@ export default {
       Tweet: this.initialTweet,
     };
   },
+  // (tweetId)
   methods: {
     async tweet(tweetId) {
+      // console.log(tweetId);
       try {
-        // const data1 = {
-        //   text: this.text,
-        //   id: this.id,
-        // };
-        // console.log(tweetId);
-        // const response = await tweetAPI.tweet.post({ tweetId, data1 });
-        // console.log(response);
+        const data1 = {
+          comment: this.text,
+          TweetId: tweetId,
+        };
+        console.log(tweetId);
+        const response = await tweetAPI.tweet.post({ tweetId, data1 });
+        console.log(response);
 
         this.$emit("after-create-comment", {
           text: this.text,
-          id: this.id,
+          // id:tweetId,
+          account: this.initialTweet.account,
+          createdAt: this.initialTweet.createdAt,
         });
         this.text = "";
+        console.log("ok");
       } catch (error) {
         console.log("error", error);
       }
@@ -173,7 +186,7 @@ export default {
 }
 #thumbnail {
   margin-top: 50px;
-  margin-left: -50px;
+  margin-left: -10px;
   position: relative;
 }
 .push {
