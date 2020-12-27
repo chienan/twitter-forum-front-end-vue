@@ -10,7 +10,7 @@
       <form @submit.stop.prevent="handleSignUp">
         <div class="mb-3 label-parents">
           <input
-            type="email"
+            type="text"
             class="form-control input1 input-space"
             id="account"
             aria-describedby="emailHelp"
