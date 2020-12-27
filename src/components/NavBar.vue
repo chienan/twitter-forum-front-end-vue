@@ -20,6 +20,11 @@
       </div>
 
       <div class="nav-item d-flex align-items-center">
+        <img class="chat-room" src="https://i.imgur.com/2EadrJC.png" style="width: 25px" alt />
+        <p class="nav-link">公開聊天室</p>
+      </div>
+
+      <div class="nav-item d-flex align-items-center">
         <img src="https://i.imgur.com/Ce7aQj4.png" style="width: 20.75px" alt />
         <router-link
           :to="{ name: 'set-account', params: { id: currentUser.id } }"
@@ -55,16 +60,14 @@ export default {
   },
   //vuex `mapState` 方法
   computed: {
-
-    ...mapState(["currentUser", "isAuthenticated"]),
+    ...mapState(["currentUser", "isAuthenticated"])
   },
   methods: {
     logout() {
       this.$store.commit("revokeAuthentication");
       this.$router.push("/signin");
-    },
-  },
-
+    }
+  }
 };
 </script>
 

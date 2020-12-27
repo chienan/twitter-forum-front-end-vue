@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row main-content">
       <div class="icon-container">
-        <router-link :to="this.$router.go(-1)">
+        <router-link :to="{ name: 'user', params: { id: user.id } }" class="user-name">
           <img src="https://i.imgur.com/cyFMsT7.png" class="icon-back" alt />
         </router-link>
       </div>
