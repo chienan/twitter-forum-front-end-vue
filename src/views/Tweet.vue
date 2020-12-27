@@ -7,7 +7,11 @@
 
     <div>
       <!-- TweetsDetail -->
-      <TweetsDetail :initialTweet="Tweet" :tweetReplies="tweetReplies" />
+      <TweetsDetail
+        :initialTweet="Tweet"
+        :tweetReplies="tweetReplies"
+        @after-create-comment="afterCreateComment"
+      />
     </div>
 
     <div>
@@ -15,7 +19,7 @@
       <FollowRecommend />
     </div>
 
-    <div class="repliedContent">
+    <div class="repliedContent" style="display: none">
       <!-- RepliedContent -->
       <RepliedContent
         :initialTweet="Tweet"

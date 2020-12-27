@@ -8,7 +8,7 @@
           </div>
           <div class="d-flex flex-row">
             <div>
-              <router-link to="/admin/tweets"
+              <router-link :to="{ path: '/admin/tweets' }"
                 ><img
                   src="https://i.postimg.cc/MKrzTW5q/icon-index.png"
                   alt=""
@@ -16,7 +16,8 @@
               /></router-link>
             </div>
             <div>
-              <router-link to="/admin/tweets"
+              <!--  to="/admin/tweets" -->
+              <router-link :to="{ path: '/admin/tweets' }"
                 ><p
                   class="bold icon-index"
                   style="font-size: 18px; color: #ff6600"
@@ -28,7 +29,9 @@
           </div>
           <div class="d-flex flex-row">
             <div>
-              <router-link to="/admin/userList">
+              <router-link :to="{ path: '/admin/userList' }">
+                <!-- "{path: '/CouplePackage' }"
+              :to="{path: '/CouplePackage' -->
                 <img
                   src="https://i.postimg.cc/dVjPCwmh/icon-user.png"
                   alt=""
@@ -37,7 +40,8 @@
               </router-link>
             </div>
             <div>
-              <router-link to="/admin/userList">
+              <!-- to="/admin/userList" -->
+              <router-link :to="{ path: '/admin/userList' }">
                 <p
                   class="bold icon-user"
                   style="font-size: 18px; color: #1c1c1c"

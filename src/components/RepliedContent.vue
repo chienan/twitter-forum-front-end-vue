@@ -37,10 +37,12 @@
           >
 
           <div id="thumbnail">
-            <div class="currentUser">
-              <img :src="currentUser.avatar" alt="" class="style2" />
+            <div>
+              <div class="currentUser">
+                <img :src="currentUser.avatar" alt="" class="style2" />
+              </div>
+              <span class="push">推你的回覆</span>
             </div>
-            <span class="push">推你的回覆</span>
             <div>
               <form @submit.stop.prevent="tweet(initialTweet.id)">
                 <input
@@ -67,6 +69,7 @@
               </form>
             </div>
           </div>
+          <!--form下2個  -->
         </div>
       </div>
     </div>
@@ -99,16 +102,16 @@ export default {
   },
   // (tweetId)
   methods: {
-    async tweet() {
+    async tweet(tweetId) {
       // console.log(tweetId);
       try {
-        // const data1 = {
-        //   text: this.text,
-        //   id: this.id,
-        // };
-        // console.log(tweetId);
-        // const response = await tweetAPI.tweet.post({ tweetId, data1 });
-        // console.log(response);
+        const data1 = {
+          comment: this.text,
+          TweetId: tweetId,
+        };
+        console.log(tweetId);
+        const response = await tweetAPI.tweet.post({ tweetId, data1 });
+        console.log(response);
 
         this.$emit("after-create-comment", {
           text: this.text,
@@ -183,7 +186,7 @@ export default {
 }
 #thumbnail {
   margin-top: 50px;
-  margin-left: -50px;
+  margin-left: -10px;
   position: relative;
 }
 .push {
