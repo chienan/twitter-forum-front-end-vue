@@ -1,7 +1,9 @@
 <template>
-  <div class="test2 col-9">
+  <div class="col-9">
+    <!-- <div class="container"> -->
     <ul class="list-group rounded-0" style="width: 1063px; height: 1320px">
       <li class="list-group-item bold">使用者列表</li>
+
       <div class="d-flex flex-row flex-wrap">
         <div v-for="adminUser in adminUsers" :key="adminUser.id">
           <div>
@@ -22,7 +24,10 @@
                   <div class="d-flex flex-row vector">
                     <div class="d-flex flex-row">
                       <div class="mr-1">
-                        <img src="https://i.postimg.cc/65Z7T5qC/Vector-3.png" alt />
+                        <img
+                          src="https://i.postimg.cc/65Z7T5qC/Vector-3.png"
+                          alt
+                        />
                       </div>
                       <div class="mr-3">
                         <p>{{ adminUser.Tweets.length }}</p>
@@ -31,7 +36,10 @@
 
                     <div class="d-flex flex-row">
                       <div class="mr-1">
-                        <img src="https://i.postimg.cc/Jhp0SsYC/Vector-2.png" alt />
+                        <img
+                          src="https://i.postimg.cc/Jhp0SsYC/Vector-2.png"
+                          alt
+                        />
                       </div>
                       <p>{{ adminUser.likeCount }}</p>
                     </div>
@@ -50,16 +58,17 @@
                   </div>
                 </div>
               </div>
+
               <!-- card-body -->
             </div>
             <!-- card -->
           </div>
           <!-- 1 -->
         </div>
-
       </div>
     </ul>
   </div>
+  <!-- </div> -->
 </template>
 
 <script>
@@ -67,9 +76,9 @@ export default {
   props: {
     adminUsers: {
       type: Array,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 };
 </script>
 
@@ -81,6 +90,10 @@ export default {
 .bold {
   font-weight: bold;
 }
+/* .container {
+  height: 1320px;
+  width: 1063px;
+} */
 .list-group {
   border: 1px solid #e6ecf0;
   border-top: none;
