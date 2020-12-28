@@ -1,31 +1,87 @@
 <template>
-<div class="d-flex">
-  <div>
-    <NavBar />
-  </div>
-
-  <div class="container">
-    <title>💬 Real-Time Chat App with Socket.IO</title>
-    <body>
-      <h1>輸入名稱加入聊天</h1>
-      <ul class="feed"></ul>
-
-      <form class="messaging-form" action="#">
-        <span class="feedback"></span>
-        <div class="message-input">
-          <span class="avatar">?</span>
-          <input type="text" class="message-input-field name-input" placeholder="輸入暱稱" />
+  <div class="d-flex">
+    <div>
+      <NavBar />
+    </div>
+    <div class="container">
+      <div class="main-content">
+        <div class="chat-user">
+          <div class="chat-header">
+            <div class="chat-title">上線使用者 (5)</div>
+          </div>
+          <div class="chat-user-item">
+            <div class="item">
+              <div class="item-content">
+                <div class="circle"></div>
+                <div class="user-name">Apple</div>
+                <div class="user-account">@apple</div>
+              </div>
+            </div>
+          </div>
+          <div class="chat-user-item">
+            <div class="item">
+              <div class="item-content">
+                <div class="circle"></div>
+                <div class="user-name">Jane Cooper</div>
+                <div class="user-account">@Jan3coo</div>
+              </div>
+            </div>
+          </div>
+          <div class="chat-user-item">
+            <div class="item">
+              <div class="item-content">
+                <div class="circle"></div>
+                <div class="user-name">Wade Warren</div>
+                <div class="user-account">@vvvvrren</div>
+              </div>
+            </div>
+          </div>
+          <div class="chat-user-item">
+            <div class="item">
+              <div class="item-content">
+                <div class="circle"></div>
+                <div class="user-name">小熊維尼</div>
+                <div class="user-account">@pooh</div>
+              </div>
+            </div>
+          </div>
+          <div class="chat-user-item">
+            <div class="item">
+              <div class="item-content">
+                <div class="circle"></div>
+                <div class="user-name">Ralph Edwards</div>
+                <div class="user-account">@Rafed</div>
+              </div>
+            </div>
+          </div>
         </div>
+        <div class="chat-room">
+          <div class="chat-header">
+            <div class="chat-title">公開聊天室</div>
+          </div>
+          <div class="chat-room-container">
+            <div class="chat-room-title">輸入名稱加入聊天</div>
+            <ul class="feed"></ul>
 
-        <button class="join">Join</button>
-      </form>
-    </body>
+            <form class="messaging-form" action="#">
+              <span class="feedback"></span>
+              <div class="message-input">
+                <span class="avatar">?</span>
+                <input type="text" class="message-input-field name-input" placeholder="輸入暱稱" />
+              </div>
+
+              <button class="join">Join</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
 </template>
 
 <script>
 import NavBar from "../components/NavBar";
+
 export default {
   components: {
     NavBar
@@ -34,49 +90,106 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  width: 700px;
-  height: 1000px;
-  /* border: 1px solid gray; */
-}
-::placeholder {
-  font-style: italic;
-}
-
-html {
-  font-family: sans-serif;
-}
-
+/* CSS reset  */
 body {
-  margin: 30px;
-}
-
-ul {
-  list-style: none;
-  word-wrap: break-word;
-}
-
-li {
-  margin-bottom: 20px;
-}
-
-h1 {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 40px;
-  text-align: center;
-  color: #444444;
   margin: 0;
+  padding: 0;
 }
-
-time {
-  font-size: 90%;
-}
-
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
 p {
-  margin: 10px 0 0;
+  margin: 0px;
+  padding: 0px;
+}
+/* style start */
+.container {
+  position: relative;
+}
+.main-content {
+  height: 720px;
+  width: 950px;
+  position: absolute;
+  left: 220px;
+  border: 1px solid #e6ecf0;
+  display: flex;
+}
+
+.chat-user {
+  width: 320px;
+  border-right: 1px solid #e6ecf0;
+}
+.chat-room {
+  flex: 1;
+}
+
+.chat-header {
+  height: 50px;
+  border-bottom: 1px solid #e6ecf0;
+  display: flex;
+  align-items: center;
+  font-weight: 650;
+  font-size: 17px;
+  line-height: 15px;
+  color: #1c1c1c;
+}
+
+.chat-title {
+  margin-left: 20px;
+}
+
+.item {
+  border-bottom: 1px solid #e6ecf0;
+  height: 65px;
+}
+
+.item-content {
+  display: flex;
+  align-items: center;
+  padding: 7px 0px 8px 15px;
+}
+
+.circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #e6ecf0;
+}
+
+.user-name,
+.user-account {
+  margin-left: 6px;
+}
+
+.user-name {
+  font-weight: 550;
+  font-size: 15px;
+  line-height: 15px;
+  color: #1c1c1c;
+}
+
+.user-account {
+  font-weight: 550;
+  font-size: 15px;
+  line-height: 15px;
+  color: #657786;
+}
+
+.chat-room-container {
+  width: 100%;
+  height: 670px;
+  /* border: 1px solid gray; */
+  position: relative;
+}
+
+.chat-room-title {
+  position: absolute;
+  top: 250px;
+  left: 200px;
+  font-size: 30px;
 }
 
 hr {
@@ -93,28 +206,20 @@ hr:after {
 }
 
 .messaging-form {
-  position: fixed;
-  bottom: 30px;
-  left: 30px;
-  width: calc(100% - 60px);
+  position: absolute;
+  bottom: 40px;
   display: flex;
 }
 
 .message-input {
   position: relative;
-  width: 50%;
+  width: 400px;
   padding: 2px;
   border-radius: 40px;
-  margin-left: 300px;
+  margin-left: 90px;
+  margin-right: 10px;
   background: #ffffff4f;
   border: 1px solid #f60;
-}
-
-.avatar {
-  width: 25px;
-  height: 25px;
-  border-radius: 100%;
-  display: block;
 }
 
 .message-input .avatar {

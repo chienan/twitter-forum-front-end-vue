@@ -20,7 +20,7 @@
       </div>
 
       <div class="nav-item d-flex align-items-center">
-        <img src="https://i.imgur.com/2EadrJC.png" width="20px" alt />
+        <img src="https://i.imgur.com/2EadrJC.png" class="chat-icon" width="22px" alt />
         <a href="/#/chat" class="nav-link">公開聊天室</a>
       </div>
 
@@ -98,6 +98,10 @@ export default {
   vertical-align: middle;
 }
 
+.chat-icon {
+  margin-left: -1.5px;
+}
+
 .nav-link {
   color: #1c1c1c;
 }
@@ -127,7 +131,6 @@ export default {
 .modal-mask {
   position: fixed;
   /* z-index: 9998; */
-
   top: 0;
   left: 0;
   width: 100%;
