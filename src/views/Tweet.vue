@@ -42,10 +42,10 @@ export default {
     TweetsDetail,
     RepliedContent,
     NavBar,
-    FollowRecommend,
+    FollowRecommend
   },
   computed: {
-    ...mapState(["currentUser"]),
+    ...mapState(["currentUser"])
   },
   data() {
     return {
@@ -58,19 +58,17 @@ export default {
         avatar: "",
         likes: [],
         replies: [],
-        isLike: false,
+        isLike: false
       },
-      tweetReplies: [],
+      tweetReplies: []
     };
   },
-
   created() {
     const { id } = this.$route.params;
     this.fetchTweet(id);
     this.fetchReplies(id);
     // console.log(id);
   },
-
   methods: {
     async fetchTweet(tweetId) {
       // console.log(tweetId);
@@ -87,13 +85,12 @@ export default {
           avatar: data.User.avatar,
           likes: data.Likes.length,
           replies: data.Replies.length,
-          isLike: false,
+          isLike: false
         };
       } catch (error) {
         console.log("error", error);
       }
     },
-
     async fetchReplies(tweetId) {
       try {
         const { ...responst } = await tweetAPI.tweet.getReplies({ tweetId });
@@ -118,11 +115,11 @@ export default {
           // account: this.currentUser.account,
           account: account,
           avatar: this.currentUser.avatar,
-          createdAt: createdAt,
-        },
+          createdAt: createdAt
+        }
       });
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped>
@@ -133,6 +130,4 @@ export default {
 /* -60px */
 </style>
   
-
-
 

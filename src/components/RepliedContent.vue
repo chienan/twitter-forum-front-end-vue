@@ -112,7 +112,6 @@ export default {
         console.log(tweetId);
         const response = await tweetAPI.tweet.post({ tweetId, data1 });
         console.log(response);
-
         this.$emit("after-create-comment", {
           text: this.text,
           // id:tweetId,
@@ -162,7 +161,6 @@ export default {
   font-size: 15px;
   margin-top: 5px;
 }
-
 .card-text {
   margin-top: -14px;
   margin-left: 10px;

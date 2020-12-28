@@ -2,7 +2,7 @@
   <div class="d-flex justify-content-center signin">
     <div class="logo">
       <div class="d-flex justify-content-center">
-        <img src="https://i.postimg.cc/LsddLPp9/Logo.png" alt="" />
+        <img src="https://i.postimg.cc/LsddLPp9/Logo.png" alt />
       </div>
       <div class="bold signup">建立你的帳號</div>
     </div>
@@ -75,13 +75,7 @@
           <label for="exampleInputPassword1" class="form-label">密碼確認</label>
         </div>
 
-        <button
-          style="width: 500px; height: 45px"
-          type="submit"
-          class="btn bold mt-2"
-        >
-          註冊
-        </button>
+        <button style="width: 500px; height: 45px" type="submit" class="btn bold mt-2">註冊</button>
       </form>
 
       <div class="signup-alphitter d-flex justify-content-center">
@@ -91,8 +85,7 @@
           class="bold"
           href="#"
           style="color: #0099ff"
-          >取消</router-link
-        >
+        >取消</router-link>
       </div>
     </div>
   </div>
@@ -109,10 +102,9 @@ export default {
       name: "",
       email: "",
       password: "",
-      passwordCheck: "",
+      passwordCheck: ""
     };
   },
-
   methods: {
     async handleSignUp() {
       try {
@@ -121,41 +113,36 @@ export default {
           name: this.name,
           email: this.email,
           password: this.password,
-          checkPassword: this.passwordCheck,
+          checkPassword: this.passwordCheck
         };
-
         if (!this.account) {
           Toast.fire({
             icon: "warning",
-            title: "請輸入帳號，謝謝!",
+            title: "請輸入帳號，謝謝!"
           });
           return;
         }
-
         if (!this.name) {
           Toast.fire({
             icon: "warning",
-            title: "請輸入姓名，謝謝!",
+            title: "請輸入姓名，謝謝!"
           });
           return;
         }
-
         if (!this.email) {
           Toast.fire({
             icon: "warning",
-            title: "請輸入email，謝謝!",
+            title: "請輸入email，謝謝!"
           });
           return;
         }
-
         if (!this.password || !this.passwordCheck) {
           Toast.fire({
             icon: "warning",
-            title: "請輸密碼，謝謝!",
+            title: "請輸密碼，謝謝!"
           });
           return;
         }
-
         const response = await signupAPI.create({ data1 });
         console.log(response);
         const { data } = response;
@@ -167,11 +154,11 @@ export default {
         console.log("error", error);
         Toast.fire({
           icon: "error",
-          title: "目前無法註冊，請稍後再試",
+          title: "目前無法註冊，請稍後再試"
         });
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -190,7 +177,6 @@ export default {
 .form1 {
   margin-top: 65px;
 }
-
 .name {
   margin-bottom: 35px;
 }
@@ -200,7 +186,6 @@ export default {
 .password {
   margin-bottom: 35px;
 }
-
 button {
   background-color: #ff6600;
   color: white;
@@ -227,7 +212,6 @@ button:focus {
 .form-control {
   margin-top: -20px;
 }
-
 input {
   /* position: relative; */
   background-color: #f5f8fa;
@@ -251,7 +235,6 @@ input.form-control:focus {
 .label-parents {
   position: relative;
   margin-top: 25px;
-
   /* margin-bottom: 50px; */
 }
 .input1:placeholder-shown ~ label {
@@ -260,7 +243,6 @@ input.form-control:focus {
 .input1:not(:placeholder-shown) ~ label {
   display: none;
 }
-
 label {
   position: absolute;
   top: 2px;
@@ -272,7 +254,6 @@ label {
 .input-space {
   margin-bottom: 35px;
 }
-
 .signup-alphitter {
   margin-top: 35px;
   /* border-bottom: 1px solid #0099ff;
