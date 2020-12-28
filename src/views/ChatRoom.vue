@@ -35,7 +35,9 @@ export default {
 
 <style scoped>
 .container {
-  width: 600px;
+  width: 700px;
+  height: 1000px;
+  /* border: 1px solid gray; */
 }
 ::placeholder {
   font-style: italic;
