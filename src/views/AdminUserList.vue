@@ -3,7 +3,7 @@
     <div>
       <!-- class="col-3" -->
       <!-- AdminBar -->
-      <UserBar />
+      <AdminBar />
     </div>
     <div>
       <!-- class="col-9" -->
@@ -14,13 +14,13 @@
 </template>
 
 <script>
-import UserBar from "../components/UserBar.vue";
+import AdminBar from "../components/AdminBar.vue";
 import UserCard from "../components/UserCard.vue";
 import AdminUsersAPI from "../apis/admin.js";
 export default {
   name: " AdminUsers",
   components: {
-    UserBar,
+    AdminBar,
     UserCard,
   },
   data() {
