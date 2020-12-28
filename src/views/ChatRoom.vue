@@ -1,188 +1,42 @@
 <template>
-<container>
-  <head>
+<div class="d-flex">
+  <div>
+    <NavBar />
+  </div>
+
+  <div class="container">
     <title>💬 Real-Time Chat App with Socket.IO</title>
-    <meta charset="UTF-8" />
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <h1>輸入名稱加入聊天</h1>
-    <ul class="feed"></ul>
+    <body>
+      <h1>輸入名稱加入聊天</h1>
+      <ul class="feed"></ul>
 
-    <form class="messaging-form" action="#">
-      <span class="feedback"></span>
-      <div class="message-input">
-        <span class="avatar">?</span>
-        <input type="text" class="message-input-field name-input" placeholder="輸入暱稱" />
-      </div>
+      <form class="messaging-form" action="#">
+        <span class="feedback"></span>
+        <div class="message-input">
+          <span class="avatar">?</span>
+          <input type="text" class="message-input-field name-input" placeholder="輸入暱稱" />
+        </div>
 
-      <button class="join">Join</button>
-    </form>
-
-    <!-- <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script> -->
-    <!-- <script src="app.js"></script> -->
-  </body>
-</container>
+        <button class="join">Join</button>
+      </form>
+    </body>
+  </div>
+</div>
 </template>
 
-
 <script>
-import io from "socket.io";
-// eslint-disable-next-line no-unused-vars
-import cors from "cors";
-const socket = io.connect("https://simple-twitter-socket.herokuapp.com/?#");
-// const socket = io()
-
+import NavBar from "../components/NavBar";
 export default {
- mounted() {
-  const s = document.createElement('script');
-  s.type = 'text/javascript';
-  s.src = '你的需要的js文件地址';
-  document.body.appendChild(s);
- },
-}
-
-const dom = {
-  nameInput: document.querySelector(".name-input"),
-  joinButton: document.querySelector(".join"),
-  inputAvatar: document.querySelector(".messaging-form .avatar"),
-  welcomeMessage: document.querySelector("h1"),
-  feed: document.querySelector(".feed"),
-  feedback: document.querySelector(".feedback")
-};
-
-const user = {
-  name: null,
-  avatar: null
-};
-
-const getAvatar = () => {
-  let num = Math.floor(Math.random() * 30);
-  return `url(https://loremflickr.com/320/240/cats?random=${num})`;
-};
-
-const addEntry = ({ user, message }, you) => {
-  const entry = document.createElement("li");
-  const date = new Date();
-
-  entry.classList = `message-entry${you ? " message-entry-own" : ""}`;
-  entry.innerHTML = `
-        <span class="avatar" style="background: ${
-          user.avatar
-        }; background-size: contain;"></span>
-        <div class="message-body">
-            <span class="user-name">${you ? "You" : user.name}</span>
-            <time>- ${date.getHours()}:${date.getMinutes()}</time>
-            <p>${message}</p>
-        </div>
-    `;
-
-  dom.feed.appendChild(entry);
-};
-
-const addWelcomeMessage = (user, you) => {
-  const welcomeMessage = document.createElement("li");
-  const message = you
-    ? "您已加入聊天"
-    : `<span class="user-name">${user.name}</span> 加入聊天`;
-
-  const avatar = you
-    ? ""
-    : `<span class="avatar" style="background: ${user.avatar}; background-size: contain;"></span>`;
-
-  welcomeMessage.classList = "welcome-message";
-  welcomeMessage.innerHTML = `
-        <hr />
-        <h2 class="welcome-message-text">
-            ${avatar}
-            ${message}
-        </h2>
-    `;
-
-  dom.feed.appendChild(welcomeMessage);
-};
-
-const enterChannel = () => {
-  const avatar = getAvatar();
-  const name = dom.nameInput.value;
-
-  dom.joinButton.remove();
-  dom.welcomeMessage.remove();
-
-  dom.nameInput.value = "";
-  dom.nameInput.placeholder = "輸入您的訊息...";
-
-  dom.inputAvatar.innerText = "";
-  dom.inputAvatar.style.backgroundImage = avatar;
-  dom.inputAvatar.style.backgroundSize = "contain";
-
-  user.name = name;
-  user.avatar = avatar;
-
-  addWelcomeMessage({ avatar }, true);
-
-  socket.emit("user connected", {
-    name,
-    avatar
-  });
-};
-
-socket.on("user connected", payload => addWelcomeMessage(payload, false));
-
-socket.on("user typing", ({ user, typers }) => {
-  dom.feedback.innerHTML =
-    typers > 1 ? "Several people are typing" : `<i>${user}</i> is typing`;
-});
-
-socket.on("user stopped typing", typers => {
-  if (!typers) {
-    dom.feedback.innerHTML = "";
-  }
-});
-
-socket.on("send message", payload => {
-  addEntry(payload);
-
-  if (!payload.typers) {
-    dom.feedback.innerHTML = "";
-  }
-});
-
-dom.joinButton.onclick = e => {
-  e.preventDefault();
-
-  if (!dom.nameInput.value) {
-    dom.nameInput.parentElement.classList.add("error");
-  } else {
-    enterChannel();
-
-    dom.nameInput.onkeyup = e => {
-      socket.emit("user typing");
-
-      // If user presses enter
-      if (e.keyCode === 13) {
-        const message = e.target.value;
-
-        socket.emit("send message", {
-          message,
-          user
-        });
-
-        addEntry({ user, message }, true);
-
-        e.target.value = "";
-      }
-
-      if (e.target.value === "") {
-        socket.emit("user stopped typing");
-      }
-    };
+  components: {
+    NavBar
   }
 };
 </script>
 
-
 <style scoped>
+.container {
+  width: 600px;
+}
 ::placeholder {
   font-style: italic;
 }
@@ -246,10 +100,10 @@ hr:after {
 
 .message-input {
   position: relative;
-  width: 90%;
+  width: 50%;
   padding: 2px;
   border-radius: 40px;
-  margin-right: 20px;
+  margin-left: 300px;
   background: #ffffff4f;
   border: 1px solid #f60;
 }

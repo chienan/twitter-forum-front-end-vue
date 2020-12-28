@@ -106,6 +106,12 @@ const router = new Router({
       name: 'admin-userList',
       component: () => import('../views/AdminUserList.vue')
     },
+    {
+      path: '/chat',
+      name: 'chat-room',
+      component: () => import('../views/ChatRoom.vue')
+
+    },
 
     {
       path: '*',
