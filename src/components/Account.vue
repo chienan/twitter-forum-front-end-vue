@@ -1,95 +1,98 @@
 <template>
   <div class="d-flex flex-row">
-    <div class="bar col-3"></div>
-    <div class="test2 col-9">
-      <ul class="list-group rounded-0" style="width: 1063px; height: 1202px">
-        <li class="list-group-item">帳戶設定</li>
-        <div>
-          <form @submit.stop.prevent="accountEdit" class="account-form ml-3">
-            <div class="mb-3 label-parents">
-              <input
-                type="text"
-                class="form-control input1 input-space rounded-0"
-                id="account"
-                aria-describedby="emailHelp"
-                placeholder="帳號"
-                style="width: 642px; height: 48px"
-                v-model="account"
-                required
-              />
+    <div class="container">
+      <!-- <div class="bar col-3"></div> -->
 
-              <label for="account" class="form-label">帳號</label>
-              <div id="emailHelp" class="form-text"></div>
-            </div>
+      <div class="test2 col-9">
+        <ul class="list-group rounded-0" style="width: 1063px; height: 1202px">
+          <li class="list-group-item">帳戶設定</li>
+          <div>
+            <form @submit.stop.prevent="accountEdit" class="account-form ml-3">
+              <div class="mb-3 label-parents">
+                <input
+                  type="text"
+                  class="form-control input1 input-space rounded-0"
+                  id="account"
+                  aria-describedby="emailHelp"
+                  placeholder="帳號"
+                  style="width: 642px; height: 48px"
+                  v-model="account"
+                  required
+                />
 
-            <div class="label-parents">
-              <input
-                type="text"
-                class="form-control input1 name rounded-0"
-                id="name"
-                placeholder="名稱"
-                style="width: 642px; height: 48px"
-                v-model="name"
-                required
-              />
+                <label for="account" class="form-label">帳號</label>
+                <div id="emailHelp" class="form-text"></div>
+              </div>
 
-              <label for="name" class="form-label">名稱</label>
-            </div>
+              <div class="label-parents">
+                <input
+                  type="text"
+                  class="form-control input1 name rounded-0"
+                  id="name"
+                  placeholder="名稱"
+                  style="width: 642px; height: 48px"
+                  v-model="name"
+                  required
+                />
 
-            <div class="label-parents">
-              <input
-                type="email"
-                class="form-control input1 email rounded-0"
-                id="email"
-                placeholder="Email"
-                style="width: 642px; height: 48px"
-                v-model="email"
-                required
-              />
+                <label for="name" class="form-label">名稱</label>
+              </div>
 
-              <label for="email" class="form-label">Email</label>
-            </div>
+              <div class="label-parents">
+                <input
+                  type="email"
+                  class="form-control input1 email rounded-0"
+                  id="email"
+                  placeholder="Email"
+                  style="width: 642px; height: 48px"
+                  v-model="email"
+                  required
+                />
 
-            <div class="password label-parents">
-              <input
-                type="password"
-                class="form-control input1 rounded-0"
-                id="password"
-                placeholder="密碼"
-                style="width: 642px; height: 48px"
-                v-model="password"
-                required
-              />
+                <label for="email" class="form-label">Email</label>
+              </div>
 
-              <label for="password" class="form-label">密碼</label>
-            </div>
+              <div class="password label-parents">
+                <input
+                  type="password"
+                  class="form-control input1 rounded-0"
+                  id="password"
+                  placeholder="密碼"
+                  style="width: 642px; height: 48px"
+                  v-model="password"
+                  required
+                />
 
-            <div class="mb-3 label-parents">
-              <input
-                type="password"
-                class="form-control input1 rounded-0"
-                id="passwordCheck"
-                placeholder="密碼確認"
-                style="width: 642px; height: 48px"
-                v-model="passwordCheck"
-                required
-              />
+                <label for="password" class="form-label">密碼</label>
+              </div>
 
-              <label for="passwordCheck" class="form-label">密碼確認</label>
-            </div>
-            <div class="d-flex justify-content-center">
-              <button
-                style="width: 122px; height: 50px"
-                type="submit"
-                class="btn bold mt-3"
-                :disabled="isProcessing"
-              >
-                {{ isProcessing ? "請稍後" : "儲存" }}
-              </button>
-            </div>
-          </form>
-        </div>
-      </ul>
+              <div class="mb-3 label-parents">
+                <input
+                  type="password"
+                  class="form-control input1 rounded-0"
+                  id="passwordCheck"
+                  placeholder="密碼確認"
+                  style="width: 642px; height: 48px"
+                  v-model="passwordCheck"
+                  required
+                />
+
+                <label for="passwordCheck" class="form-label">密碼確認</label>
+              </div>
+              <div class="d-flex justify-content-center">
+                <button
+                  style="width: 122px; height: 50px"
+                  type="submit"
+                  class="btn bold mt-3"
+                  :disabled="isProcessing"
+                >
+                  {{ isProcessing ? "請稍後" : "儲存" }}
+                </button>
+              </div>
+            </form>
+          </div>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -205,6 +208,10 @@ export default {
 }
 .bar {
   border-right: 1px solid #e6ecf0;
+}
+.container {
+  height: 100%;
+  width: 642px;
 }
 
 .list-group {

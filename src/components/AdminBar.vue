@@ -4,56 +4,39 @@
       <div>
         <div class="content">
           <div>
-            <img src="https://i.postimg.cc/YST4m6x2/Icon.png" alt="" />
+            <img src="https://i.postimg.cc/YST4m6x2/Icon.png" alt />
           </div>
           <div class="d-flex flex-row">
             <div>
-              <router-link to="/admin/tweets"
-                ><img
-                  src="https://i.postimg.cc/MKrzTW5q/icon-index.png"
-                  alt=""
-                  class="icon-index mr-4"
-              /></router-link>
-            </div>
-            <div>
-              <router-link to="/admin/tweets"
-                ><p
-                  class="bold icon-index"
-                  style="font-size: 18px; color: #ff6600"
-                >
-                  推文清單
-                </p></router-link
-              >
-            </div>
-          </div>
-          <div class="d-flex flex-row">
-            <div>
-              <router-link to="/admin/userList">
-                <img
-                  src="https://i.postimg.cc/dVjPCwmh/icon-user.png"
-                  alt=""
-                  class="icon-user mr-4"
-                />
+              <router-link :to="{ path: '/admin/tweets' }">
+                <img src="https://i.postimg.cc/MKrzTW5q/icon-index.png" alt class="icon-index mr-4" />
               </router-link>
             </div>
             <div>
-              <router-link to="/admin/userList">
-                <p
-                  class="bold icon-user"
-                  style="font-size: 18px; color: #1c1c1c"
-                >
-                  使用者列表
-                </p></router-link
-              >
+              <!--  to="/admin/tweets" -->
+              <router-link :to="{ path: '/admin/tweets' }">
+                <p class="bold icon-index" style="font-size: 18px; color: #ff6600">推文清單</p>
+              </router-link>
             </div>
           </div>
           <div class="d-flex flex-row">
             <div>
-              <img
-                src="https://i.postimg.cc/NjJDSnQN/icon-logout.png"
-                alt=""
-                class="icon-logout mr-4"
-              />
+              <router-link :to="{ path: '/admin/userList' }">
+                <!-- "{path: '/CouplePackage' }"
+                :to="{path: '/CouplePackage'-->
+                <img src="https://i.postimg.cc/dVjPCwmh/icon-user.png" alt class="icon-user mr-4" />
+              </router-link>
+            </div>
+            <div>
+              <!-- to="/admin/userList" -->
+              <router-link :to="{ path: '/admin/userList' }">
+                <p class="bold icon-user" style="font-size: 18px; color: #1c1c1c">使用者列表</p>
+              </router-link>
+            </div>
+          </div>
+          <div class="d-flex flex-row">
+            <div>
+              <img src="https://i.postimg.cc/NjJDSnQN/icon-logout.png" alt class="icon-logout mr-4" />
             </div>
             <div>
               <button @click="logout">
@@ -73,14 +56,14 @@
 import { mapState } from "vuex";
 export default {
   computed: {
-    ...mapState(["currentUser", "isAuthenticated"]),
+    ...mapState(["currentUser", "isAuthenticated"])
   },
   methods: {
     logout() {
       this.$store.commit("revokeAuthentication");
       this.$router.push("/signin");
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -96,11 +79,9 @@ export default {
   margin-left: 120px;
   margin-top: 15px;
 }
-
 /* .bar {
   border-right: 1px solid red;
 } */
-
 .bold {
   font-weight: bold;
 }

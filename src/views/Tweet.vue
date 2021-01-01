@@ -7,7 +7,11 @@
 
     <div>
       <!-- TweetsDetail -->
-      <TweetsDetail :initialTweet="Tweet" :tweetReplies="tweetReplies" />
+      <TweetsDetail
+        :initialTweet="Tweet"
+        :tweetReplies="tweetReplies"
+        @after-create-comment="afterCreateComment"
+      />
     </div>
 
     <div>
@@ -15,7 +19,7 @@
       <FollowRecommend />
     </div>
 
-    <div class="repliedContent">
+    <div class="repliedContent" style="display: none">
       <!-- RepliedContent -->
       <RepliedContent
         :initialTweet="Tweet"
@@ -38,10 +42,10 @@ export default {
     TweetsDetail,
     RepliedContent,
     NavBar,
-    FollowRecommend,
+    FollowRecommend
   },
   computed: {
-    ...mapState(["currentUser"]),
+    ...mapState(["currentUser"])
   },
   data() {
     return {
@@ -54,22 +58,20 @@ export default {
         avatar: "",
         likes: [],
         replies: [],
-        isLike: false,
+        isLike: false
       },
-      tweetReplies: [],
+      tweetReplies: []
     };
   },
-
   created() {
     const { id } = this.$route.params;
     this.fetchTweet(id);
     this.fetchReplies(id);
-    console.log(id);
+    // console.log(id);
   },
-
   methods: {
     async fetchTweet(tweetId) {
-      console.log(tweetId);
+      // console.log(tweetId);
       try {
         const response = await tweetAPI.tweet.get({ tweetId });
         console.log(response);
@@ -78,18 +80,17 @@ export default {
           id: data.id,
           description: data.description,
           name: data.User.name,
-          accoun: data.User.account,
+          account: data.User.account,
           createdAt: data.createdAt,
           avatar: data.User.avatar,
           likes: data.Likes.length,
           replies: data.Replies.length,
-          isLike: false,
+          isLike: false
         };
       } catch (error) {
         console.log("error", error);
       }
     },
-
     async fetchReplies(tweetId) {
       try {
         const { ...responst } = await tweetAPI.tweet.getReplies({ tweetId });
@@ -101,28 +102,32 @@ export default {
       }
     },
     afterCreateComment(payload) {
-      console.log("ok");
-      const { text, id } = payload;
+      console.log(payload);
+      // console.log(tweetId);
+      const { text, account, createdAt } = payload;
+      console.log(text, account, createdAt);
       this.tweetReplies.push({
-        text: text,
-        id: tweetId,
+        comment: text,
+        createdAt: new Date(),
         User: {
           id: this.currentUser.id,
           name: this.currentUser.name,
-          createdAt: new Date(),
-        },
+          // account: this.currentUser.account,
+          account: account,
+          avatar: this.currentUser.avatar,
+          createdAt: createdAt
+        }
       });
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped>
 .repliedContent {
   margin-top: -700px;
-  margin-left: -60px;
+  margin-left: 800px;
 }
+/* -60px */
 </style>
   
-
-
 

@@ -1,217 +1,195 @@
 <template>
-<container>
-  <head>
-    <title>💬 Real-Time Chat App with Socket.IO</title>
-    <meta charset="UTF-8" />
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <h1>輸入名稱加入聊天</h1>
-    <ul class="feed"></ul>
+  <div class="d-flex">
+    <div>
+      <NavBar />
+    </div>
+    <div class="container">
+      <div class="main-content">
+        <div class="chat-user">
+          <div class="chat-header">
+            <div class="chat-title">上線使用者 (5)</div>
+          </div>
+          <div class="chat-user-item">
+            <div class="item">
+              <div class="item-content">
+                <div class="circle"></div>
+                <div class="user-name">Apple</div>
+                <div class="user-account">@apple</div>
+              </div>
+            </div>
+          </div>
+          <div class="chat-user-item">
+            <div class="item">
+              <div class="item-content">
+                <div class="circle"></div>
+                <div class="user-name">Jane Cooper</div>
+                <div class="user-account">@Jan3coo</div>
+              </div>
+            </div>
+          </div>
+          <div class="chat-user-item">
+            <div class="item">
+              <div class="item-content">
+                <div class="circle"></div>
+                <div class="user-name">Wade Warren</div>
+                <div class="user-account">@vvvvrren</div>
+              </div>
+            </div>
+          </div>
+          <div class="chat-user-item">
+            <div class="item">
+              <div class="item-content">
+                <div class="circle"></div>
+                <div class="user-name">小熊維尼</div>
+                <div class="user-account">@pooh</div>
+              </div>
+            </div>
+          </div>
+          <div class="chat-user-item">
+            <div class="item">
+              <div class="item-content">
+                <div class="circle"></div>
+                <div class="user-name">Ralph Edwards</div>
+                <div class="user-account">@Rafed</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="chat-room">
+          <div class="chat-header">
+            <div class="chat-title">公開聊天室</div>
+          </div>
+          <div class="chat-room-container">
+            <div class="chat-room-title">輸入名稱加入聊天</div>
+            <ul class="feed"></ul>
 
-    <form class="messaging-form" action="#">
-      <span class="feedback"></span>
-      <div class="message-input">
-        <span class="avatar">?</span>
-        <input type="text" class="message-input-field name-input" placeholder="輸入暱稱" />
+            <form class="messaging-form" action="#">
+              <span class="feedback"></span>
+              <div class="message-input">
+                <span class="avatar">?</span>
+                <input type="text" class="message-input-field name-input" placeholder="輸入暱稱" />
+              </div>
+
+              <button class="join">Join</button>
+            </form>
+          </div>
+        </div>
       </div>
-
-      <button class="join">Join</button>
-    </form>
-
-    <!-- <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script> -->
-    <!-- <script src="app.js"></script> -->
-  </body>
-</container>
+    </div>
+  </div>
 </template>
 
-
 <script>
-import io from "socket.io";
-// eslint-disable-next-line no-unused-vars
-import cors from "cors";
-const socket = io.connect("https://simple-twitter-socket.herokuapp.com/?#");
-// const socket = io()
+import NavBar from "../components/NavBar";
 
-const dom = {
-  nameInput: document.querySelector(".name-input"),
-  joinButton: document.querySelector(".join"),
-  inputAvatar: document.querySelector(".messaging-form .avatar"),
-  welcomeMessage: document.querySelector("h1"),
-  feed: document.querySelector(".feed"),
-  feedback: document.querySelector(".feedback")
-};
-
-const user = {
-  name: null,
-  avatar: null
-};
-
-const getAvatar = () => {
-  let num = Math.floor(Math.random() * 30);
-  return `url(https://loremflickr.com/320/240/cats?random=${num})`;
-};
-
-const addEntry = ({ user, message }, you) => {
-  const entry = document.createElement("li");
-  const date = new Date();
-
-  entry.classList = `message-entry${you ? " message-entry-own" : ""}`;
-  entry.innerHTML = `
-        <span class="avatar" style="background: ${
-          user.avatar
-        }; background-size: contain;"></span>
-        <div class="message-body">
-            <span class="user-name">${you ? "You" : user.name}</span>
-            <time>- ${date.getHours()}:${date.getMinutes()}</time>
-            <p>${message}</p>
-        </div>
-    `;
-
-  dom.feed.appendChild(entry);
-};
-
-const addWelcomeMessage = (user, you) => {
-  const welcomeMessage = document.createElement("li");
-  const message = you
-    ? "您已加入聊天"
-    : `<span class="user-name">${user.name}</span> 加入聊天`;
-
-  const avatar = you
-    ? ""
-    : `<span class="avatar" style="background: ${user.avatar}; background-size: contain;"></span>`;
-
-  welcomeMessage.classList = "welcome-message";
-  welcomeMessage.innerHTML = `
-        <hr />
-        <h2 class="welcome-message-text">
-            ${avatar}
-            ${message}
-        </h2>
-    `;
-
-  dom.feed.appendChild(welcomeMessage);
-};
-
-const enterChannel = () => {
-  const avatar = getAvatar();
-  const name = dom.nameInput.value;
-
-  dom.joinButton.remove();
-  dom.welcomeMessage.remove();
-
-  dom.nameInput.value = "";
-  dom.nameInput.placeholder = "輸入您的訊息...";
-
-  dom.inputAvatar.innerText = "";
-  dom.inputAvatar.style.backgroundImage = avatar;
-  dom.inputAvatar.style.backgroundSize = "contain";
-
-  user.name = name;
-  user.avatar = avatar;
-
-  addWelcomeMessage({ avatar }, true);
-
-  socket.emit("user connected", {
-    name,
-    avatar
-  });
-};
-
-socket.on("user connected", payload => addWelcomeMessage(payload, false));
-
-socket.on("user typing", ({ user, typers }) => {
-  dom.feedback.innerHTML =
-    typers > 1 ? "Several people are typing" : `<i>${user}</i> is typing`;
-});
-
-socket.on("user stopped typing", typers => {
-  if (!typers) {
-    dom.feedback.innerHTML = "";
-  }
-});
-
-socket.on("send message", payload => {
-  addEntry(payload);
-
-  if (!payload.typers) {
-    dom.feedback.innerHTML = "";
-  }
-});
-
-dom.joinButton.onclick = e => {
-  e.preventDefault();
-
-  if (!dom.nameInput.value) {
-    dom.nameInput.parentElement.classList.add("error");
-  } else {
-    enterChannel();
-
-    dom.nameInput.onkeyup = e => {
-      socket.emit("user typing");
-
-      // If user presses enter
-      if (e.keyCode === 13) {
-        const message = e.target.value;
-
-        socket.emit("send message", {
-          message,
-          user
-        });
-
-        addEntry({ user, message }, true);
-
-        e.target.value = "";
-      }
-
-      if (e.target.value === "") {
-        socket.emit("user stopped typing");
-      }
-    };
+export default {
+  components: {
+    NavBar
   }
 };
 </script>
 
-
 <style scoped>
-::placeholder {
-  font-style: italic;
-}
-
-html {
-  font-family: sans-serif;
-}
-
+/* CSS reset  */
 body {
-  margin: 30px;
-}
-
-ul {
-  list-style: none;
-  word-wrap: break-word;
-}
-
-li {
-  margin-bottom: 20px;
-}
-
-h1 {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 40px;
-  text-align: center;
-  color: #444444;
   margin: 0;
+  padding: 0;
 }
-
-time {
-  font-size: 90%;
-}
-
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
 p {
-  margin: 10px 0 0;
+  margin: 0px;
+  padding: 0px;
+}
+/* style start */
+.container {
+  position: relative;
+}
+.main-content {
+  height: 720px;
+  width: 950px;
+  position: absolute;
+  left: 220px;
+  border: 1px solid #e6ecf0;
+  display: flex;
+}
+
+.chat-user {
+  width: 320px;
+  border-right: 1px solid #e6ecf0;
+}
+.chat-room {
+  flex: 1;
+}
+
+.chat-header {
+  height: 50px;
+  border-bottom: 1px solid #e6ecf0;
+  display: flex;
+  align-items: center;
+  font-weight: 650;
+  font-size: 17px;
+  line-height: 15px;
+  color: #1c1c1c;
+}
+
+.chat-title {
+  margin-left: 20px;
+}
+
+.item {
+  border-bottom: 1px solid #e6ecf0;
+  height: 65px;
+}
+
+.item-content {
+  display: flex;
+  align-items: center;
+  padding: 7px 0px 8px 15px;
+}
+
+.circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #e6ecf0;
+}
+
+.user-name,
+.user-account {
+  margin-left: 6px;
+}
+
+.user-name {
+  font-weight: 550;
+  font-size: 15px;
+  line-height: 15px;
+  color: #1c1c1c;
+}
+
+.user-account {
+  font-weight: 550;
+  font-size: 15px;
+  line-height: 15px;
+  color: #657786;
+}
+
+.chat-room-container {
+  width: 100%;
+  height: 670px;
+  /* border: 1px solid gray; */
+  position: relative;
+}
+
+.chat-room-title {
+  position: absolute;
+  top: 250px;
+  left: 200px;
+  font-size: 30px;
 }
 
 hr {
@@ -228,28 +206,20 @@ hr:after {
 }
 
 .messaging-form {
-  position: fixed;
-  bottom: 30px;
-  left: 30px;
-  width: calc(100% - 60px);
+  position: absolute;
+  bottom: 40px;
   display: flex;
 }
 
 .message-input {
   position: relative;
-  width: 90%;
+  width: 400px;
   padding: 2px;
   border-radius: 40px;
-  margin-right: 20px;
+  margin-left: 90px;
+  margin-right: 10px;
   background: #ffffff4f;
   border: 1px solid #f60;
-}
-
-.avatar {
-  width: 25px;
-  height: 25px;
-  border-radius: 100%;
-  display: block;
 }
 
 .message-input .avatar {

@@ -110,11 +110,6 @@ const router = new Router({
       path: '/chat',
       name: 'chat-room',
       component: () => import('../views/ChatRoom.vue')
-    },
-    {
-      path: '/chatRoom',
-      name: 'chat-room-2',
-      component: () => import('../views/ChatRoomm.vue')
 
     },
 

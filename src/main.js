@@ -5,6 +5,16 @@ import store from './store'
 // import io from 'socket.io'
 
 
+// import BootstrapVue from "bootstrap-vue"
+// import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
+// import "bootstrap/dist/css/bootstrap.css";
+// import "bootstrap-vue/dist/bootstrap-vue.css";
+
+import BootstrapVue from 'bootstrap-vue'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+Vue.use(BootstrapVue)
+
 Vue.config.productionTip = false
 
 new Vue({
