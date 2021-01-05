@@ -21,10 +21,10 @@
                 <div class="recommend-title d-flex flex-column">
                   <router-link :to="{name: 'user', params: {id: user.id}}">
                     <!--recommend name-->
-                    <div class="recommend-name">{{user.name}}</div>
+                    <div class="recommend-name">{{user.name | shortCut}}</div>
 
                     <!--recommend id-->
-                    <div class="recommend-account">@{{user.account}}</div>
+                    <div class="recommend-account">@{{user.account | shortCut}}</div>
                   </router-link>
                 </div>
               </div>
@@ -45,8 +45,7 @@
         </div>
 
         <div class="recommend-bottom">
-          <!--           
-          <a href class="show-more">顯示更多</a>-->
+          <a href v-show="users.length > 6" class="show-more">顯示更多</a>
         </div>
       </div>
     </div>
@@ -73,19 +72,25 @@ export default {
   created() {
     this.fetchTopTenUsers();
   },
+  filters: {
+    shortCut(string) {
+      if (string.length > 12) {
+        return string.slice(0, 12) + "...";
+      }
+      return string;
+    }
+  },
   methods: {
     async fetchTopTenUsers() {
       try {
         const response = await usersAPI.getTopTenUsers({ users });
-        console.log("response", response);
-
         const users = response.data;
         this.users = users;
         // console.log(this.currentUser.Followings);
         let recommendFollows = this.currentUser.Followings.filter(
           user => user.id !== response.data.id
         );
-        console.log(recommendFollows);
+        console.log("recommendFollows:", recommendFollows);
       } catch (error) {
         console.log("error", error);
         Toast.fire({
@@ -168,11 +173,14 @@ export default {
 }
 
 .list-group {
-  position: fixed;
+  /* position: fixed; */
+  position: absolute;
   background-color: #f5f8fa;
   width: 300px;
-  right: 50px;
-  top: 15px;
+  /* right: 50px;
+  top: 15px; */
+  left: 930px;
+  top: 35px;
   border-radius: 14px;
 }
 
@@ -205,6 +213,7 @@ export default {
   display: flex;
   align-items: left;
   justify-content: center;
+  max-width: 68%;
 }
 
 .recommend-name {
@@ -213,13 +222,13 @@ export default {
   font-size: 15px;
   line-height: 15px;
   color: #1c1c1c;
+  /* max-width: 95%; */
 }
 
 .recommend-account {
   font-weight: 550;
   font-size: 15px;
   line-height: 15px;
-
   color: #657786;
 }
 
@@ -246,7 +255,7 @@ export default {
 }
 
 .delete-follow {
-  width: 92px;
+  width: 80px;
   height: 30px;
   background: #ff6600;
   border: 1px solid #ff6600;

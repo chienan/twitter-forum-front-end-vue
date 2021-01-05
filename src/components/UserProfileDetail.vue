@@ -38,7 +38,6 @@
 
           <!--跟隨-->
           <button v-else class="btn-follow" @click.stop.prevent="addFollow(user.id)">跟隨</button>
-
         </div>
         <div class="profile-section">
           <div class="user-name">{{user.name}}</div>
@@ -96,7 +95,6 @@ export default {
     async getFollowingsNumber(userId) {
       try {
         const response = await usersAPI.getUserFollowings({ userId });
-        console.log("response", response);
         const followingLength = response.data.length;
         if (followingLength) {
           this.followingLength = followingLength;
@@ -114,7 +112,6 @@ export default {
     async getFollowersNumber(userId) {
       try {
         const response = await usersAPI.getUserFollowers({ userId });
-        console.log("response", response);
         const followerLength = response.data.length;
         if (followerLength) {
           this.followerLength = followerLength;
@@ -169,7 +166,6 @@ export default {
             };
           }
         });
-
       } catch (error) {
         console.error(error.message);
         Toast.fire({
@@ -187,7 +183,6 @@ export default {
         }
 
         this.user.isFollowed = false;
-
 
         this.users = this.users.map(user => {
           if (user.id !== userId) {
