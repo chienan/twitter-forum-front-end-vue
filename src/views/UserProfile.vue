@@ -121,8 +121,6 @@ export default {
     async fetchUser(userId) {
       try {
         const response = await usersAPI.getUsers({ userId });
-        console.log("response", response);
-
         const user = response.data;
         this.user = user;
         this.isLoading = false;
@@ -138,8 +136,6 @@ export default {
     async fetchUserTweets(userId) {
       try {
         const response = await usersAPI.getUsersTweets({ userId });
-        console.log("response", response);
-        console.log(response.data.length);
         const tweets = response.data;
         const tweetsLength = response.data.length;
         this.tweets = tweets;
@@ -194,7 +190,6 @@ export default {
             return tweet;
           }
         });
-        console.log(this.tweet);
         Toast.fire({
           icon: "success",
           title: "unlike tweet"

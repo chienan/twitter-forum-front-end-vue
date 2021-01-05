@@ -4,9 +4,10 @@
       <div class="list-group list-group-flush">
         <div class="list-group-item list-title">跟隨誰</div>
 
-        <!--li start-->
+        <!--top six users-->
 
-        <div class="list-group-item" v-for="user in users" :key="user.id">
+        <div class="list-group-item" v-for="user in topSix" :key="user.id">
+          <!-- v-for="user in users" :key="user.id" -->
           <!-- currentUser.id !== user.id -->
           <div class="list-container">
             <div class="item d-flex row justify-content-between align-items-center">
@@ -21,10 +22,10 @@
                 <div class="recommend-title d-flex flex-column">
                   <router-link :to="{name: 'user', params: {id: user.id}}">
                     <!--recommend name-->
-                    <div class="recommend-name">{{user.name}}</div>
+                    <div class="recommend-name">{{user.name | shortCut}}</div>
 
                     <!--recommend id-->
-                    <div class="recommend-account">@{{user.account}}</div>
+                    <div class="recommend-account">@{{user.account | shortCut}}</div>
                   </router-link>
                 </div>
               </div>
@@ -44,9 +45,54 @@
           </div>
         </div>
 
+        <!-- show more users -->
+        <div
+          v-show="showMore"
+          class="list-group-item more-users-wrapper"
+          v-for="user in moreUsers"
+          :key="user.id"
+        >
+          <div class="list-container">
+            <div class="item d-flex row justify-content-between align-items-center">
+              <div class="li-front-part row">
+                <div class="image-container">
+                  <!--recommend image-->
+                  <router-link :to="{name: 'user', params: {id: user.id}}">
+                    <img :src="user.avatar" class="user-avatar" width="50px" height="50px" />
+                  </router-link>
+                </div>
+
+                <div class="recommend-title d-flex flex-column">
+                  <router-link :to="{name: 'user', params: {id: user.id}}">
+                    <!--recommend name-->
+                    <div class="recommend-name">{{user.name | shortCut}}</div>
+
+                    <!--recommend id-->
+                    <div class="recommend-account">@{{user.account | shortCut}}</div>
+                  </router-link>
+                </div>
+              </div>
+
+              <div class="btn-follow">
+                <button
+                  v-if="user.isFollowed"
+                  class="delete-follow"
+                  @click.stop.prevent="deleteFollowing(user.id)"
+                >正在跟隨</button>
+
+                <button v-else-if="user.id === currentUser.id" class="follow-self">您本人</button>
+
+                <button v-else class="follow" @click.stop.prevent="addFollow(user.id)">跟隨</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- </div> -->
+
+        <!-- show more button -->
         <div class="recommend-bottom">
-          <!--           
-          <a href class="show-more">顯示更多</a>-->
+          <div v-show="!showMore" class="show-more" @click.stop.prevent="showMoreUsers">顯示更多</div>
+          <div v-show="showMore" class="show-more" @click.stop.prevent="closeMoreUsers">收回</div>
         </div>
       </div>
     </div>
@@ -67,25 +113,48 @@ export default {
       },
       user: {
         id: ""
-      }
+      },
+      topSix: [],
+      moreUsers: [],
+      showMore: false,
+      recommendFollows: []
     };
   },
   created() {
     this.fetchTopTenUsers();
   },
+  filters: {
+    shortCut(string) {
+      if (string.length > 12) {
+        return string.slice(0, 12) + "...";
+      }
+      return string;
+    },
+    hideList(li) {
+      if (li.length > 6) {
+        return li.slice(0, 6);
+      }
+      return li;
+    }
+  },
   methods: {
     async fetchTopTenUsers() {
       try {
         const response = await usersAPI.getTopTenUsers({ users });
-        console.log("response", response);
-
         const users = response.data;
         this.users = users;
         // console.log(this.currentUser.Followings);
-        let recommendFollows = this.currentUser.Followings.filter(
+
+        this.recommendFollows = this.currentUser.Followings.filter(
           user => user.id !== response.data.id
         );
-        console.log(recommendFollows);
+
+        this.topSix = users.slice(0, 6);
+        this.moreUsers = users.slice(6, 10);
+
+        // console.log("topSix:", this.topSix);
+        // console.log("moreUsers:", this.moreUsers);
+        // console.log("recommendFollows:", recommendFollows);
       } catch (error) {
         console.log("error", error);
         Toast.fire({
@@ -107,7 +176,24 @@ export default {
           title: "追蹤成功"
         });
 
-        this.users = this.users.map(user => {
+        // this.topSix = this.topSix.find(user => {
+        //   user.id === id;
+        //   return {
+        //     isFollowed: true
+        //   };
+        // });
+
+        this.topSix = this.topSix.map(user => {
+          if (user.id !== id) {
+            return user;
+          } else {
+            return {
+              ...user,
+              isFollowed: true
+            };
+          }
+        });
+        this.moreUsers = this.moreUsers.map(user => {
           if (user.id !== id) {
             return user;
           } else {
@@ -133,7 +219,7 @@ export default {
           throw new Error(data.message);
         }
 
-        this.users = this.users.map(user => {
+        this.topSix = this.topSix.map(user => {
           if (user.id !== userId) {
             return user;
           } else {
@@ -143,6 +229,18 @@ export default {
             };
           }
         });
+
+        this.moreUsers = this.moreUsers.map(user => {
+          if (user.id !== userId) {
+            return user;
+          } else {
+            return {
+              ...user,
+              isFollowed: false
+            };
+          }
+        });
+
         Toast.fire({
           icon: "success",
           title: "成功取消追蹤"
@@ -154,6 +252,12 @@ export default {
         });
         console.log("error", error);
       }
+    },
+    showMoreUsers() {
+      this.showMore = true;
+    },
+    closeMoreUsers() {
+      this.showMore = false;
     }
   },
   //vuex `mapState` 方法
@@ -173,7 +277,12 @@ export default {
   width: 300px;
   right: 50px;
   top: 15px;
+  /* position: absolute; */
+  /* left: 905px;
+  top: 35px; */
   border-radius: 14px;
+  max-height: 650px;
+  overflow: scroll;
 }
 
 .list-group-item {
@@ -205,6 +314,7 @@ export default {
   display: flex;
   align-items: left;
   justify-content: center;
+  max-width: 68%;
 }
 
 .recommend-name {
@@ -213,13 +323,13 @@ export default {
   font-size: 15px;
   line-height: 15px;
   color: #1c1c1c;
+  /* max-width: 95%; */
 }
 
 .recommend-account {
   font-weight: 550;
   font-size: 15px;
   line-height: 15px;
-
   color: #657786;
 }
 
@@ -246,7 +356,7 @@ export default {
 }
 
 .delete-follow {
-  width: 92px;
+  width: 80px;
   height: 30px;
   background: #ff6600;
   border: 1px solid #ff6600;
@@ -271,7 +381,19 @@ export default {
   color: #ff6600;
 }
 
+.show-more:hover {
+  cursor: pointer;
+}
+
 .user-id-input {
   display: none;
+}
+
+.more-users-wrapper {
+  /* top: 100%;
+  width: 100%; */
+  transition: transform 1s ease-out;
+  /* transform: scale(1, 0);
+  transform-origin: top; */
 }
 </style>
