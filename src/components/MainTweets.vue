@@ -102,15 +102,18 @@
                         id="modal-avatar"
                       />
                       <textarea
+                        ref="descriptionArea"
+                        class="textarea-description"
                         name="description"
                         rows="2"
                         cols="40"
+                        maxlength="140"
                         required
                         v-model="description"
-                        style="height: 150px; width: 380px;border:none"
-                      >
-                      有什麼新鮮事？
-                      </textarea>
+                        placeholder="有什麼新鮮事？"
+                      />
+
+                      <span class="text-count">{{this.description.length}} / 140</span>
                       <button class="btn-tweet">推文</button>
                     </div>
                   </form>
@@ -226,6 +229,9 @@ export default {
     },
     openModal() {
       this.myModal = true;
+      setTimeout(() => {
+        this.$refs.descriptionArea.focus();
+      });
     },
     async handleSubmit() {
       try {
@@ -469,6 +475,24 @@ p {
 .modal-wrapper {
   display: table-cell;
   vertical-align: middle;
+}
+
+#modal-avatar {
+  margin-right: 20px;
+}
+
+.textarea-description {
+  margin-top: 20px;
+  height: 150px;
+  width: 380px;
+  border: none;
+}
+
+.text-count {
+  position: absolute;
+  font-size: 12px;
+  right: 100px;
+  bottom: 15px;
 }
 
 .like-count {
