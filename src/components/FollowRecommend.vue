@@ -7,7 +7,6 @@
         <!--li start-->
 
         <div class="list-group-item" v-for="user in users" :key="user.id">
-          <!-- currentUser.id !== user.id -->
           <div class="list-container">
             <div class="item d-flex row justify-content-between align-items-center">
               <div class="li-front-part row">
@@ -60,40 +59,44 @@ import { Toast } from "../utils/helpers";
 import { mapState } from "vuex";
 
 export default {
+  props: {
+    initialTops: {
+      type: Object,
+      required: true
+    }
+  },
   data() {
     return {
-      users: {
-        isLiked: false
-      },
-      user: {
-        id: ""
-      }
+      users: this.initialTops
     };
+    // user: {
+    //   id: ""
+    // }
   },
   created() {
-    this.fetchTopTenUsers();
+    // this.fetchTopTenUsers();
   },
   methods: {
-    async fetchTopTenUsers() {
-      try {
-        const response = await usersAPI.getTopTenUsers({ users });
-        console.log("response", response);
+    // async fetchTopTenUsers() {
+    //   try {
+    //     const response = await usersAPI.getTopTenUsers({ users });
+    //     console.log("response", response);
 
-        const users = response.data;
-        this.users = users;
-        // console.log(this.currentUser.Followings);
-        let recommendFollows = this.currentUser.Followings.filter(
-          user => user.id !== response.data.id
-        );
-        console.log(recommendFollows);
-      } catch (error) {
-        console.log("error", error);
-        Toast.fire({
-          icon: "error",
-          title: "無法取得資料，請稍後再試"
-        });
-      }
-    },
+    //     const users = response.data;
+    //     this.users = users;
+    //     // console.log(this.currentUser.Followings);
+    //     let recommendFollows = this.currentUser.Followings.filter(
+    //       user => user.id !== response.data.id
+    //     );
+    //     console.log(recommendFollows);
+    //   } catch (error) {
+    //     console.log("error", error);
+    //     Toast.fire({
+    //       icon: "error",
+    //       title: "無法取得資料，請稍後再試"
+    //     });
+    //   }
+    // },
     async addFollow(id) {
       try {
         const { data } = await usersAPI.addFollow({
@@ -117,6 +120,11 @@ export default {
             };
           }
         });
+        this.$emit("after-add-follow", {
+          userId: id
+          // isFollowed: true
+        });
+        this.user.isFollowed = true;
       } catch (error) {
         console.error(error.message);
         Toast.fire({
@@ -132,7 +140,6 @@ export default {
         if (data.status !== "success") {
           throw new Error(data.message);
         }
-
         this.users = this.users.map(user => {
           if (user.id !== userId) {
             return user;
@@ -142,6 +149,10 @@ export default {
               isFollowed: false
             };
           }
+        });
+        this.$emit("after-delete-follow", {
+          userId: this.userId,
+          isFollowed: false
         });
         Toast.fire({
           icon: "success",
