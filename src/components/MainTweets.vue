@@ -105,12 +105,15 @@
                         name="description"
                         rows="2"
                         cols="40"
+                        maxlength="140"
                         required
                         v-model="description"
+                        @input="countRemnant"
                         style="height: 150px; width: 380px;border:none"
                       >
                       有什麼新鮮事？
                       </textarea>
+                      <span class="text-count">{{this.description.length}} / 140</span>
                       <button class="btn-tweet">推文</button>
                     </div>
                   </form>
@@ -469,6 +472,13 @@ p {
 .modal-wrapper {
   display: table-cell;
   vertical-align: middle;
+}
+
+.text-count {
+  position: absolute;
+  font-size: 12px;
+  right: 100px;
+  bottom: 15px;
 }
 
 .like-count {
