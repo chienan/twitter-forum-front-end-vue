@@ -4,9 +4,10 @@
       <div class="list-group list-group-flush">
         <div class="list-group-item list-title">跟隨誰</div>
 
-        <!--li start-->
+        <!--top six users-->
 
-        <div class="list-group-item" v-for="user in users" :key="user.id">
+        <div class="list-group-item" v-for="user in topSix" :key="user.id">
+          <!-- v-for="user in users" :key="user.id" -->
           <!-- currentUser.id !== user.id -->
           <div class="list-container">
             <div class="item d-flex row justify-content-between align-items-center">
@@ -44,8 +45,49 @@
           </div>
         </div>
 
+        <!-- show more users -->
+
+        <div v-show="showMore" class="list-group-item" v-for="user in moreUsers" :key="user.id">
+          <div class="list-container">
+            <div class="item d-flex row justify-content-between align-items-center">
+              <div class="li-front-part row">
+                <div class="image-container">
+                  <!--recommend image-->
+                  <router-link :to="{name: 'user', params: {id: user.id}}">
+                    <img :src="user.avatar" class="user-avatar" width="50px" height="50px" />
+                  </router-link>
+                </div>
+
+                <div class="recommend-title d-flex flex-column">
+                  <router-link :to="{name: 'user', params: {id: user.id}}">
+                    <!--recommend name-->
+                    <div class="recommend-name">{{user.name | shortCut}}</div>
+
+                    <!--recommend id-->
+                    <div class="recommend-account">@{{user.account | shortCut}}</div>
+                  </router-link>
+                </div>
+              </div>
+
+              <div class="btn-follow">
+                <button
+                  v-if="user.isFollowed"
+                  class="delete-follow"
+                  @click.stop.prevent="deleteFollowing(user.id)"
+                >正在跟隨</button>
+
+                <button v-else-if="user.id === currentUser.id" class="follow-self">您本人</button>
+
+                <button v-else class="follow" @click.stop.prevent="addFollow(user.id)">跟隨</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- show more button -->
         <div class="recommend-bottom">
-          <a href v-show="users.length > 6" class="show-more">顯示更多</a>
+          <div v-show="!showMore" class="show-more" @click.stop.prevent="showMoreUsers">顯示更多</div>
+          <div v-show="showMore" class="show-more" @click.stop.prevent="closeMoreUsers">收回</div>
         </div>
       </div>
     </div>
@@ -66,7 +108,11 @@ export default {
       },
       user: {
         id: ""
-      }
+      },
+      topSix: [],
+      moreUsers: [],
+      showMore: false,
+      recommendFollows: []
     };
   },
   created() {
@@ -78,6 +124,12 @@ export default {
         return string.slice(0, 12) + "...";
       }
       return string;
+    },
+    hideList(li) {
+      if (li.length > 6) {
+        return li.slice(0, 6);
+      }
+      return li;
     }
   },
   methods: {
@@ -87,10 +139,17 @@ export default {
         const users = response.data;
         this.users = users;
         // console.log(this.currentUser.Followings);
-        let recommendFollows = this.currentUser.Followings.filter(
+
+        this.recommendFollows = this.currentUser.Followings.filter(
           user => user.id !== response.data.id
         );
-        console.log("recommendFollows:", recommendFollows);
+
+        this.topSix = users.slice(0, 6);
+        this.moreUsers = users.slice(6, users.length - 1);
+
+        // console.log("topSix:", this.topSix);
+        // console.log("moreUsers:", this.moreUsers);
+        // console.log("recommendFollows:", recommendFollows);
       } catch (error) {
         console.log("error", error);
         Toast.fire({
@@ -159,6 +218,12 @@ export default {
         });
         console.log("error", error);
       }
+    },
+    showMoreUsers() {
+      this.showMore = true;
+    },
+    closeMoreUsers() {
+      this.showMore = false;
     }
   },
   //vuex `mapState` 方法
@@ -278,6 +343,10 @@ export default {
   font-size: 15px;
   line-height: 22px;
   color: #ff6600;
+}
+
+.show-more:hover {
+  cursor: pointer;
 }
 
 .user-id-input {
