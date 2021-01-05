@@ -46,8 +46,12 @@
         </div>
 
         <!-- show more users -->
-
-        <div v-show="showMore" class="list-group-item" v-for="user in moreUsers" :key="user.id">
+        <div
+          v-show="showMore"
+          class="list-group-item more-users-wrapper"
+          v-for="user in moreUsers"
+          :key="user.id"
+        >
           <div class="list-container">
             <div class="item d-flex row justify-content-between align-items-center">
               <div class="li-front-part row">
@@ -83,6 +87,7 @@
             </div>
           </div>
         </div>
+        <!-- </div> -->
 
         <!-- show more button -->
         <div class="recommend-bottom">
@@ -145,7 +150,7 @@ export default {
         );
 
         this.topSix = users.slice(0, 6);
-        this.moreUsers = users.slice(6, users.length - 1);
+        this.moreUsers = users.slice(6, 10);
 
         // console.log("topSix:", this.topSix);
         // console.log("moreUsers:", this.moreUsers);
@@ -171,7 +176,24 @@ export default {
           title: "追蹤成功"
         });
 
-        this.users = this.users.map(user => {
+        // this.topSix = this.topSix.find(user => {
+        //   user.id === id;
+        //   return {
+        //     isFollowed: true
+        //   };
+        // });
+
+        this.topSix = this.topSix.map(user => {
+          if (user.id !== id) {
+            return user;
+          } else {
+            return {
+              ...user,
+              isFollowed: true
+            };
+          }
+        });
+        this.moreUsers = this.moreUsers.map(user => {
           if (user.id !== id) {
             return user;
           } else {
@@ -197,7 +219,7 @@ export default {
           throw new Error(data.message);
         }
 
-        this.users = this.users.map(user => {
+        this.topSix = this.topSix.map(user => {
           if (user.id !== userId) {
             return user;
           } else {
@@ -207,6 +229,18 @@ export default {
             };
           }
         });
+
+        this.moreUsers = this.moreUsers.map(user => {
+          if (user.id !== userId) {
+            return user;
+          } else {
+            return {
+              ...user,
+              isFollowed: false
+            };
+          }
+        });
+
         Toast.fire({
           icon: "success",
           title: "成功取消追蹤"
@@ -238,15 +272,17 @@ export default {
 }
 
 .list-group {
-  /* position: fixed; */
-  position: absolute;
+  position: fixed;
   background-color: #f5f8fa;
   width: 300px;
-  /* right: 50px;
-  top: 15px; */
-  left: 930px;
-  top: 35px;
+  right: 50px;
+  top: 15px;
+  /* position: absolute; */
+  /* left: 905px;
+  top: 35px; */
   border-radius: 14px;
+  max-height: 650px;
+  overflow: scroll;
 }
 
 .list-group-item {
@@ -351,5 +387,13 @@ export default {
 
 .user-id-input {
   display: none;
+}
+
+.more-users-wrapper {
+  /* top: 100%;
+  width: 100%; */
+  transition: transform 1s ease-out;
+  /* transform: scale(1, 0);
+  transform-origin: top; */
 }
 </style>
