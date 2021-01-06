@@ -199,7 +199,7 @@ export default {
         //   user => user.id !== response.data.id
         // );
         // console.log(recommendFollows);
-        console.log("topTenUsers:", topTenUsers);
+        // console.log("topTenUsers:", topTenUsers);
       } catch (error) {
         console.log("error", error);
         Toast.fire({
@@ -211,7 +211,7 @@ export default {
     afterAddFollow(payload) {
       // const { userId } = payload;
       const { userId } = payload;
-      console.log(payload);
+      console.log("add follow:", payload);
       this.users = this.users.map(user => {
         if (user.id !== userId) {
           return user;
@@ -226,7 +226,7 @@ export default {
     },
     afterDeleteFollow(payload) {
       const { userId } = payload;
-      console.log(payload);
+      console.log("delete follow:", payload);
       this.users = this.users.map(user => {
         if (user.id !== userId) {
           return user;

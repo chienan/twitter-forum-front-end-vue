@@ -61,7 +61,7 @@ import { mapState } from "vuex";
 export default {
   props: {
     initialTops: {
-      type: Object,
+      type: Array,
       required: true
     }
   },
@@ -124,7 +124,6 @@ export default {
           userId: id
           // isFollowed: true
         });
-        this.user.isFollowed = true;
       } catch (error) {
         console.error(error.message);
         Toast.fire({
@@ -151,8 +150,8 @@ export default {
           }
         });
         this.$emit("after-delete-follow", {
-          userId: this.userId,
-          isFollowed: false
+          userId: userId
+          // isFollowed: false
         });
         Toast.fire({
           icon: "success",
@@ -170,6 +169,13 @@ export default {
   //vuex `mapState` 方法
   computed: {
     ...mapState(["currentUser", "isAuthenticated"])
+  },
+  watch: {
+    initialTops(val) {
+      if (val && val.length > 0) {
+        this.users = this.initialTops;
+      }
+    }
   }
 };
 </script>
