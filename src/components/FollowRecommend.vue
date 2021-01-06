@@ -115,16 +115,19 @@ export default {
   data() {
     return {
       users: this.initialTops,
-      topSix: this.initialTops.slice(0, 6),
-      moreUsers: this.initialTops.slice(6, 10),
-      showMore: false
+      showMore: false,
+      topSix: [],
+      moreUsers: []
     };
 
     // user: {
     //   id: ""
     // }
   },
-  created() {},
+  created() {
+    this.fetchTopSix();
+    this.fetchMoreUsers();
+  },
   filters: {
     shortCut(string) {
       if (string.length > 12) {
@@ -140,6 +143,14 @@ export default {
     }
   },
   methods: {
+    fetchTopSix() {
+      const topSixUsers = this.initialTops.slice(0, 6);
+      this.topSix = topSixUsers;
+    },
+    fetchMoreUsers() {
+      const getMoreUsers = this.initialTops.slice(6, 10);
+      this.moreUsers = getMoreUsers;
+    },
     async addFollow(id) {
       try {
         const { data } = await usersAPI.addFollow({
@@ -263,6 +274,8 @@ export default {
     initialTops(val) {
       if (val && val.length > 0) {
         this.users = this.initialTops;
+        this.fetchTopSix();
+        this.fetchMoreUsers();
       }
     }
   }
