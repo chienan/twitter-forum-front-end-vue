@@ -6,7 +6,12 @@
     <Spinner v-if="isLoading" />
     <div v-else class="main-content">
       <UserProfileNav :user="user" :tweets="tweets" :tweetsLength="tweetsLength" />
-      <UserProfileDetail :user="user" />
+
+      <UserProfileDetail
+        :initial-user="user"
+        @after-add-follow="afterAddFollow"
+        @after-delete-follow="afterDeleteFollow"
+      />
       <!-- UserProfileNavTabs  -->
       <div class="user-profile-navtabs">
         <div class="tab-tweets">推文</div>
@@ -104,7 +109,8 @@ export default {
       tweets: {},
       tweetsLength: "",
       isLoading: true,
-      topTenUsers: []
+      topTenUsers: [],
+      isFollowed: true
     };
   },
   created() {
@@ -218,6 +224,22 @@ export default {
           title: "無法取得資料，請稍後再試"
         });
       }
+    },
+    afterAddFollow() {
+      this.isFollowed = true;
+    },
+    afterDeleteFollow() {
+      this.isFollowed = false;
+    }
+  },
+  watch: {
+    user() {
+      // const { id: userId } = this.$route.params;
+      this.fetchTopTenUsers();
+      // this.fetchUser(userId);
+    },
+    isFollowed() {
+      this.fetchTopTenUsers();
     }
   }
 };

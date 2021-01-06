@@ -71,11 +71,12 @@ import { mapState } from "vuex";
 
 export default {
   props: {
-    user: {},
-    users: {}
+    initialUser: {}
+    // users: {}
   },
   data() {
     return {
+      user: this.initialUser,
       followingLength: "",
       followerLength: ""
     };
@@ -139,12 +140,14 @@ export default {
           title: "追蹤成功"
         });
 
-
         this.user = {
           ...this.user,
           isFollowed: true
         };
 
+        this.$emit("after-add-follow", {
+          userId: id
+        });
       } catch (error) {
         console.error(error.message);
         Toast.fire({
@@ -161,12 +164,14 @@ export default {
           throw new Error(data.message);
         }
 
-
         this.user = {
           ...this.user,
           isFollowed: false
         };
 
+        this.$emit("after-delete-follow", {
+          userId: userId
+        });
 
         Toast.fire({
           icon: "success",
