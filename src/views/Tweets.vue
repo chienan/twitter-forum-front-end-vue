@@ -103,11 +103,9 @@ export default {
     // }
   },
   watch: {
-    // tweets: {
-    //   handler: function() {
-    //   },
-    //   deep: true
-    // }
+    tweets() {
+      this.fetchTweets();
+    }
   },
   computed: {
     ...mapState(["currentUser", "isAuthenticated"])
