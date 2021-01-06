@@ -106,22 +106,29 @@ import { Toast } from "../utils/helpers";
 import { mapState } from "vuex";
 
 export default {
+  props: {
+    initialTops: {
+      type: Array,
+      required: true
+    }
+  },
   data() {
     return {
-      users: {
-        isLiked: false
-      },
-      user: {
-        id: ""
-      },
-      topSix: [],
-      moreUsers: [],
+
+      users: this.initialTops,
       showMore: false,
-      recommendFollows: []
+      topSix: [],
+      moreUsers: []
+
     };
+
+    // user: {
+    //   id: ""
+    // }
   },
   created() {
-    this.fetchTopTenUsers();
+    this.fetchTopSix();
+    this.fetchMoreUsers();
   },
   filters: {
     shortCut(string) {
@@ -138,30 +145,13 @@ export default {
     }
   },
   methods: {
-    async fetchTopTenUsers() {
-      try {
-        const response = await usersAPI.getTopTenUsers({ users });
-        const users = response.data;
-        this.users = users;
-        // console.log(this.currentUser.Followings);
-
-        this.recommendFollows = this.currentUser.Followings.filter(
-          user => user.id !== response.data.id
-        );
-
-        this.topSix = users.slice(0, 6);
-        this.moreUsers = users.slice(6, 10);
-
-        // console.log("topSix:", this.topSix);
-        // console.log("moreUsers:", this.moreUsers);
-        // console.log("recommendFollows:", recommendFollows);
-      } catch (error) {
-        console.log("error", error);
-        Toast.fire({
-          icon: "error",
-          title: "無法取得資料，請稍後再試"
-        });
-      }
+    fetchTopSix() {
+      const topSixUsers = this.initialTops.slice(0, 6);
+      this.topSix = topSixUsers;
+    },
+    fetchMoreUsers() {
+      const getMoreUsers = this.initialTops.slice(6, 10);
+      this.moreUsers = getMoreUsers;
     },
     async addFollow(id) {
       try {
@@ -176,12 +166,7 @@ export default {
           title: "追蹤成功"
         });
 
-        // this.topSix = this.topSix.find(user => {
-        //   user.id === id;
-        //   return {
-        //     isFollowed: true
-        //   };
-        // });
+
 
         this.topSix = this.topSix.map(user => {
           if (user.id !== id) {
@@ -202,6 +187,9 @@ export default {
               isFollowed: true
             };
           }
+        });
+        this.$emit("after-add-follow", {
+          userId: id
         });
       } catch (error) {
         console.error(error.message);
@@ -229,8 +217,8 @@ export default {
             };
           }
         });
-
         this.moreUsers = this.moreUsers.map(user => {
+
           if (user.id !== userId) {
             return user;
           } else {
@@ -239,6 +227,21 @@ export default {
               isFollowed: false
             };
           }
+        });
+
+        // this.users = this.users.map(user => {
+        //   if (user.id !== userId) {
+        //     return user;
+        //   } else {
+        //     return {
+        //       ...user,
+        //       isFollowed: false
+        //     };
+        //   }
+        // });
+        this.$emit("after-delete-follow", {
+          userId: userId
+          // isFollowed: false
         });
 
         Toast.fire({
@@ -263,6 +266,15 @@ export default {
   //vuex `mapState` 方法
   computed: {
     ...mapState(["currentUser", "isAuthenticated"])
+  },
+  watch: {
+    initialTops(val) {
+      if (val && val.length > 0) {
+        this.users = this.initialTops;
+        this.fetchTopSix();
+        this.fetchMoreUsers();
+      }
+    }
   }
 };
 </script>
@@ -270,7 +282,6 @@ export default {
 .list-group-container {
   position: relative;
 }
-
 .list-group {
   position: fixed;
   background-color: #f5f8fa;
@@ -284,11 +295,9 @@ export default {
   max-height: 650px;
   overflow: scroll;
 }
-
 .list-group-item {
   background-color: #f5f8fa;
 }
-
 .list-title {
   font-weight: bold;
   font-size: 18px;
@@ -296,27 +305,22 @@ export default {
   height: 45px;
   color: #1c1c1c;
 }
-
 .item {
   margin: 0 10px;
   width: 100%;
 }
-
 .image-container {
   margin-right: 10px;
 }
-
 .user-avatar {
   border-radius: 50%;
 }
-
 .recommend-title {
   display: flex;
   align-items: left;
   justify-content: center;
   max-width: 68%;
 }
-
 .recommend-name {
   max-width: 150px;
   font-weight: 550;
@@ -325,14 +329,12 @@ export default {
   color: #1c1c1c;
   /* max-width: 95%; */
 }
-
 .recommend-account {
   font-weight: 550;
   font-size: 15px;
   line-height: 15px;
   color: #657786;
 }
-
 .follow {
   width: 62px;
   height: 30px;
@@ -343,7 +345,6 @@ export default {
   font-weight: 550;
   line-height: 15px;
 }
-
 .follow-self {
   width: 62px;
   height: 30px;
@@ -354,7 +355,6 @@ export default {
   font-weight: 550;
   line-height: 15px;
 }
-
 .delete-follow {
   width: 80px;
   height: 30px;
@@ -366,11 +366,9 @@ export default {
   line-height: 15px;
   color: #ffffff;
 }
-
 .recommend-bottom {
   height: 50px;
 }
-
 .show-more {
   display: flex;
   align-items: center;
@@ -380,6 +378,7 @@ export default {
   line-height: 22px;
   color: #ff6600;
 }
+
 
 .show-more:hover {
   cursor: pointer;

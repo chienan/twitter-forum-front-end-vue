@@ -16,7 +16,7 @@
 
     <div>
       <!-- FollowRecommend -->
-      <FollowRecommend />
+      <FollowRecommend :initial-tops="topTenUsers" />
     </div>
 
     <div class="repliedContent" style="display: none">
@@ -36,7 +36,10 @@ import TweetsDetail from "../components/TweetsDetail.vue";
 import RepliedContent from "../components/RepliedContent.vue";
 import NavBar from "../components/NavBar.vue";
 import FollowRecommend from "../components/FollowRecommend.vue";
+import usersAPI from "../apis/users";
 import tweetAPI from "../apis/tweet.js";
+import { Toast } from "../utils/helpers";
+
 export default {
   components: {
     TweetsDetail,
@@ -60,13 +63,16 @@ export default {
         replies: [],
         isLike: false
       },
-      tweetReplies: []
+      tweetReplies: [],
+      topTenUsers: []
     };
   },
   created() {
     const { id } = this.$route.params;
     this.fetchTweet(id);
     this.fetchReplies(id);
+    this.fetchTopTenUsers();
+
     // console.log(id);
   },
   methods: {
@@ -99,6 +105,20 @@ export default {
         this.tweetReplies = data;
       } catch (error) {
         console.log("error", error);
+      }
+    },
+    async fetchTopTenUsers() {
+      try {
+        const response = await usersAPI.getTopTenUsers();
+
+        const topTenUsers = response.data;
+        this.topTenUsers = topTenUsers;
+      } catch (error) {
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "無法取得資料，請稍後再試"
+        });
       }
     },
     afterCreateComment(payload) {

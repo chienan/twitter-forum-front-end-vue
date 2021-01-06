@@ -126,23 +126,6 @@ export default {
         });
       }
     },
-
-    // async fetchUserFollower(userId) {
-    //   try {
-    //     const response = await usersAPI.getUserFollowers({ userId });
-    //     console.log("response", response);
-
-    //     const users = response.data;
-    //     this.users = users;
-    //   } catch (error) {
-    //     console.log("error", error);
-    //     Toast.fire({
-    //       icon: "error",
-    //       title: "無法取得使用者資料"
-    //     });
-    //   }
-    // },
-
     async addFollow(id) {
       try {
         const { data } = await usersAPI.addFollow({
@@ -156,16 +139,12 @@ export default {
           title: "追蹤成功"
         });
 
-        this.users = this.users.map(user => {
-          if (user.id !== id) {
-            return user;
-          } else {
-            return {
-              ...user,
-              isFollowed: true
-            };
-          }
-        });
+
+        this.user = {
+          ...this.user,
+          isFollowed: true
+        };
+
       } catch (error) {
         console.error(error.message);
         Toast.fire({
@@ -182,18 +161,12 @@ export default {
           throw new Error(data.message);
         }
 
-        this.user.isFollowed = false;
 
-        this.users = this.users.map(user => {
-          if (user.id !== userId) {
-            return user;
-          } else {
-            return {
-              ...user,
-              isFollowed: false
-            };
-          }
-        });
+        this.user = {
+          ...this.user,
+          isFollowed: false
+        };
+
 
         Toast.fire({
           icon: "success",

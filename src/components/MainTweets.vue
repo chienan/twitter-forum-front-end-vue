@@ -146,13 +146,14 @@ export default {
   },
   data() {
     return {
+      tweets: this.initialTweets,
       myModal: false,
       description: ""
     };
   },
   props: {
-    tweets: {
-      type: Object,
+    initialTweets: {
+      type: Array,
       required: true
     }
   },
@@ -243,11 +244,27 @@ export default {
           return;
         }
         const { data } = await tweetsAPI.create({
+          // tweetId: data.tweetId,
           description: this.description
         });
         if (data.status === "error") {
           throw new Error(data.message);
         }
+
+        this.tweets.unshift({
+          // id: this.tweetId,
+          description: this.description,
+          User: {
+            id: this.currentUser.id,
+            name: this.currentUser.name,
+            account: this.currentUser.account,
+            avatar: this.currentUser.avatar
+          },
+          createdAt: new Date(),
+          replyCount: "0",
+          likeCount: "0"
+        });
+
         this.$emit("after-create-tweet", {
           tweetId: data.tweetId,
           description: this.description
@@ -264,6 +281,12 @@ export default {
       }
     }
   }
+  // watch: {
+  //   tweets() {
+  //     this.fetchTweets();
+  //   },
+  //   deep: true
+  // }
 };
 </script>
 

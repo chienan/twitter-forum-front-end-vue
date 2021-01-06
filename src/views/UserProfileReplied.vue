@@ -59,7 +59,7 @@
     </div>
 
     <div>
-      <FollowRecommend />
+      <FollowRecommend :initial-tops="topTenUsers" />
     </div>
   </div>
 </template>
@@ -95,7 +95,8 @@ export default {
       user: {},
       tweets: {},
       tweetsLength: "",
-      isLoading: true
+      isLoading: true,
+      topTenUsers: []
     };
   },
   created() {
@@ -103,12 +104,12 @@ export default {
     this.fetchUser(userId);
     this.fetchUserRepliedTweets(userId);
     this.fetchUserTweetsLength(userId);
+    this.fetchTopTenUsers();
   },
   methods: {
     async fetchUser(userId) {
       try {
         const response = await usersAPI.getUsers({ userId });
-        console.log("response", response);
 
         const user = response.data;
         this.user = user;
@@ -124,7 +125,6 @@ export default {
     async fetchUserRepliedTweets(userId) {
       try {
         const response = await usersAPI.getUsersReplied({ userId });
-        console.log("response", response);
 
         const tweets = response.data;
         this.tweets = tweets;
@@ -142,7 +142,6 @@ export default {
       try {
         const response = await usersAPI.getUsersTweets({ userId });
 
-        console.log(response.data.length);
         const tweetsLength = response.data.length;
         this.tweetsLength = tweetsLength;
       } catch (error) {
@@ -150,6 +149,20 @@ export default {
         Toast.fire({
           icon: "error",
           title: "無法取得使用者資料"
+        });
+      }
+    },
+    async fetchTopTenUsers() {
+      try {
+        const response = await usersAPI.getTopTenUsers();
+
+        const topTenUsers = response.data;
+        this.topTenUsers = topTenUsers;
+      } catch (error) {
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "無法取得資料，請稍後再試"
         });
       }
     }

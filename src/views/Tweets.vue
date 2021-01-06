@@ -7,12 +7,15 @@
     <div>
       <Spinner v-if="isLoading" />
       <!-- <template v-else> -->
-      <MainTweets v-else :tweets="tweets" @after-create-tweet="afterCreateTweet" />
+      <MainTweets v-else :initial-tweets="tweets" />
+
+      <!-- @after-create-tweet="afterCreateTweet"  -->
+
       <!-- </template> -->
     </div>
 
     <div>
-      <FollowRecommend />
+      <FollowRecommend :initial-tops="topTenUsers" />
     </div>
   </div>
 </template>
@@ -21,6 +24,7 @@
 import NavBar from "../components/NavBar";
 import MainTweets from "../components/MainTweets";
 import FollowRecommend from "../components/FollowRecommend";
+import usersAPI from "../apis/users";
 import tweetsAPI from "../apis/tweets";
 import { Toast } from "../utils/helpers";
 import { mapState } from "vuex";
@@ -35,18 +39,19 @@ export default {
   },
   data() {
     return {
-      tweets: {},
-      isLoading: true
+      tweets: [],
+      isLoading: true,
+      topTenUsers: []
     };
   },
   created() {
     this.fetchTweets();
+    this.fetchTopTenUsers();
   },
   methods: {
     async fetchTweets() {
       try {
         const response = await tweetsAPI.getTweets({ tweets });
-        console.log("response", response);
 
         const tweets = response.data;
         this.tweets = tweets;
@@ -62,39 +67,52 @@ export default {
       }
     },
 
-    afterCreateTweet(payload) {
-      const { tweetId, description } = payload;
-      this.tweets.push({
-        id: tweetId,
-        description: description,
-        User: {
-          id: this.currentUser.id,
-          name: this.currentUser.name,
-          account: this.currentUser.account,
-          avatar: this.currentUser.avatar
-        },
-        createdAt: new Date(),
-        replyCount: "0",
-        likeCount: "0"
-      });
-      console.log("aftercreate");
-    }
-    // afterAddLike(payload) {
-    //   const { tweetId } = payload;
-    //   this.tweets.push({
-    //     id: tweetId,
-    //     likeCount: +1
+    // afterCreateTweet(payload) {
+    //   const { description } = payload;
+    //   this.tweets = this.tweets.push({
+    //     description: description
     //   });
-    // }
-  },
-  watch: {
-    tweets: {
-      handler: function() {
-        console.log("watch is on"); //測試用
-      },
-      deep: true
+    // },
+
+    // afterCreateTweet(payload) {
+    //   const { description } = payload;
+    //   // console.log("payload:", payload);
+    //   this.tweets = this.tweets.push({
+    //     // id: tweetId,
+    //     description: description,
+    //     User: {
+    //       id: this.currentUser.id,
+    //       name: this.currentUser.name,
+    //       account: this.currentUser.account,
+    //       avatar: this.currentUser.avatar
+    //     },
+    //     createdAt: new Date(),
+    //     replyCount: "0",
+    //     likeCount: "0"
+    //   });
+    // },
+
+    async fetchTopTenUsers() {
+      try {
+        const response = await usersAPI.getTopTenUsers();
+
+        const topTenUsers = response.data;
+        this.topTenUsers = topTenUsers;
+      } catch (error) {
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "無法取得資料，請稍後再試"
+        });
+      }
     }
   },
+  // watch: {
+  //   tweets() {
+  //     this.fetchTweets();
+  //   },
+  //   deep: true
+  // },
   computed: {
     ...mapState(["currentUser", "isAuthenticated"])
   }

@@ -82,7 +82,7 @@
     </div>
 
     <div>
-      <FollowRecommend />
+      <FollowRecommend :initial-tops="topTenUsers" />
     </div>
   </div>
 </template>
@@ -110,7 +110,8 @@ export default {
       user: {},
       tweets: {},
       tweetsLength: "",
-      isLoading: true
+      isLoading: true,
+      topTenUsers: []
     };
   },
   filters: {
@@ -126,13 +127,12 @@ export default {
     this.fetchUser(userId);
     this.fetchUserLiked(userId);
     this.fetchUserTweetsLength(userId);
+    this.fetchTopTenUsers();
   },
   methods: {
     async fetchUser(userId) {
       try {
         const response = await usersAPI.getUsers({ userId });
-        console.log("response", response);
-
         const user = response.data;
         this.user = user;
         this.isLoading = false;
@@ -149,7 +149,6 @@ export default {
     async fetchUserLiked(userId) {
       try {
         const response = await usersAPI.getUsersLikes({ userId });
-        console.log("response", response);
 
         const tweets = response.data;
         this.tweets = tweets;
@@ -164,8 +163,6 @@ export default {
     async fetchUserTweetsLength(userId) {
       try {
         const response = await usersAPI.getUsersTweets({ userId });
-
-        console.log(response.data.length);
         const tweetsLength = response.data.length;
         this.tweetsLength = tweetsLength;
       } catch (error) {
@@ -217,7 +214,6 @@ export default {
             return tweet;
           }
         });
-        console.log(this.tweet);
         Toast.fire({
           icon: "success",
           title: "unlike tweet"
@@ -227,6 +223,20 @@ export default {
         Toast.fire({
           icon: "error",
           title: "您沒有like這條tweet"
+        });
+      }
+    },
+    async fetchTopTenUsers() {
+      try {
+        const response = await usersAPI.getTopTenUsers();
+
+        const topTenUsers = response.data;
+        this.topTenUsers = topTenUsers;
+      } catch (error) {
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "無法取得資料，請稍後再試"
         });
       }
     }

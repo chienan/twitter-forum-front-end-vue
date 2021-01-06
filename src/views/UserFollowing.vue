@@ -46,7 +46,11 @@
     </div>
 
     <div>
-      <FollowRecommend />
+      <FollowRecommend
+        :initial-tops="topTenUsers"
+        @after-add-follow="afterAddFollow"
+        @after-delete-follow="afterDeleteFollow"
+      />
     </div>
   </div>
 </template>
@@ -71,7 +75,8 @@ export default {
       user: {},
       tweetsLength: "",
       users: {},
-      isLoading: true
+      isLoading: true,
+      topTenUsers: []
     };
   },
   created() {
@@ -79,13 +84,12 @@ export default {
     this.fetchUser(userId);
     this.fetchUserTweetsLength(userId);
     this.fetchUserFollowing(userId);
+    this.fetchTopTenUsers();
   },
   methods: {
     async fetchUser(userId) {
       try {
         const response = await usersAPI.getUsers({ userId });
-        console.log("response", response);
-
         const user = response.data;
         this.user = user;
         this.isLoading = false;
@@ -115,8 +119,6 @@ export default {
     async fetchUserFollowing(userId) {
       try {
         const response = await usersAPI.getUserFollowings({ userId });
-        console.log("response", response);
-
         const users = response.data;
         this.users = users;
       } catch (error) {
@@ -164,16 +166,11 @@ export default {
         if (data.status !== "success") {
           throw new Error(data.message);
         }
-        this.users = this.users.map(user => {
-          if (user.id !== userId) {
-            return user;
-          } else {
-            return {
-              ...user,
-              isFollowed: false
-            };
-          }
+
+        this.users = this.users.filter(user => {
+          return user.id !== userId;
         });
+
         Toast.fire({
           icon: "success",
           title: "成功取消追蹤"
@@ -185,6 +182,55 @@ export default {
         });
         console.log("error", error);
       }
+    },
+    async fetchTopTenUsers() {
+      try {
+        const response = await usersAPI.getTopTenUsers();
+        console.log("response", response);
+
+        const topTenUsers = response.data;
+        this.topTenUsers = topTenUsers;
+      } catch (error) {
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "無法取得資料，請稍後再試"
+        });
+      }
+    },
+    afterAddFollow(payload) {
+      // const { userId } = payload;
+      const { userId } = payload;
+      console.log("add follow:", payload);
+
+      // this.users.push({
+      //   id: userId
+      // });
+
+      this.users = this.users.map(user => {
+        if (user.id !== userId) {
+          return user;
+        } else {
+          return {
+            ...user,
+            isFollowed: true
+          };
+        }
+      });
+    },
+    afterDeleteFollow(payload) {
+      const { userId } = payload;
+      console.log("delete follow:", payload);
+      this.users = this.users.filter(user => {
+        return user.id !== userId;
+      });
+    }
+  },
+  watch: {
+    users() {
+      const { id: userId } = this.$route.params;
+      this.fetchTopTenUsers();
+      this.fetchUserFollowing(userId);
     }
   }
 };
