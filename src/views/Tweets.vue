@@ -7,7 +7,10 @@
     <div>
       <Spinner v-if="isLoading" />
       <!-- <template v-else> -->
-      <MainTweets v-else :tweets="tweets" @after-create-tweet="afterCreateTweet" />
+      <MainTweets v-else :initial-tweets="tweets" />
+
+      <!-- @after-create-tweet="afterCreateTweet"  -->
+
       <!-- </template> -->
     </div>
 
@@ -36,7 +39,7 @@ export default {
   },
   data() {
     return {
-      tweets: {},
+      tweets: [],
       isLoading: true,
       topTenUsers: []
     };
@@ -64,22 +67,31 @@ export default {
       }
     },
 
-    afterCreateTweet(payload) {
-      const { tweetId, description } = payload;
-      this.tweets.push({
-        id: tweetId,
-        description: description,
-        User: {
-          id: this.currentUser.id,
-          name: this.currentUser.name,
-          account: this.currentUser.account,
-          avatar: this.currentUser.avatar
-        },
-        createdAt: new Date(),
-        replyCount: "0",
-        likeCount: "0"
-      });
-    },
+    // afterCreateTweet(payload) {
+    //   const { description } = payload;
+    //   this.tweets = this.tweets.push({
+    //     description: description
+    //   });
+    // },
+
+    // afterCreateTweet(payload) {
+    //   const { description } = payload;
+    //   // console.log("payload:", payload);
+    //   this.tweets = this.tweets.push({
+    //     // id: tweetId,
+    //     description: description,
+    //     User: {
+    //       id: this.currentUser.id,
+    //       name: this.currentUser.name,
+    //       account: this.currentUser.account,
+    //       avatar: this.currentUser.avatar
+    //     },
+    //     createdAt: new Date(),
+    //     replyCount: "0",
+    //     likeCount: "0"
+    //   });
+    // },
+
     async fetchTopTenUsers() {
       try {
         const response = await usersAPI.getTopTenUsers();
@@ -94,19 +106,13 @@ export default {
         });
       }
     }
-    // afterAddLike(payload) {
-    //   const { tweetId } = payload;
-    //   this.tweets.push({
-    //     id: tweetId,
-    //     likeCount: +1
-    //   });
-    // }
   },
-  watch: {
-    tweets() {
-      this.fetchTweets();
-    }
-  },
+  // watch: {
+  //   tweets() {
+  //     this.fetchTweets();
+  //   },
+  //   deep: true
+  // },
   computed: {
     ...mapState(["currentUser", "isAuthenticated"])
   }
