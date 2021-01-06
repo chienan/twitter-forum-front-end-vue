@@ -194,12 +194,6 @@ export default {
 
         const topTenUsers = response.data;
         this.topTenUsers = topTenUsers;
-        // console.log(this.currentUser.Followings);
-        // let recommendFollows = this.currentUser.Followings.filter(
-        //   user => user.id !== response.data.id
-        // );
-        // console.log(recommendFollows);
-        // console.log("topTenUsers:", topTenUsers);
       } catch (error) {
         console.log("error", error);
         Toast.fire({

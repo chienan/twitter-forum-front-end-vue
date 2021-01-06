@@ -102,7 +102,6 @@ export default {
         });
         this.$emit("after-add-follow", {
           userId: id
-          // isFollowed: true
         });
       } catch (error) {
         console.error(error.message);
