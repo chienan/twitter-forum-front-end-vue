@@ -190,7 +190,6 @@ export default {
     async fetchTopTenUsers() {
       try {
         const response = await usersAPI.getTopTenUsers();
-        console.log("response", response);
 
         const topTenUsers = response.data;
         this.topTenUsers = topTenUsers;
@@ -205,7 +204,6 @@ export default {
     afterAddFollow(payload) {
       // const { userId } = payload;
       const { userId } = payload;
-      console.log("add follow:", payload);
       this.users = this.users.map(user => {
         if (user.id !== userId) {
           return user;
@@ -216,11 +214,9 @@ export default {
           };
         }
       });
-      // console.log("after-add-follow");
     },
     afterDeleteFollow(payload) {
       const { userId } = payload;
-      console.log("delete follow:", payload);
       this.users = this.users.map(user => {
         if (user.id !== userId) {
           return user;

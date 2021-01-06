@@ -12,7 +12,7 @@
     </div>
 
     <div>
-      <FollowRecommend />
+      <FollowRecommend :initial-tops="topTenUsers" />
     </div>
   </div>
 </template>
@@ -21,6 +21,7 @@
 import NavBar from "../components/NavBar";
 import MainTweets from "../components/MainTweets";
 import FollowRecommend from "../components/FollowRecommend";
+import usersAPI from "../apis/users";
 import tweetsAPI from "../apis/tweets";
 import { Toast } from "../utils/helpers";
 import { mapState } from "vuex";
@@ -36,17 +37,18 @@ export default {
   data() {
     return {
       tweets: {},
-      isLoading: true
+      isLoading: true,
+      topTenUsers: []
     };
   },
   created() {
     this.fetchTweets();
+    this.fetchTopTenUsers();
   },
   methods: {
     async fetchTweets() {
       try {
         const response = await tweetsAPI.getTweets({ tweets });
-        console.log("response", response);
 
         const tweets = response.data;
         this.tweets = tweets;
@@ -77,7 +79,20 @@ export default {
         replyCount: "0",
         likeCount: "0"
       });
-      console.log("aftercreate");
+    },
+    async fetchTopTenUsers() {
+      try {
+        const response = await usersAPI.getTopTenUsers();
+
+        const topTenUsers = response.data;
+        this.topTenUsers = topTenUsers;
+      } catch (error) {
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "無法取得資料，請稍後再試"
+        });
+      }
     }
     // afterAddLike(payload) {
     //   const { tweetId } = payload;
@@ -88,12 +103,11 @@ export default {
     // }
   },
   watch: {
-    tweets: {
-      handler: function() {
-        console.log("watch is on"); //測試用
-      },
-      deep: true
-    }
+    // tweets: {
+    //   handler: function() {
+    //   },
+    //   deep: true
+    // }
   },
   computed: {
     ...mapState(["currentUser", "isAuthenticated"])
