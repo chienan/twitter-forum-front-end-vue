@@ -100,8 +100,7 @@ export default {
       tweets: {},
       tweetsLength: "",
       isLoading: true,
-      isFollowed: true,
-
+      isFollowed: "",
       topTenUsers: []
     };
   },
@@ -173,10 +172,10 @@ export default {
       }
     },
     afterAddFollow() {
-      this.isFollowed = true;
+      this.isFollowed = "true";
     },
     afterDeleteFollow() {
-      this.isFollowed = false;
+      this.isFollowed = "false";
     }
   },
   watch: {
