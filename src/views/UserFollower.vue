@@ -238,6 +238,11 @@ export default {
         }
       });
     }
+  },
+  watch: {
+    users() {
+      this.fetchTopTenUsers();
+    }
   }
 };
 </script>

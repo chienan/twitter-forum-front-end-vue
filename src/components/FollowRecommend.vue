@@ -77,26 +77,6 @@ export default {
     // this.fetchTopTenUsers();
   },
   methods: {
-    // async fetchTopTenUsers() {
-    //   try {
-    //     const response = await usersAPI.getTopTenUsers({ users });
-    //     console.log("response", response);
-
-    //     const users = response.data;
-    //     this.users = users;
-    //     // console.log(this.currentUser.Followings);
-    //     let recommendFollows = this.currentUser.Followings.filter(
-    //       user => user.id !== response.data.id
-    //     );
-    //     console.log(recommendFollows);
-    //   } catch (error) {
-    //     console.log("error", error);
-    //     Toast.fire({
-    //       icon: "error",
-    //       title: "無法取得資料，請稍後再試"
-    //     });
-    //   }
-    // },
     async addFollow(id) {
       try {
         const { data } = await usersAPI.addFollow({
