@@ -114,10 +114,12 @@ export default {
   },
   data() {
     return {
+
       users: this.initialTops,
       showMore: false,
       topSix: [],
       moreUsers: []
+
     };
 
     // user: {
@@ -164,16 +166,7 @@ export default {
           title: "追蹤成功"
         });
 
-        // this.users = this.users.map(user => {
-        //   if (user.id !== id) {
-        //     return user;
-        //   } else {
-        //     return {
-        //       ...user,
-        //       isFollowed: true
-        //     };
-        //   }
-        // });
+
 
         this.topSix = this.topSix.map(user => {
           if (user.id !== id) {
@@ -213,6 +206,7 @@ export default {
         if (data.status !== "success") {
           throw new Error(data.message);
         }
+
         this.topSix = this.topSix.map(user => {
           if (user.id !== userId) {
             return user;
@@ -224,6 +218,7 @@ export default {
           }
         });
         this.moreUsers = this.moreUsers.map(user => {
+
           if (user.id !== userId) {
             return user;
           } else {
@@ -233,6 +228,7 @@ export default {
             };
           }
         });
+
         // this.users = this.users.map(user => {
         //   if (user.id !== userId) {
         //     return user;
@@ -247,6 +243,7 @@ export default {
           userId: userId
           // isFollowed: false
         });
+
         Toast.fire({
           icon: "success",
           title: "成功取消追蹤"
@@ -381,12 +378,16 @@ export default {
   line-height: 22px;
   color: #ff6600;
 }
+
+
 .show-more:hover {
   cursor: pointer;
 }
+
 .user-id-input {
   display: none;
 }
+
 .more-users-wrapper {
   /* top: 100%;
   width: 100%; */

@@ -95,7 +95,6 @@ export default {
     async getFollowingsNumber(userId) {
       try {
         const response = await usersAPI.getUserFollowings({ userId });
-        console.log("response", response);
         const followingLength = response.data.length;
         if (followingLength) {
           this.followingLength = followingLength;
@@ -113,7 +112,6 @@ export default {
     async getFollowersNumber(userId) {
       try {
         const response = await usersAPI.getUserFollowers({ userId });
-        console.log("response", response);
         const followerLength = response.data.length;
         if (followerLength) {
           this.followerLength = followerLength;
@@ -141,10 +139,12 @@ export default {
           title: "追蹤成功"
         });
 
+
         this.user = {
           ...this.user,
           isFollowed: true
         };
+
       } catch (error) {
         console.error(error.message);
         Toast.fire({
@@ -161,10 +161,12 @@ export default {
           throw new Error(data.message);
         }
 
+
         this.user = {
           ...this.user,
           isFollowed: false
         };
+
 
         Toast.fire({
           icon: "success",

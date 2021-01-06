@@ -38,13 +38,8 @@
             />-->
 
             <label for="cover" class="upload-container">
-              <input
-                name="image"
-                type="file"
-                accept="image/*"
-                class="upload-input-cover"
-                @click="handleCoverChange"
-              />
+              <input name="image" type="file" accept="image/*" class="upload-input-cover" />
+              <!-- @click="handleCoverChange" -->
               <span class="upload-icon-cover">+</span>
               <!-- <img
               src="https://i.postimg.cc/8cst7cYh/icon-upload-Photo.png"
@@ -68,6 +63,7 @@
             <p class="circle"></p>
             <img
               name="avatar"
+              v-if="avatar"
               :src="avatar"
               class="card-img-top thumbnail"
               id="user-avatar"
@@ -189,14 +185,14 @@ export default {
       this.introduction = introduction;
       this.isLoading = false;
     },
-    handleCoverChange(e) {
-      const files = e.target.files;
-      console.log("files", files);
-      if (!files.length) return;
-      const coverURL = window.URL.createObjectURL(files[1]);
-      this.cover = coverURL;
-      console.log(coverURL);
-    },
+    // handleCoverChange(e) {
+    //   const files = e.target.files;
+    //   console.log("files", files);
+    //   if (!files.length) return;
+    //   const coverURL = window.URL.createObjectURL(files[1]);
+    //   this.cover = coverURL;
+    //   console.log(coverURL);
+    // },
     handleAvatarChange(e) {
       const files = e.target.files;
       console.log("files", files);
@@ -208,7 +204,6 @@ export default {
 
     async handleSubmit(e) {
       try {
-        console.log("submit");
         if (!this.name) {
           Toast.fire({
             icon: "warning",
@@ -229,13 +224,11 @@ export default {
           throw new Error(data.message);
         }
 
-        console.log(formData);
+        console.log("formData:", formData);
 
         // console.log(data);
 
         this.$router.push({ name: "user", params: { id: this.id } });
-
-        console.log("back to profile");
       } catch (error) {
         console.error(error.message);
 
