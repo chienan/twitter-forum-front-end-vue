@@ -1,13 +1,18 @@
 <template>
-  <div class="d-flex justify-content-center">
-    <ul class="list-group rounded-0" style="width: 600px" id="tweets-detail">
+  <div class="container">
+    <ul class="list-group rounded-0" id="tweets-detail">
       <li class="list-group-item" style="height: 55px; border-top: none">
         <div class="d-flex flex-row">
           <div>
-            <img class="mt-1" src="https://i.postimg.cc/4N8M37VK/Vector-1.png" alt />
+            <img
+              class="icon-back"
+              src="https://i.imgur.com/cyFMsT7.png"
+              @click="$router.go(-1)"
+              alt
+            />
           </div>
           <div>
-            <p class="bold ml-5 mt-1" style="font-size: 18px">推文</p>
+            <p class="bold mt-1" style="font-size: 18px">推文</p>
           </div>
         </div>
       </li>
@@ -20,11 +25,11 @@
           </div>
           <div class="ml-2">
             <p class="bold">{{ Tweet.name }}</p>
-            <p class="color-gray apple">@{{ initialTweet.account }}</p>
+            <p class="color-gray apple user-account">@{{ initialTweet.account }}</p>
           </div>
         </div>
 
-        <div class="text bold">{{ Tweet.description }}</div>
+        <div class="description-section">{{ Tweet.description }}</div>
         <p class="color-gray time">{{ Tweet.createdAt | fromNow }}</p>
         <hr />
       </li>
@@ -32,12 +37,12 @@
       <li class="list-group-item count-relative" style="height: 50px; border-bottom: none">
         <div class="d-flex flex-row count">
           <div class="mr-3">
-            <span class="bold">{{ Tweet.replies }}</span>
-            <span class="color-gray bold">回覆</span>
+            <span class="tweet-replies">{{ Tweet.replies }}</span>
+            <span class="replies color-gray">回覆</span>
           </div>
           <div>
-            <span class="bold">{{ Tweet.likes }}</span>
-            <span class="color-gray bold">喜歡次數</span>
+            <span class="tweet-likes">{{ Tweet.likes }}</span>
+            <span class="likes color-gray">喜歡次數</span>
           </div>
         </div>
       </li>
@@ -51,7 +56,7 @@
             </b-button>
             <label for="replied">
               <div>
-                <img src="https://i.postimg.cc/ZqS9w3RK/Vector-3.png" alt class="replied-icon" />
+                <img src="https://i.imgur.com/ncDfH3P.png" alt class="replied-icon" />
               </div>
             </label>
             <div>
@@ -134,7 +139,7 @@
             <!-- Modal -->
 
             <div class="heart-icon-relative">
-              <img src="https://i.postimg.cc/26P3BBPD/Vector.png" alt class="heart-icon" />
+              <img src="https://i.imgur.com/PNWIJak.png" alt class="heart-icon" />
             </div>
           </div>
         </div>
@@ -146,7 +151,7 @@
         :key="tweetReplie.id"
       >
         <div>
-          <img :src="tweetReplie.User.avatar" alt class="mt-1 avatar" />
+          <img :src="tweetReplie.User.avatar" alt class="avatar" />
         </div>
         <div class="ml-2" style="line-height: 27px">
           <span class="bold mr-2">{{ tweetReplie.User.name }}</span>
@@ -156,11 +161,11 @@
             }}
           </span>
           <div>
-            <span class="color-gray bold">回覆</span>
+            <span class="color-gray mr-1">回覆</span>
             <span style="color: #ff6600">@{{ initialTweet.account }}</span>
           </div>
 
-          <p>{{ tweetReplie.comment }}</p>
+          <p class="reply-comment">{{ tweetReplie.comment }}</p>
         </div>
       </li>
     </ul>
@@ -172,6 +177,7 @@ import { fromNowFilter } from "../utils/mixins.js";
 import { mapState } from "vuex";
 import tweetAPI from "../apis/tweet.js";
 import { Toast } from "../utils/helpers.js";
+
 export default {
   mixins: [fromNowFilter],
   props: {
@@ -189,7 +195,8 @@ export default {
       Tweet: this.initialTweet,
       // islike: this.initialTweet.isLike,
       // isModel: false,
-      text: ""
+      text: "",
+      isLoading: true
     };
   },
   computed: {
@@ -239,6 +246,26 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  position: relative;
+}
+
+.list-group {
+  position: absolute;
+  top: -15px;
+  left: 235px;
+  width: 600px;
+  /* border: 1px solid black; */
+}
+
+.icon-back {
+  width: 17px;
+  height: 14px;
+  margin-top: 10px;
+  margin-right: 36px;
+  cursor: pointer;
+}
+
 .list-group-item {
   border-color: #e6ecf0;
 }
@@ -254,7 +281,14 @@ export default {
 .apple {
   margin-top: -17px;
 }
+
+.user-account {
+  font-size: 15px;
+  line-height: 22px;
+}
+
 .avatar {
+  margin: 5px 2px 0px -7px;
   height: 50px;
   width: 50px;
   border-radius: 50%;
@@ -263,9 +297,12 @@ export default {
   position: relative;
 }
 .heart-icon {
+  width: 25.12px;
+  height: 23.64px;
   position: absolute;
-  left: 150px;
-  top: -33px;
+  left: 140px;
+  top: -20px;
+  /* top: -36px; */
 }
 .Photo {
   margin-left: -6px;
@@ -273,12 +310,20 @@ export default {
   height: 50px;
   border-radius: 50%;
 }
-.text {
-  margin-left: -3px;
-  margin-top: -8px;
-  margin-bottom: 10px;
+
+.description-section {
+  display: flex;
+  align-items: center;
+  width: 500px;
+  min-height: 100px;
+  /* border: 1px solid gray; */
+  font-weight: 450px;
+  font-size: 20px;
+  line-height: 34px;
 }
+
 .time {
+  margin-top: 15px;
   margin-left: -3px;
   font-size: 15px;
 }
@@ -321,8 +366,25 @@ hr {
   font-size: 19px;
 }
 .replied-icon {
-  margin-right: 130px;
+  height: 24.69px;
+  width: 24.69px;
+  position: absolute;
+  left: 20px;
+  bottom: 18px;
+  cursor: pointer;
 }
+
+.replies,
+.likes {
+  margin-left: 3px;
+}
+
+.reply-comment {
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+}
+
 .list {
   padding-bottom: 0px;
 }
