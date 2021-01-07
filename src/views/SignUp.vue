@@ -2,7 +2,7 @@
   <div class="d-flex justify-content-center signin">
     <div class="logo">
       <div class="d-flex justify-content-center">
-        <img src="https://i.postimg.cc/LsddLPp9/Logo.png" alt />
+        <img class="alpha-logo" src="https://i.imgur.com/JqDOAUX.png" alt />
       </div>
       <div class="bold signup">建立你的帳號</div>
     </div>
@@ -10,6 +10,7 @@
       <form @submit.stop.prevent="handleSignUp">
         <div class="mb-3 label-parents">
           <input
+            ref="account"
             type="text"
             class="form-control input1 input-space"
             id="account"
@@ -105,6 +106,11 @@ export default {
       passwordCheck: ""
     };
   },
+  created() {
+    setTimeout(() => {
+      this.$refs.account.focus();
+    });
+  },
   methods: {
     async handleSignUp() {
       try {
@@ -170,8 +176,13 @@ export default {
   margin-top: 100px;
   position: relative;
 }
+.alpha-logo {
+  width: 40px;
+  height: 40px;
+}
+
 .logo {
-  margin-top: -60px;
+  margin-top: -53px;
   position: absolute;
 }
 .form1 {
@@ -213,14 +224,12 @@ button:focus {
   margin-top: -20px;
 }
 input {
-  /* position: relative; */
   background-color: #f5f8fa;
-  border-top: none;
-  border-right: none;
-  border-left: none;
-  border-color: #657786;
-  border-width: 2px;
-  border-radius: 0;
+  border: none;
+  border-bottom: 2px solid #657786;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
 }
 input.form-control:focus {
   border-color: #ccc;
