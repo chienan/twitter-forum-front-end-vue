@@ -7,7 +7,10 @@
 
     <div>
       <!-- TweetsDetail -->
+      <Spinner v-if="isLoading" />
+
       <TweetsDetail
+        v-else
         :initialTweet="Tweet"
         :tweetReplies="tweetReplies"
         @after-create-comment="afterCreateComment"
@@ -39,13 +42,15 @@ import FollowRecommend from "../components/FollowRecommend.vue";
 import usersAPI from "../apis/users";
 import tweetAPI from "../apis/tweet.js";
 import { Toast } from "../utils/helpers";
+import Spinner from "../components/Spinner";
 
 export default {
   components: {
     TweetsDetail,
     RepliedContent,
     NavBar,
-    FollowRecommend
+    FollowRecommend,
+    Spinner
   },
   computed: {
     ...mapState(["currentUser"])
@@ -64,7 +69,8 @@ export default {
         isLike: false
       },
       tweetReplies: [],
-      topTenUsers: []
+      topTenUsers: [],
+      isLoading: true
     };
   },
   created() {
@@ -93,6 +99,7 @@ export default {
           replies: data.Replies.length,
           isLike: false
         };
+        this.isLoading = false;
       } catch (error) {
         console.log("error", error);
       }
