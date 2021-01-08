@@ -1,12 +1,12 @@
 <template>
   <Spinner v-if="isLoading" />
-  <div v-else>
+  <div class="container" v-else>
     <form class="d-flex justify-content-center" @submit.stop.prevent="handleSubmit">
       <div class="card" style="width: 600px; height: 654px">
         <div class="d-flex flex-row title">
           <router-link :to="{ name: 'user', params:{id: id}}">
             <div>
-              <img src="https://i.postimg.cc/3JLWjBwj/icon-close.png" alt class="cross" />
+              <img src="https://i.imgur.com/pzaWlxn.png" alt class="cross" />
             </div>
           </router-link>
           <div>
@@ -20,34 +20,24 @@
         <div>
           <!--  user cover  -->
           <div class="photo-relative">
-            <!-- https://i.postimg.cc/zGr93SJ5/Cover-Photo.png -->
-            <!-- <img
-              src="https://i.postimg.cc/3RFy5ZJR/Cover-Photo.png"
+            <img
+              v-if="cover"
+              :src="cover"
               class="card-img-top cover-photo"
               alt
               style="height: 200px"
-            />-->
-            <img :src="cover" class="card-img-top cover-photo" alt style="height: 200px" />
-
-            <!-- <img
-              src="https://i.postimg.cc/8cst7cYh/icon-upload-Photo.png"
-              class="card-img-top icon-upload-photo2"
-              alt
-              style="height: 24px; width: 24px"
-              @change="handleFileChange"
-            />-->
+            />
 
             <label for="cover" class="upload-container">
-              <input name="image" type="file" accept="image/*" class="upload-input-cover" />
-              <!-- @click="handleCoverChange" -->
+              <input
+                name="image"
+                type="file"
+                accept="image/*"
+                class="upload-input-cover"
+                id="cover"
+                @change="handleCoverChange"
+              />
               <span class="upload-icon-cover">+</span>
-              <!-- <img
-              src="https://i.postimg.cc/8cst7cYh/icon-upload-Photo.png"
-              class="card-img-top icon-upload-photo1"
-              id="upload-avatar"
-              alt
-              style="height: 24px; width: 24px"
-              />-->
             </label>
 
             <img
@@ -61,64 +51,59 @@
           <!-- user avatar -->
           <div class="circle-relative">
             <p class="circle"></p>
-            <img
-              name="avatar"
-              v-if="avatar"
-              :src="avatar"
-              class="card-img-top thumbnail"
-              id="user-avatar"
-              alt
-              style="height: 120px; width: 120px"
-            />
+            <img v-if="avatar" :src="avatar" class="card-img-top user-avatar" alt />
+            <label for="avatar" class="upload-container">
+              <input
+                type="file"
+                accept="image/*"
+                name="avatar"
+                id="avatar"
+                class="upload-input"
+                @change="handleAvatarChange"
+              />
+              <span class="upload_icon">+</span>
+            </label>
           </div>
-          <label class="upload-container">
-            <input type="file" accept="image/*" class="upload-input" @click="handleAvatarChange" />
-            <span class="upload_icon">+</span>
-            <!-- <img
-              src="https://i.postimg.cc/8cst7cYh/icon-upload-Photo.png"
-              class="card-img-top icon-upload-photo1"
-              id="upload-avatar"
-              alt
-              style="height: 24px; width: 24px"
-            />-->
-          </label>
         </div>
         <div class="card-body">
           <div class="mb-3 label-parents">
-            <label for="exampleInputEmail1" class="form-label">名稱</label>
+            <label for="name" class="form-label">名稱</label>
             <input
               name="name"
               type="text"
               v-model="name"
-              class="form-control input1 input-space rounded-0"
-              id="exampleInputEmail1"
-              aria-describedby="emailHelp"
+              class="form-control input1 input-space"
+              id="name"
               placeholder="名稱"
+              maxlength="50"
               style="width: 570px; height: 54px"
             />
 
-            <div id="emailHelp" class="form-text"></div>
+            <!-- aria-describedby="emailHelp" -->
+
+            <div id="name-count" class="form-text"></div>
           </div>
           <div class="number">
-            <span>8</span>/
+            <span>{{name.length}}</span>/
             <span>50</span>
           </div>
           <div class="mb-3 label-parents">
-            <label for="exampleInputEmail1" class="form-label">自我介紹</label>
+            <label for="textarea" class="form-label">自我介紹</label>
             <input
               name="introduction"
               type="text"
               v-model="introduction"
-              class="form-control input1 input-space rounded-0"
-              id="exampleInputEmail1"
-              aria-describedby="emailHelp"
+              class="form-control input1 input-space"
+              id="introduction"
               placeholder="自我介紹"
+              maxlength="160"
               style="width: 570px; height: 150px"
             />
+            <!-- aria-describedby="emailHelp" -->
 
-            <div id="emailHelp" class="form-text"></div>
+            <div id="introduction-count" class="form-text"></div>
             <div class="number1">
-              <span>0</span>/
+              <span>{{introduction.length}}</span>/
               <span>160</span>
             </div>
           </div>
@@ -143,6 +128,8 @@ export default {
       avatar: "",
       introduction: "",
       isLoading: true
+      // newCover: "",
+      // newAvatar: ""
     };
   },
   components: {
@@ -185,21 +172,38 @@ export default {
       this.introduction = introduction;
       this.isLoading = false;
     },
-    // handleCoverChange(e) {
-    //   const files = e.target.files;
-    //   console.log("files", files);
-    //   if (!files.length) return;
-    //   const coverURL = window.URL.createObjectURL(files[1]);
-    //   this.cover = coverURL;
-    //   console.log(coverURL);
-    // },
-    handleAvatarChange(e) {
-      const files = e.target.files;
-      console.log("files", files);
-      if (!files.length) return;
-      const avatarURL = window.URL.createObjectURL(files[0]);
-      this.avatar = avatarURL;
-      console.log(avatarURL);
+    async handleCoverChange(e) {
+      try {
+        const files = e.target.files;
+        console.log("files", files);
+        // if (!files.length) return;
+        const coverURL = window.URL.createObjectURL(files[0]);
+        this.cover = coverURL;
+        console.log("this.cover:", this.cover);
+      } catch (error) {
+        console.error(error.message);
+
+        Toast.fire({
+          icon: "error",
+          title: "無法更新圖片，請稍後再試"
+        });
+      }
+    },
+    async handleAvatarChange(e) {
+      try {
+        const files = e.target.files;
+        console.log("files", files);
+        const avatarURL = window.URL.createObjectURL(files[0]);
+        this.avatar = avatarURL;
+        console.log("this.avatar:", this.avatar);
+      } catch (error) {
+        console.error(error.message);
+
+        Toast.fire({
+          icon: "error",
+          title: "無法更新圖片，請稍後再試"
+        });
+      }
     },
 
     async handleSubmit(e) {
@@ -226,8 +230,10 @@ export default {
 
         console.log("formData:", formData);
 
-        // console.log(data);
-
+        Toast.fire({
+          icon: "success",
+          title: "更新成功"
+        });
         this.$router.push({ name: "user", params: { id: this.id } });
       } catch (error) {
         console.error(error.message);
@@ -250,8 +256,10 @@ export default {
   margin-bottom: 72px;
 }
 .cross {
-  margin-top: 14px;
-  margin-left: 11px;
+  width: 15px;
+  height: 15px;
+  margin-top: 19px;
+  margin-left: 17px;
 }
 .info {
   margin-top: 11px;
@@ -305,10 +313,14 @@ button:focus {
   top: -60px;
   left: 13px;
 }
-.thumbnail {
+.user-avatar {
+  height: 120px;
+  width: 120px;
   position: absolute;
   top: -60px;
   left: 13px;
+  border-radius: 50%;
+  border: 4px solid #ffffff;
 }
 .icon-upload-photo1 {
   position: absolute;
@@ -338,14 +350,20 @@ button:focus {
   border: 2px solid #ffffff;
 }
 
-input {
+input,
+textarea {
   /* position: relative; */
   background-color: #f5f8fa;
-  border-top: none;
+  /* border-top: none;
   border-right: none;
   border-left: none;
   border-color: #657786;
-  border-width: 2px;
+  border-width: 2px; */
+  border: none;
+  border-bottom: 2px solid #657786;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
   font-size: 19px;
   font-weight: 700;
   padding-top: 27px;
@@ -408,12 +426,17 @@ label {
 }
 
 .upload-icon-cover {
+  /* z-index: 2; */
   color: #ffffff;
   font-weight: bold;
-  font-size: 180%;
+  /* font-size: 180%; */
+  font-size: 35px;
   position: absolute;
-  right: 340px;
-  bottom: -22px;
+  left: 200px;
+  bottom: 89px;
+  /* right: 10px; */
+  /* right: 340px;
+  bottom: -22px; */
 }
 
 .upload-icon-cover:hover {
