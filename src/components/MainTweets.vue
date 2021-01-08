@@ -215,7 +215,6 @@ export default {
         //     };
         //   }
         // });
-        console.log(this.tweet);
         Toast.fire({
           icon: "success",
           title: "unlike tweet"
@@ -270,13 +269,18 @@ export default {
           description: this.description
         });
 
+        Toast.fire({
+          icon: "success",
+          title: "推文成功"
+        });
+
         this.myModal = false;
         this.description = "";
       } catch (error) {
         console.error(error.message);
         Toast.fire({
           icon: "error",
-          title: "無法新增tweet，請稍後再試"
+          title: "目前無法推文，請稍後再試"
         });
       }
     }
