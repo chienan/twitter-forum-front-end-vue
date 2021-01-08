@@ -56,26 +56,32 @@
             </b-button>
             <label for="replied">
               <div>
-                <img src="https://i.imgur.com/ncDfH3P.png" alt class="replied-icon" />
+                <img
+                  src="https://i.imgur.com/ncDfH3P.png"
+                  alt
+                  class="replied-icon"
+                  @click="openModal"
+                />
               </div>
             </label>
+            <!--  Modal start  -->
             <div>
-              <b-modal id="modal-1" title="回覆表單" hide-footer>
+              <b-modal id="modal-1" class="reply-modal" title hide-footer>
                 <!-- <div class="card-header">
                   <img src="https://i.postimg.cc/pdc5H7Qh/Vector.png" alt="X" />
                 </div>-->
-                <div class="my-4">
+                <div class="card-content-container">
                   <div class="card-body d-flex flex-row">
                     <div>
-                      <div class="d-flex flex-row">
+                      <div class="tweet-content d-flex flex-row">
                         <div class="Photo1">
-                          <img :src="initialTweet.avatar" alt class="style2" />
+                          <img :src="initialTweet.avatar" alt class="style2 tweet-user-avatar" />
                         </div>
 
                         <div class="replied-relative">
                           <div class="d-flex flex-row">
-                            <h5 class="card-title mr-2 bold">{{ initialTweet.name }}</h5>
-                            <p style="color: #657786">
+                            <h5 class="tweet-user-name card-title mr-2">{{ initialTweet.name }}</h5>
+                            <p class="tweet-user-info" style="color: #657786">
                               @{{ initialTweet.account }}・{{
                               initialTweet.createdAt | fromNow
                               }}
@@ -83,47 +89,44 @@
                           </div>
                           <p class="card-text">{{ initialTweet.description }}</p>
                           <small class="replied">
-                            <span style="color: #657786; font-weight: bold">回覆給</span>
-                            <span style="color: #ff6600">@{{ initialTweet.account }}</span>
+                            <span class="reply-start mr-1" style="color: #657786;">回覆給</span>
+                            <span
+                              class="reply-account"
+                              style="color: #ff6600"
+                            >@{{ initialTweet.account }}</span>
                           </small>
                         </div>
                       </div>
                       <div class="divider">
-                        <img src="https://i.postimg.cc/L6HStVZh/divider.png" alt />
+                        <!-- <img src="https://i.postimg.cc/L6HStVZh/divider.png" alt /> -->
                       </div>
                     </div>
                     <!-- </div> -->
                   </div>
                   <!-- card-body -->
 
-                  <div>
-                    <div class="d-flex flex-row" id="thumbnail">
+                  <div class="user-reply-container">
+                    <div id="thumbnail">
                       <div class="currentUser">
-                        <img :src="currentUser.avatar" alt class="style2" />
-                      </div>
-                      <div class="push-relative">
-                        <span class="push">推你的回覆</span>
+                        <img :src="currentUser.avatar" alt class="style2 current-user-avatar" />
                       </div>
                     </div>
                     <div>
                       <form @submit.stop.prevent="tweet(initialTweet.id)">
-                        <input
+                        <textarea
                           type="text"
                           v-model="text"
-                          style="
-                            width: 380px;
-                            height: 140px;
-                            border: none;
-                            outline: none;
-                          "
+                          ref="replyArea"
+                          placeholder="推你的回覆"
+                          class="reply-textarea"
+                          required="required"
                         />
 
                         <div>
                           <div class="button-relative">
                             <b-button
-                              class="mt-3 button1"
-                              @click="$bvModal.hide('bv-modal-example')"
-                              style="width: 80px; height: 40px"
+                              class="button1"
+                              @click="$bvModal.hide('modal-1')"
                               type="submit"
                             >回覆</b-button>
                           </div>
@@ -136,7 +139,7 @@
               </b-modal>
             </div>
 
-            <!-- Modal -->
+            <!-- Modal end -->
 
             <div class="heart-icon-relative">
               <img src="https://i.imgur.com/PNWIJak.png" alt class="heart-icon" />
@@ -145,7 +148,9 @@
         </div>
       </li>
 
+      <div v-if="tweetReplies.length === 0" class="no-replies-container">尚無回覆</div>
       <li
+        v-else
         class="list-group-item d-flex flex-row list"
         v-for="tweetReplie in tweetReplies"
         :key="tweetReplie.id"
@@ -196,7 +201,8 @@ export default {
       // islike: this.initialTweet.isLike,
       // isModel: false,
       text: "",
-      isLoading: true
+      isLoading: true,
+      modal: false
     };
   },
   computed: {
@@ -218,6 +224,7 @@ export default {
           comment: this.text,
           TweetId: tweetId
         };
+
         console.log(tweetId);
         const response = await tweetAPI.tweet.post({ tweetId, data1 });
         console.log(response);
@@ -240,6 +247,12 @@ export default {
           title: "目前無法編輯帳戶，請稍後再試"
         });
       }
+    },
+    openModal() {
+      (this.modal = true),
+        setTimeout(() => {
+          this.$refs.replyArea.focus();
+        });
     }
   }
 };
@@ -256,6 +269,17 @@ export default {
   left: 235px;
   width: 600px;
   /* border: 1px solid black; */
+}
+
+.no-replies-container {
+  height: 310px;
+  border: 1px solid #e6ecf0;
+  border-top: none;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #e6ecf0;
 }
 
 .icon-back {
@@ -332,15 +356,18 @@ export default {
 /* border: 1px solid black; */
 /* max-height: 1000px;
 } */
+
+.card-text {
+  min-height: 50px;
+}
+
 hr {
   margin-left: -3px;
   background-color: #e6ecf0;
   height: 1px;
   border: none;
 }
-/* .push-relative {
-  position: relative;
-} */
+
 .push {
   /* position: absolute; */
   /* top: 14px;
@@ -385,6 +412,25 @@ hr {
   align-items: center;
 }
 
+.card-body {
+  margin-top: 2px;
+}
+
+.tweet-user-avatar {
+  margin-top: 0px;
+}
+
+.tweet-user-name {
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 22px;
+}
+
+.tweet-user-info {
+  font-size: 15px;
+  line-height: 22px;
+}
+
 .list {
   padding-bottom: 0px;
 }
@@ -393,14 +439,28 @@ hr {
   margin-left: 0px;
   /* position: relative; */
 }
+
 .Photo1 {
   margin-left: -20px;
   margin-top: 3px;
 }
 .divider {
-  margin-top: -45px;
-  margin-left: 0px;
+  /* display: flex;
+  align-items: center;
+  justify-content: center; */
+  width: 2px;
+  height: 80px;
+  /* margin-bottom: -5px; */
+  background: #ccd6dd;
+
+  margin-top: -70px;
+  margin-left: 3px;
 }
+
+.user-reply-container {
+  display: flex;
+}
+
 .style2 {
   width: 50px;
   height: 50px;
@@ -408,8 +468,18 @@ hr {
 }
 .replied-relative {
   /* position: relative; */
-  margin-left: 20px;
+  margin-left: 15px;
 }
+
+.reply-textarea {
+  border: none;
+  height: 130px;
+  width: 400px;
+  margin-left: 15px;
+  margin-top: -7px;
+  margin-bottom: 40px;
+}
+
 .button2 {
   border: none;
   /* border-outline: none; */
@@ -437,12 +507,14 @@ input {
 }
 .button1 {
   border-radius: 35px;
-  /* margin-bottom: -100px;
-  margin-right: 10px; */
   position: absolute;
-  right: 10px;
-  bottom: -15px;
+  right: -4px;
+  bottom: -5px;
   background-color: #ff6600;
+  border: none;
+  width: 64px;
+  height: 40px;
+  border-radius: 100px;
 }
 .button1:hover {
   background-color: #ff6600;

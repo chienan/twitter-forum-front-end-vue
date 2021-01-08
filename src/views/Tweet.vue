@@ -78,15 +78,12 @@ export default {
     this.fetchTweet(id);
     this.fetchReplies(id);
     this.fetchTopTenUsers();
-
-    // console.log(id);
   },
   methods: {
     async fetchTweet(tweetId) {
       // console.log(tweetId);
       try {
         const response = await tweetAPI.tweet.get({ tweetId });
-        console.log(response);
         const { data } = response;
         this.Tweet = {
           id: data.id,
@@ -107,7 +104,6 @@ export default {
     async fetchReplies(tweetId) {
       try {
         const { ...responst } = await tweetAPI.tweet.getReplies({ tweetId });
-        console.log(responst);
         const { data } = responst;
         this.tweetReplies = data;
       } catch (error) {
@@ -129,7 +125,7 @@ export default {
       }
     },
     afterCreateComment(payload) {
-      console.log(payload);
+      // console.log(payload);
       // console.log(tweetId);
       const { text, account, createdAt } = payload;
       console.log(text, account, createdAt);
