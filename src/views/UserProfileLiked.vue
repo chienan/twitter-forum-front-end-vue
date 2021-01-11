@@ -26,7 +26,8 @@
         <!-- tweet-list -->
         <div class="tweet-list">
           <!--tweet item start-->
-          <div v-for="tweet in tweets" :key="tweet.id" class="tweet-item">
+          <div v-if="tweets.length === 0" class="none-content">尚無內容</div>
+          <div v-else v-for="tweet in tweets" :key="tweet.id" class="tweet-item">
             <div class="item-left">
               <router-link :to="{ name: 'user', params:{id: tweet.User.id}}">
                 <img :src="tweet.User.avatar" class="circle" alt />
@@ -449,5 +450,17 @@ p {
 #icon-like,
 #icon-unlike:hover {
   cursor: pointer;
+}
+
+.none-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e6ecf0;
+  border-top: none;
+  height: 225px;
+  width: 600px;
+  color: #e6ecf0;
+  font-size: 25px;
 }
 </style>

@@ -2,9 +2,9 @@
   <div class="container">
     <div class="row main-content">
       <div class="icon-container">
-        <router-link :to="{ name: 'user', params: { id: user.id } }" class="user-name">
-          <img src="https://i.imgur.com/cyFMsT7.png" class="icon-back" alt />
-        </router-link>
+        <!-- <router-link :to="{ name: 'user', params: { id: user.id } }" class="user-name"> -->
+        <img src="https://i.imgur.com/cyFMsT7.png" class="icon-back" @click="$router.go(-1)" alt />
+        <!-- </router-link> -->
       </div>
 
       <div class="title">
@@ -69,5 +69,9 @@ export default {
   line-height: 19px;
   letter-spacing: 0.5px;
   color: #657786;
+}
+
+.icon-back:hover {
+  cursor: pointer;
 }
 </style>

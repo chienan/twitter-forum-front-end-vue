@@ -23,7 +23,8 @@
         <!-- tweet-list -->
         <div class="tweet-list">
           <!--tweet item start-->
-          <div class="tweet-item" v-for="tweet in tweets" :key="tweet.if">
+          <div v-if="tweets.length === 0" class="none-content">尚無內容</div>
+          <div v-else class="tweet-item" v-for="tweet in tweets" :key="tweet.id">
             <div class="item-left">
               <img :src="user.avatar" class="circle" alt />
               <!-- <div class="circle"></div> -->
@@ -316,6 +317,18 @@ p {
 .item-interaction {
   position: relative;
   height: 10px;
+}
+
+.none-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e6ecf0;
+  border-top: none;
+  height: 225px;
+  width: 600px;
+  color: #e6ecf0;
+  font-size: 25px;
 }
 
 /* .item-interaction,
