@@ -18,7 +18,8 @@
       </div>
       <!-- User Follow List -->
       <div class="user-follow-list">
-        <div class="follow-item" v-for="user in users" :key="user.id">
+        <div v-if="!users.length" class="none-follow">尚無內容</div>
+        <div v-else class="follow-item" v-for="user in users" :key="user.id">
           <button
             v-if="user.isFollowed"
             class="delete-follow"
@@ -367,5 +368,16 @@ export default {
   text-align: left;
   text-justify: inter-ideograph;
   margin-bottom: 10px;
+}
+
+.none-follow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e6ecf0;
+  border-top: none;
+  height: 610px;
+  color: #e6ecf0;
+  font-size: 25px;
 }
 </style>
