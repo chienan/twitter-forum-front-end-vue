@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <ul class="list-group rounded-0" style="width: 1063px; height: 1202px">
       <li class="list-group-item group-item-border bold">推文清單</li>
 
@@ -96,6 +96,11 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  position: relative;
+  left: 315px;
+}
+
 .bold {
   font-weight: bold;
 }
