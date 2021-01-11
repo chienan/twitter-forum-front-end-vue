@@ -30,7 +30,7 @@
 
             <label for="cover" class="upload-container">
               <input
-                name="image"
+                name="cover"
                 type="file"
                 accept="image/*"
                 class="upload-input-cover"
@@ -41,10 +41,11 @@
             </label>
 
             <img
-              src="https://i.postimg.cc/02S2SfDB/icon-delete.png"
+              src="https://i.imgur.com/gHVdVrY.png"
               class="card-img-top icon-delete"
               alt
-              style="height: 24px; width: 24px"
+              style="height: 15px; width: 15px"
+              @click.stop.prevent="clearCover"
             />
           </div>
 
@@ -84,7 +85,7 @@
             <div id="name-count" class="form-text"></div>
           </div>
           <div class="number">
-            <span>{{name.length}}</span>/
+            <span>{{name ? name.length : '0'}}</span>/
             <span>50</span>
           </div>
           <div class="mb-3 label-parents">
@@ -103,7 +104,7 @@
 
             <div id="introduction-count" class="form-text"></div>
             <div class="number1">
-              <span>{{introduction.length}}</span>/
+              <span>{{introduction ? introduction.length : '0'}}</span>/
               <span>160</span>
             </div>
           </div>
@@ -127,9 +128,10 @@ export default {
       cover: "",
       avatar: "",
       introduction: "",
-      isLoading: true
+      isLoading: true,
       // newCover: "",
       // newAvatar: ""
+      initialCover: ""
     };
   },
   components: {
@@ -171,6 +173,7 @@ export default {
       this.name = name;
       this.introduction = introduction;
       this.isLoading = false;
+      this.initialCover = this.cover;
     },
     async handleCoverChange(e) {
       try {
@@ -205,7 +208,6 @@ export default {
         });
       }
     },
-
     async handleSubmit(e) {
       try {
         if (!this.name) {
@@ -243,6 +245,9 @@ export default {
           title: "無法更新使用者資料，請稍後再試"
         });
       }
+    },
+    clearCover() {
+      this.cover = this.initialCover;
     }
   }
 };
@@ -266,7 +271,6 @@ export default {
   margin-left: 35px;
 }
 .title {
-  /* border: 1px solid black; */
   height: 55px;
 }
 form {
@@ -426,17 +430,11 @@ label {
 }
 
 .upload-icon-cover {
-  /* z-index: 2; */
   color: #ffffff;
-  font-weight: bold;
-  /* font-size: 180%; */
-  font-size: 35px;
+  font-size: 34px;
   position: absolute;
   left: 200px;
-  bottom: 89px;
-  /* right: 10px; */
-  /* right: 340px;
-  bottom: -22px; */
+  bottom: 92px;
 }
 
 .upload-icon-cover:hover {
@@ -463,12 +461,14 @@ label {
   font-size: 180%;
   position: absolute;
   left: 50px;
-  /* width: 100%;
-  top: 10px; */
   bottom: -5px;
 }
 
 .upload_icon:hover {
+  cursor: pointer;
+}
+
+.icon-delete:hover {
   cursor: pointer;
 }
 
