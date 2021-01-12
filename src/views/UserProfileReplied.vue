@@ -181,7 +181,9 @@ export default {
   },
   watch: {
     user() {
+      const { id: userId } = this.$route.params;
       this.fetchTopTenUsers();
+      this.fetchUser(userId);
     },
     isFollowed() {
       this.fetchTopTenUsers();
