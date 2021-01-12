@@ -91,4 +91,10 @@ input:required {
 input:invalid {
   box-shadow: none;
 }
+
+@media screen and (max-width: 1200px) {
+  .follow-recommend {
+    display: none;
+  }
+}
 </style>

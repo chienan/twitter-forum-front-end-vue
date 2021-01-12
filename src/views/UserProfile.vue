@@ -73,7 +73,7 @@
     </div>
 
     <div>
-      <FollowRecommend :initial-tops="topTenUsers" />
+      <FollowRecommend :initial-tops="topTenUsers" class="follow-recommend" />
     </div>
   </div>
 </template>
