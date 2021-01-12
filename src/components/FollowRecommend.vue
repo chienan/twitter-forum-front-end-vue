@@ -114,12 +114,10 @@ export default {
   },
   data() {
     return {
-
       users: this.initialTops,
       showMore: false,
       topSix: [],
       moreUsers: []
-
     };
 
     // user: {
@@ -165,8 +163,6 @@ export default {
           icon: "success",
           title: "追蹤成功"
         });
-
-
 
         this.topSix = this.topSix.map(user => {
           if (user.id !== id) {
@@ -218,7 +214,6 @@ export default {
           }
         });
         this.moreUsers = this.moreUsers.map(user => {
-
           if (user.id !== userId) {
             return user;
           } else {
@@ -271,6 +266,9 @@ export default {
     initialTops(val) {
       if (val && val.length > 0) {
         this.users = this.initialTops;
+        this.fetchTopSix();
+        this.fetchMoreUsers();
+      } else if (!val) {
         this.fetchTopSix();
         this.fetchMoreUsers();
       }
@@ -378,7 +376,6 @@ export default {
   line-height: 22px;
   color: #ff6600;
 }
-
 
 .show-more:hover {
   cursor: pointer;

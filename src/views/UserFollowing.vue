@@ -79,6 +79,7 @@ export default {
       tweetsLength: "",
       users: {},
       isLoading: true,
+      isFollow: 0,
       topTenUsers: []
     };
   },
@@ -154,6 +155,7 @@ export default {
             };
           }
         });
+        this.isFollow = this.isFollow + 1;
       } catch (error) {
         console.error(error.message);
         Toast.fire({
@@ -173,6 +175,8 @@ export default {
         this.users = this.users.filter(user => {
           return user.id !== userId;
         });
+
+        this.isFollow = this.isFollow - 1;
 
         Toast.fire({
           icon: "success",
@@ -234,6 +238,9 @@ export default {
       const { id: userId } = this.$route.params;
       // this.fetchTopTenUsers();
       this.fetchUserFollowing(userId);
+    },
+    isFollow() {
+      this.fetchTopTenUsers();
     }
   }
 };
