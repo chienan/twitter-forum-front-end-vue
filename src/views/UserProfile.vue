@@ -73,7 +73,7 @@
     </div>
 
     <div>
-      <FollowRecommend :initial-tops="topTenUsers" />
+      <FollowRecommend :initial-tops="topTenUsers" class="follow-recommend" />
     </div>
   </div>
 </template>
@@ -123,6 +123,7 @@ export default {
   beforeRouteUpdate(to, from, next) {
     const { id: userId } = to.params;
     this.fetchUser(userId);
+    this.fetchUserTweets(userId);
     next();
   },
 
@@ -235,9 +236,9 @@ export default {
   },
   watch: {
     user() {
-      // const { id: userId } = this.$route.params;
+      const { id: userId } = this.$route.params;
       this.fetchTopTenUsers();
-      // this.fetchUser(userId);
+      this.fetchUser(userId);
     },
     isFollowed() {
       this.fetchTopTenUsers();

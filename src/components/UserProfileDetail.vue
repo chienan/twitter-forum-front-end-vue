@@ -185,6 +185,11 @@ export default {
         console.log("error", error);
       }
     }
+  },
+  watch: {
+    initialUser() {
+      this.user = this.initialUser;
+    }
   }
 };
 </script>

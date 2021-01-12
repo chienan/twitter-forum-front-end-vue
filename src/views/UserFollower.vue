@@ -51,6 +51,7 @@
         :initial-tops="topTenUsers"
         @after-add-follow="afterAddFollow"
         @after-delete-follow="afterDeleteFollow"
+        class="follow-recommend"
       />
     </div>
   </div>
