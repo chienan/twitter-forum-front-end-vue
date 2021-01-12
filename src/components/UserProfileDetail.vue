@@ -189,6 +189,9 @@ export default {
   watch: {
     initialUser() {
       this.user = this.initialUser;
+      const { id: userId } = this.$route.params;
+      this.getFollowingsNumber(userId);
+      this.getFollowersNumber(userId);
     }
   }
 };
