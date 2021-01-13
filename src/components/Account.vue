@@ -1,10 +1,11 @@
 <template>
-  <div class="d-flex flex-row">
+  <Spinner v-if="isLoading" />
+
+  <div v-else class="d-flex flex-row">
     <div class="container">
       <!-- <div class="bar col-3"></div> -->
-
       <div class="test2 col-9">
-        <ul class="list-group rounded-0" style="width: 1063px; height: 1202px">
+        <ul class="list-group rounded-0">
           <li class="list-group-item">帳戶設定</li>
           <div>
             <form @submit.stop.prevent="accountEdit" class="account-form ml-3">
@@ -85,9 +86,7 @@
                   type="submit"
                   class="btn bold mt-3"
                   :disabled="isProcessing"
-                >
-                  {{ isProcessing ? "請稍後" : "儲存" }}
-                </button>
+                >{{ isProcessing ? "請稍後" : "儲存" }}</button>
               </div>
             </form>
           </div>
@@ -103,9 +102,14 @@ import { mapState } from "vuex";
 import userEditAPI from "../apis/userAccount.js";
 import usersAPI from "../apis/users.js";
 import { Toast } from "../utils/helpers.js";
+import Spinner from "../components/Spinner";
+
 export default {
+  components: {
+    Spinner
+  },
   computed: {
-    ...mapState(["currentUser"]),
+    ...mapState(["currentUser"])
   },
 
   data() {
@@ -113,29 +117,32 @@ export default {
       account: "",
       name: "",
       email: "",
-      // password: "",
+      password: "",
+      passwordCheck: "",
       isProcessing: false,
+      isLoading: true
     };
   },
   created() {
     const { id } = this.$route.params;
     this.fetchUser(id);
-    console.log(id);
+    // console.log(id);
   },
 
   methods: {
     async fetchUser(userId) {
       try {
         const response = await usersAPI.getUsers({ userId });
-        console.log(response);
-        console.log(response.data);
+        // console.log(response);
+        // console.log(response.data);
         const { data } = response;
         const { id, account, name, email } = data;
         (this.id = id),
           (this.account = account),
           (this.name = name),
           (this.email = email);
-          // (this.password = password);
+        // (this.password = password);
+        this.isLoading = false;
       } catch (error) {
         console.log("error", error);
       }
@@ -146,7 +153,7 @@ export default {
         if (!this.account) {
           Toast.fire({
             icon: "warning",
-            title: "請輸入帳號，謝謝!",
+            title: "請輸入帳號，謝謝!"
           });
           return;
         }
@@ -154,7 +161,7 @@ export default {
         if (!this.name) {
           Toast.fire({
             icon: "warning",
-            title: "請輸入姓名，謝謝!",
+            title: "請輸入姓名，謝謝!"
           });
           return;
         }
@@ -162,7 +169,7 @@ export default {
         if (!this.email) {
           Toast.fire({
             icon: "warning",
-            title: "請輸入email，謝謝!",
+            title: "請輸入email，謝謝!"
           });
           return;
         }
@@ -170,7 +177,7 @@ export default {
         if (!this.password || !this.passwordCheck) {
           Toast.fire({
             icon: "warning",
-            title: "請輸密碼，謝謝!",
+            title: "請輸密碼，謝謝!"
           });
           return;
         }
@@ -180,7 +187,7 @@ export default {
         const formData = new FormData(form);
         const response = await userEditAPI.userEdit({
           userId: this.id,
-          formData,
+          formData
         });
         console.log(response);
         const { data } = response;
@@ -193,11 +200,11 @@ export default {
         console.log("error", error);
         Toast.fire({
           icon: "error",
-          title: "目前無法編輯帳戶，請稍後再試",
+          title: "目前無法編輯帳戶，請稍後再試"
         });
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -216,6 +223,8 @@ export default {
 
 .list-group {
   margin-left: -15px;
+  width: 1063px;
+  height: 100%;
 }
 .list-group-item {
   border-right: none;
