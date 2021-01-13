@@ -294,6 +294,7 @@ export default {
 
 .follow-item {
   border: 1px solid #e6ecf0;
+  min-height: 75px;
   background: #ffffff;
   border-top: none;
   display: flex;

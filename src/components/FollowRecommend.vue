@@ -119,10 +119,6 @@ export default {
       topSix: [],
       moreUsers: []
     };
-
-    // user: {
-    //   id: ""
-    // }
   },
   created() {
     this.fetchTopSix();
@@ -224,19 +220,8 @@ export default {
           }
         });
 
-        // this.users = this.users.map(user => {
-        //   if (user.id !== userId) {
-        //     return user;
-        //   } else {
-        //     return {
-        //       ...user,
-        //       isFollowed: false
-        //     };
-        //   }
-        // });
         this.$emit("after-delete-follow", {
           userId: userId
-          // isFollowed: false
         });
 
         Toast.fire({
