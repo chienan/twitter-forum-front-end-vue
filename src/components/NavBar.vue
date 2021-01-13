@@ -5,31 +5,90 @@
       <div class="nav-top">
         <img src="https://i.imgur.com/FwTYXrW.png" style="width: 30px" alt="logo" />
       </div>
-      <div class="nav-item d-flex align-items-center">
-        <div>
-          <img src="https://i.imgur.com/OxLE5Bf.png" style="width: 20.25px" alt />
-        </div>
-        <div>
-          <a href="/#/tweets" class="nav-link">首頁</a>
-        </div>
+
+      <!-- nav item -->
+      <div
+        v-show="!activeIndex"
+        class="origin-item"
+        @mouseover="mouseOverIndex"
+        @mouseout="mouseOutIndex"
+        @click="mouseOverIndex"
+      >
+        <a href="/#/tweets" class="nav-item d-flex align-items-center">
+          <div>
+            <img src="https://i.imgur.com/OxLE5Bf.png" style="width: 20.25px" alt />
+          </div>
+          <div>
+            <div class="nav-link">首頁</div>
+          </div>
+        </a>
       </div>
 
-      <div class="nav-item d-flex align-items-center">
-        <img src="https://i.imgur.com/MBiFHBl.png" style="width: 16.7px" alt />
-        <router-link :to="{ name: 'user', params: { id: currentUser.id } }" class="nav-link">個人資料</router-link>
+      <div v-show="activeIndex" class="active-item">
+        <a href="/#/tweets" class="nav-item d-flex align-items-center">
+          <div>
+            <img src="https://i.imgur.com/CtX9yrH.png" style="width: 20.25px" alt />
+          </div>
+          <div>
+            <div class="nav-link active-link">首頁</div>
+          </div>
+        </a>
       </div>
 
+      <div
+        v-show="!activeProfile"
+        class="origin-item"
+        @mouseover="mouseOverProfile"
+        @mouseout="mouseOutProfile"
+      >
+        <router-link
+          :to="{ name: 'user', params: { id: currentUser.id } }"
+          class="nav-item d-flex align-items-center"
+        >
+          <img src="https://i.imgur.com/MBiFHBl.png" style="width: 16.7px" alt />
+          <div class="nav-link">個人資料</div>
+        </router-link>
+      </div>
+
+      <div v-show="activeProfile" class="acitve-item">
+        <router-link
+          :to="{ name: 'user', params: { id: currentUser.id } }"
+          class="nav-item d-flex align-items-center"
+        >
+          <img src="https://i.imgur.com/h5YE1W0.png" style="width: 16.7px" alt />
+          <div class="nav-link active-link">個人資料</div>
+        </router-link>
+      </div>
+
+      <!-- 
       <div class="nav-item d-flex align-items-center">
         <img src="https://i.imgur.com/2EadrJC.png" class="chat-icon" width="22px" alt />
         <a href="/#/chat" class="nav-link">公開聊天室</a>
-      </div>
+      </div>-->
 
-      <div class="nav-item d-flex align-items-center">
-        <img src="https://i.imgur.com/Ce7aQj4.png" style="width: 20.75px" alt />
+      <div
+        v-show="!activeSetting"
+        class="origin-item"
+        @mouseover="mouseOverSetting"
+        @mouseout="mouseOutSetting"
+      >
         <router-link
           :to="{ name: 'set-account', params: { id: currentUser.id } }"
-          class="nav-link"
-        >設定</router-link>
+          class="nav-item d-flex align-items-center"
+        >
+          <img src="https://i.imgur.com/Ce7aQj4.png" style="width: 20.75px" alt />
+          <div class="nav-link">設定</div>
+        </router-link>
+      </div>
+
+      <div v-show="activeSetting" class="active-item">
+        <router-link
+          :to="{ name: 'set-account', params: { id: currentUser.id } }"
+          class="nav-item d-flex align-items-center"
+        >
+          <img src="https://i.imgur.com/yEjkFr2.png" style="width: 20.75px" alt />
+          <div class="nav-link active-link">設定</div>
+        </router-link>
       </div>
 
       <div>
@@ -55,7 +114,10 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-      description: ""
+      description: "",
+      activeIndex: false,
+      activeProfile: false,
+      activeSetting: false
     };
   },
   //vuex `mapState` 方法
@@ -66,6 +128,31 @@ export default {
     logout() {
       this.$store.commit("revokeAuthentication");
       this.$router.push("/signin");
+    },
+    /*  滑鼠經過hover效果  */
+    mouseOverIndex() {
+      this.activeIndex = true;
+    },
+    mouseOutIndex() {
+      setTimeout(() => {
+        this.activeIndex = false;
+      }, 10);
+    },
+    mouseOverProfile() {
+      this.activeProfile = !this.activeProfile;
+    },
+    mouseOutProfile() {
+      setTimeout(() => {
+        this.activeProfile = !this.activeProfile;
+      }, 10);
+    },
+    mouseOverSetting() {
+      this.activeSetting = !this.activeSetting;
+    },
+    mouseOutSetting() {
+      setTimeout(() => {
+        this.activeSetting = !this.activeSetting;
+      }, 10);
     }
   }
 };
@@ -104,6 +191,10 @@ export default {
 
 .nav-link {
   color: #1c1c1c;
+}
+
+.active-link {
+  color: #ff6600;
 }
 
 .nav-link :hover,
