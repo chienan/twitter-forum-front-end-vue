@@ -439,6 +439,8 @@ p {
   color: #1c1c1c;
   text-align: left;
   text-justify: inter-ideograph;
+  word-break: break-all;
+  word-wrap: break-word;
 }
 .item-interaction {
   /* margin: 14px 0px; */

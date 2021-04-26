@@ -339,11 +339,14 @@ export default {
   display: flex;
   align-items: center;
   width: 500px;
+  /* max-width: 500px; */
   min-height: 100px;
   /* border: 1px solid gray; */
   font-weight: 450px;
   font-size: 20px;
   line-height: 34px;
+  word-break: break-all;
+  word-wrap: break-word;
 }
 
 .time {
@@ -351,14 +354,13 @@ export default {
   margin-left: -3px;
   font-size: 15px;
 }
-/* .card-text { */
-/* position: relative; */
-/* border: 1px solid black; */
-/* max-height: 1000px;
-} */
 
 .card-text {
   min-height: 50px;
+  min-width: 350px;
+  max-width: 150px;
+  word-break: break-all;
+  word-wrap: break-word;
 }
 
 hr {
